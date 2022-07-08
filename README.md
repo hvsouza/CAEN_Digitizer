@@ -1,18 +1,18 @@
-#+STARTUP: inlineimages
-#+STARTUP: showeverything
-#+OPTIONS: toc:nil        (no default TOC at all)
-* CAEN DIGITIZER 
+
+
+# CAEN DIGITIZER
+
 Author: Henrique Vieira de Souza, APC – Paris
 
 henriquevieira.souza@gmail.com 
 
 
-* Table of Contents :toc:
-#+TOC: tables
+# Table of Contents     :toc:
 
 
-* Introduction
-This documents servers do clarify and help the data acquisition with the CAEN digitizer. All the softwares and drivers are availabe at [[http:://caen.it][caen.it]]. 
+# Introduction
+
+This documents servers do clarify and help the data acquisition with the CAEN digitizer. All the softwares and drivers are availabe at [caen.it](http:://caen.it). 
 
 The acquisition is done with Wavedump, a free software distributed by CAEN. The versions modified by the me have two minor implementations: (1) continuous writing will save only 10,000 waveforms and stop and (2) one can change the number of points per waveform saved, this decreases the sampling rate from 2 ns to 4 ns, for example, by skipping one point.
 
@@ -28,12 +28,13 @@ Text in italic and quoted are commands you can copy and paste at the terminal.
 Please, make sure you have “make” and “cmake” installed. The software “gnuplot” is also necessary but it will be installed in the installation scripts.
 Please, if you find any bug, miss information or some nasty mistake, please feel free to talk to me by email.
 
-`come codes`
+\`come codes\`
 
-* Wavedump
 
-** Installation 
+# Wavedump
 
-   [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/continuous_ex.png]] 
 
-   
+## Installation
+
+![img](https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/continuous_ex.png) 
+
