@@ -1,5 +1,5 @@
 #+STARTUP: inlineimages
-#+STARTUP: showeverything
+q#+STARTUP: showeverything
 
 * CAEN DIGITIZER 
 Author: Henrique Vieira de Souza, APC – Paris
@@ -9,11 +9,16 @@ henriquevieira.souza@gmail.com
 
 * Table of Contents
   :PROPERTIES:
-  :TOC:      :include all :depth 2
+  :TOC:      :include all
   :END:
 :CONTENTS:
-
+- [[#caen-digitizer][CAEN DIGITIZER]]
+- [[#table-of-contents][Table of Contents]]
+- [[#introduction][Introduction]]
+- [[#wavedump][Wavedump]]
+  - [[#installation][Installation]]
 :END:
+
 
 
 * Introduction
@@ -33,12 +38,36 @@ Text in italic and quoted are commands you can copy and paste at the terminal.
 Please, make sure you have “make” and “cmake” installed. The software “gnuplot” is also necessary but it will be installed in the installation scripts.
 Please, if you find any bug, miss information or some nasty mistake, please feel free to talk to me by email.
 
-`come codes`
 
 * Wavedump
 
-** Installation 
-
-   [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/continuous_ex.png]] 
+** Installatio
+   Clone this repositiory inside the "Documents" folder:
+   #+begin_src bash
+   cd ~/Documents
+   git clone https://github.com/hvsouza/CAEN_Digitizer.git
+   cd CAEN_Digitizer
+   #+end_src
 
    
+   [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/continuous_ex.png]] 
+
+   To install the digitizer drivers and wavedump there are a few requirements and steps. I invite the user to read the manual of the digitizer and wavedump and also to search about the installation.
+   
+   There is a script named “caen_installation.sh”. The script will install the required softwares and drivers and applied the changes to customize to the version created by me. As this is done in a single step, there will be 3 seconds to check for errors output. If you see any, please, try to fix it before installing everything. NOTE: you need to disable “Secure Boot” at the BIOS.
+   
+   #+begin_src bash
+   ./caen_installation.sh
+   #+end_src
+   
+   If you are installing for the first time, you probably need to restart the computer. 
+   If the digitizer is connected and installation was successfully, open a terminal and just type “wavedump”, it should show you something like this output:
+
+   The script has also created the folder: “~/Desktop/WaveDumpData”. To use the GUI, you need to execute wavedump while inside that folder, so wavedump will save the data there. 
+   
+   There are other customizations you can do, you can take a look at it in the Extra A.
+
+   If you want to quicky remove the changes I made in wavedump, please look at Extra B
+   
+
+* [#A] Extra: Creating short cut
