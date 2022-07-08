@@ -84,9 +84,9 @@ Please, if you find any bug, miss information or some nasty mistake, please feel
 
    Using wavedump is quite simple, just type =wavedump= at the terminal. By pressing [SPACE] the help menu is printed as bellow. Please keep in mind that [T] means “shift + t key”.
 
-https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/help_ex.png
+   [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/help_ex.png]]
 
-   The ones you will use most are:
+The ones you will use most are:
    [R]
    [s]
    [w] (repeating this will overwrite the file with only one waveform)
@@ -98,7 +98,32 @@ https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/help_ex.png
 
    When pressing [W], my modifications will save 10,000 waveforms in the .dat files. When it finishes, you should see this in your screen: 
 
-https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/continuous_ex.png
+   [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/continuous_ex.png]]
+
+When you press [P] for continuous plot, what can happen is that gnuplot window will keep in your way (that is very annoying!). One way to stop this is to make sure that the plot is not over the windows you are trying to use, for example the terminal. If the windows are not overlapping you should be able to use the it normally. Another way is to enable “Prevent windows which require attention from stealing focus” (search this configuration for your Linux distribution). 
+
+For using the GUI, the user should do the following during the acquisition:
+Assuming you have [s] already running, user’s chosen setup done and triggering events.
+
+[w] create a .dat file
+[w] make sure you have created it (you can even press [w] once again. 
+[W] save 10,000 or as many waveforms you want
+- Move the .dat files by yourself or with GUI (see 2.D)
+For acquire more data, repeat this. 
+
+If you want to understand the binary file structure, please check Extra D. 
+
+** Debugging USB
+
+Some times, the digitizer will not be recognized by the computer (this usually happens after using different digitizers, usb devices or cables). One way to fix it:
+
+Disconnect the digitizer, turn it off
+#+begin_src bash
+cd ~/Documents/ CAEN_Digitizer
+./fix_usb.sh
+#+end_src
+
+Connect the digitizer and turn it on. Cross your fingers and try again. 
 
 
 
