@@ -1,0 +1,58 @@
+-----------------------------------------------------------------------------
+
+                   --- CAEN SpA - Computing Division ---
+
+                                www.caen.it
+
+  -----------------------------------------------------------------------------
+
+  Program: WaveDump
+
+
+  -----------------------------------------------------------------------------
+
+
+  Content
+  -----------------------------------------------------------------------------
+
+  README        :  This file.
+  ReleaseNotes  :  Revision History and notes.
+  src           :  Source files.
+  include       :  Include files.
+
+
+  System Requirements
+  -----------------------------------------------------------------------------
+  - CAENVME library Ver 3.2.0 or above
+  - CAENComm library Ver 1.4.0 or above
+  - CAEN Digitizer Library Ver 2.16.2 or above
+  - glibc 2.19 or above
+  - GNUplot >=4.2 (www.gnuplot.org)
+
+
+  How to get support
+  -----------------------------------------------------------------------------
+  Our Software Support Group is available for questions, support and any other
+  software related issue concerning CAEN products; for software support
+  visit the page https://www.caen.it/support-services/support-form or send an email to
+  support.computing@caen.it
+
+
+  Description:
+  -----------------------------------------------------------------------------
+
+
+
+  Syntax
+  -----------------------------------------------------------------------------
+  wavedump [ConfigFile]
+  Default config file is "/etc/wavedump/WaveDumpConfig.txt"
+  or "/etc/wavedump/WaveDumpConfig_X742.txt" for X742 boards,
+  or "/etc/wavedump/WaveDumpConfig_X740.txt" for X740 boards.
+
+  Keyword list and syntax for the configuration file:
+  -----------------------------------------------------------------------------
+  For configuration file syntax please refer to the Wavedump Manual.
+
+  -----------------------------------------------------------------------------
+

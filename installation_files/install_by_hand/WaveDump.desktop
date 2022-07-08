@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=CAEN Wavedump
+Exec=/home/henrique/Desktop/WaveDumpData/WaveDumpExe.sh
+Terminal=true
+Type=Application
+Icon=/home/henrique/Pictures/WAVEDump.png
+# to be placed at ~.local/share/applications/
