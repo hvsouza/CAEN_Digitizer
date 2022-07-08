@@ -101,7 +101,11 @@ sudo make install
 mkdir -p ~/Desktop/WaveDumpData
 cp $ROOTPATH/$SOURCEFILES/{WaveDumpExe.sh,move_files.sh} ~/Desktop/WaveDumpData/
 
+# copying files necessary for QtCreator
 mkdir -p ~/Documents/QtCreator
 cp -r $ROOTPATH/$SOURCEFILES/install_by_hand/move_files ~/Documents/QtCreator/
+
+# copying file to create short cut
+cp -r $ROOTPATH/$SOURCEFILES/install_by_hand/WAVEDump.png ~/Pictures
 
 cd $ROOTPATH

@@ -27,8 +27,8 @@ henriquevieira.souza@gmail.com
   - [[#using-the-gui][Using the GUI]]
 - [[#extra-creating-a-shortcut-for-wavedump][Extra: Creating a shortcut for Wavedump]]
 - [[#extra-wavedump-decreased-sampling][Extra: Wavedump decreased sampling]]
-- [[#extra-common-variables][Extra: Common variables]]
 - [[#extra-file-structure][Extra: File structure]]
+- [[#extra-common-variables][Extra: Common variables]]
 :END:
 
 
@@ -54,7 +54,7 @@ Please, if you find any bug, miss information or some nasty mistake, please feel
 ** Installation
    Clone this repositiory inside the "Documents" folder:
    #+begin_src bash
-   cd ~/Desktop/test
+   cd ~/Documents
    git clone https://github.com/hvsouza/CAEN_Digitizer.git
    cd CAEN_Digitizer
    #+end_src
@@ -132,16 +132,179 @@ cd ~/Documents/ CAEN_Digitizer
 
 Connect the digitizer and turn it on. Cross your fingers and try again. 
 
-
-
    
 * QtCreator GUI
 ** Installation
+   Requirements to install QtCreator:
+   =sudo apt-get update && sudo apt-get upgrade=
+   =sudo apt-get -y install build-essential openssl libssl-dev libssl1.0 libgl1-mesa-dev libqt5x11extras5=
+
+   Install QtCreator following the instructions (https://www.qt.io/download-qt-installer).
+
 ** Creating the project
+
+Open QtCreator, click at "Open Project" at the right side options (bellow Create Project), open the file =Documents/QtCreator/move_files/move_file.pro= and click at Configure Project.
+
+[[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/qtcreator_proj.png]]
+
+Now, on the bottom left, change the building from Debug to Release. Run the project (Green arrow or Ctrl+R). 
+
+[[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/qtcreator_release.png]]
+
+This should pop the project in the screen, close it and close the project. 
+Now, navigate to WaveDumpData =cd ~/Desktop/WaveDumpData= and run the GUI by executing =. ./move_files.sh= the GUI window should pop-out, by executing this way the terminal is closed but the GUI keeps running. 
 ** Debugging installation
+   If the GUI did not pop-out after executing move_files.sh, check that the file =~/Documents/QtCreator/build-move_files-Desktop_Qt_6_2_4_GCC_64bit-Release= exist.
+   If the name of the file is different, you need to update it at =~/Desktop/WaveDumpData/move_files.sh=
 ** Using the GUI
 
+   The GUI is just an interface to automatically move files from the WaveDumpData folder to another folder. It will keep a track of run and subrun number for you naming it with a standard. “Run” is the run number, “subrun” is the subrun number, “Voltage” is the bias voltage of the SiPMs (always leave a number with one or two decimal numbers only), “Threshold” is the the threshold set at the ADC (this should always be a integer number). “Trigger Ch” is the channel in which you are triggering, HOWEVER, the field there can be any text, so you can write, for instance, “Ch0_and_Ch1” or even include some extra information and write something like this “Ch0_and_Ch1_cosmic_run_after_lunch_break”. “Extra info” is any extra information that will be written at the end of the files (not folders), see bellow. 
+
+
+   In the example bellow, the GUI will create a folder named =new_data= at =~/Documents/ADC_data/coldbox_data= (the lock option is just to not change the name by mistake, you don’t need to lock it).
+   After taking data with two channels, for example, you should have “wave0.dat” and “wave1.dat” at WaveDumpData.  
+
+   When pressing “Move files”, a folder named “run0_42V30_20ADC_Ch0” will be created (note: “extra info” will not be placed in the name of the folder), inside the folder “new_data” and the two files will be moved there as:
+   0_wave0_42V30_20ADC_Ch0.dat
+   0_wave1_42V30_20ADC_Ch0.dat
+   (note: if you have written “some_comments” at the “Extra info” field, the name of the file would be “0_wave0_42V30_20ADC_Ch0_some_comments .dat)
+
+   In the GUI, the subrun number should have been changed from 0 to 1. If you take another set of data and click “Move files” again, you should have now four files in total named as:
+   0_wave0_42V30_20ADC_Ch0.dat
+   0_wave1_42V30_20ADC_Ch0.dat
+   1_wave0_42V30_20ADC_Ch0.dat
+   1_wave1_42V30_20ADC_Ch0.dat
+
+   And subrun should be equal 2.
+
+   Whenever you are finished with this run (lets say, changing SiPM bias, threshold or just because you want a different run in which you will give details on a README file later), you click “Finish run”, a message will pop-out saying “Warning: calibration might not exist. Finish run anyway?”, if you are not using the calibration “feature” you can just click “yes”. 
+   (otherwise click “no” and take the calibration that you forgot) 
+
+   This should put subrun back to 0 and Run now will be equal 1. 
+
+   (A way to play with the GUI is to simply create empty waveX.dat files and transfer they to see the structure of the data). 
+
+   The Calibration tab will simply transfer the file to a folder named “Calibration” inside the current run folder. It can only support one Calibration file per channel. This is an old and unused feature that I used for placing the waveforms that I would use for the SiPM gain estimation, I would not bother using it and just creating a new “Run” as calibration. 
+   At “More”, if you have data with different extension of .dat, you can change to anything you need (“.txt”, “.csv”, “.pdf”, etc).
+
+
+[[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/qtcreator_gui.png]]
+
+
+   Please, keep in mind the the run and subrun numbers can be changed by hand. So if you commit any mistake you can change the value back there, however, the move is done with the tag “-n” so the data is not overwritten, if you need to replace subrun 0, for instance, delete the wrong one first. 
+
 * Extra: Creating a shortcut for Wavedump
+
+  Inside the folder =~/Documents/CAEN_Digitizer/installation_files/install_by_hand= you will find the file WaveDump.desktop. Replace the user from “henrique” to yours. Copy the .desktop file into =~.local/share/applications/=.
+ 
 * Extra: Wavedump decreased sampling
-* Extra: Common variables
 * Extra: File structure
+* Extra: Common variables
+#+begin_export ascii
+Bellow are the the most used configurations at the /etc/wavedump/WaveDumpConfig.txt.
+
+NOTE: In the example above, trigger is made with Ch0 and Ch1 as or. Ch0, Ch1 and Ch2 are acquired and Ch3  is not. 
+Please note that the original config file doesn’t have the individual CHANNEL_TRIGGER option.
+When acquiring with external trigger, one should set
+EXTERNAL_TRIGGER   ACQUISITION_ONLY
+and set to DISABLED each channel trigger. 
+
+
+# OPEN: open the digitizer
+# options: USB 0 0      			Desktop/NIM digitizer through USB              
+OPEN USB 0 0 
+(if you have some USB devices connected, you might need to change this value to 1 or 2) 
+
+# RECORD_LENGTH = number of samples in the acquisition window
+RECORD_LENGTH  2000
+
+# POST_TRIGGER: post trigger size in percent of the whole acquisition window
+# options: 0 to 100
+# On models 742 there is a delay of about 35nsec on signal Fast Trigger TR; the post trigger is added to
+# this delay  
+POST_TRIGGER  50
+
+#PULSE_POLARITY: input signal polarity.
+#options: POSITIVE, NEGATIVE
+#
+PULSE_POLARITY  POSITIVE
+
+# EXTERNAL_TRIGGER: external trigger input settings. When enabled, the ext. trg. can be either 
+# propagated (ACQUISITION_AND_TRGOUT) or not (ACQUISITION_ONLY) through the TRGOUT
+# options: DISABLED, ACQUISITION_ONLY, ACQUISITION_AND_TRGOUT
+EXTERNAL_TRIGGER   DISABLED	
+
+# FPIO_LEVEL: type of the front panel I/O LEMO connectors 
+# options: NIM, TTL
+FPIO_LEVEL  NIM
+
+# OUTPUT_FILE_FORMAT: output file can be either ASCII (column of decimal numbers) or binary 
+# (2 bytes per sample, except for Mod 721 and Mod 731 that is 1 byte per sample)
+# options: BINARY, ASCII
+OUTPUT_FILE_FORMAT  BINARY
+
+# OUTPUT_FILE_HEADER: if enabled, the header is included in the output file data
+# options: YES, NO
+OUTPUT_FILE_HEADER  YES
+
+# ENABLE_INPUT: enable/disable one channel
+# options: YES, NO
+ENABLE_INPUT          NO
+
+#BASELINE_LEVEL: baseline position in percent of the Full Scale. 
+# POSITIVE PULSE POLARITY (Full Scale = from 0 to + Vpp)
+# 0: analog input dynamic range = from 0 to +Vpp 
+# 50: analog input dynamic range = from +Vpp/2 to +Vpp 
+# 100: analog input dynamic range = null (usually not used)*
+# NEGATIVE PULSE POLARITY (Full Scale = from -Vpp to 0) 
+# 0: analog input dynamic range = from -Vpp to 0 
+# 50: analog input dynamic range = from -Vpp/2 to 0 
+# 100: analog input dynamic range = null (usually not used)*
+#
+# options: 0 to 100
+BASELINE_LEVEL  50
+
+# TRIGGER_THRESHOLD: threshold for the channel auto trigger (ADC counts)
+# options 0 to 2^N-1 (N=Number of bit of the ADC)
+# *The threshold is relative to the baseline:
+# 	POSITIVE PULSE POLARITY: threshold = baseline + TRIGGER_THRESHOLD
+# 	NEGATIVE PULSE POLARITY: threshold = baseline - TRIGGER_THRESHOLD
+#
+TRIGGER_THRESHOLD      100
+
+# CHANNEL_TRIGGER: channel auto trigger settings. When enabled, the ch. auto trg. can be either 
+# propagated (ACQUISITION_AND_TRGOUT) or not (ACQUISITION_ONLY) through the TRGOUT
+# options: DISABLED, ACQUISITION_ONLY, ACQUISITION_AND_TRGOUT, TRGOUT_ONLY
+# NOTE: since in x730 boards even and odd channels are paired, their 'CHANNEL_TRIGGER' value
+# will be equal to the OR combination of the pair, unless one of the two channels of
+# the pair is set to 'DISABLED'. If so, the other one behaves as usual.
+CHANNEL_TRIGGER        DISABLED
+
+[0]
+ENABLE_INPUT           YES
+BASELINE_LEVEL         10
+TRIGGER_THRESHOLD      500
+CHANNEL_TRIGGER        ACQUISITION_ONLY
+
+[1]
+ENABLE_INPUT           YES
+BASELINE_LEVEL         10
+TRIGGER_THRESHOLD      500
+CHANNEL_TRIGGER        ACQUISITION_ONLY
+
+
+[2]
+ENABLE_INPUT           YES
+BASELINE_LEVEL         10
+TRIGGER_THRESHOLD      500
+CHANNEL_TRIGGER        DISABLED
+
+
+
+[3]
+ENABLE_INPUT           NO
+BASELINE_LEVEL         10
+TRIGGER_THRESHOLD      500
+CHANNEL_TRIGGER        DISABLED
+#+end_export
+
