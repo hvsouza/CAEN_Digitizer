@@ -1,19 +1,11 @@
 #+STARTUP: inlineimages
 
-#+TOC: headlines 1 local
-#+TOC: listening
-#+TOC: tables
 
-
-* CAEN_Digitizer
 Author: Henrique Vieira de Souza, APC – Paris
 henriquevieira.souza@gmail.com 
 
-A tutorial/description for DAQ is given at DAQ_info.pdf
 
 * Table of Contents :toc:
- - [[#introduction][Introduction]]
- - [[#wavedump][Wavedump]]
 
 * Introduction
 This documents servers do clarify and help the data acquisition with the CAEN digitizer. All the softwares and drivers are availabe at [[http:://caen.it][caen.it]]. 
@@ -31,6 +23,9 @@ Text in italic and quoted are commands you can copy and paste at the terminal.
 
 Please, make sure you have “make” and “cmake” installed. The software “gnuplot” is also necessary but it will be installed in the installation scripts.
 Please, if you find any bug, miss information or some nasty mistake, please feel free to talk to me by email.
+[[#wavedump][wow]]
+
+`come codes`
 
 * Wavedump
 
