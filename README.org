@@ -1,5 +1,5 @@
 #+STARTUP: inlineimages
-q#+STARTUP: showeverything
+#+STARTUP: showeverything
 
 * CAEN DIGITIZER 
 Author: Henrique Vieira de Souza, APC – Paris
@@ -17,11 +17,17 @@ henriquevieira.souza@gmail.com
 - [[#introduction][Introduction]]
 - [[#wavedump][Wavedump]]
   - [[#installation][Installation]]
+- [[#qtcreator][QtCreator]]
+  - [[#installation][Installation]]
+- [[#extra-creating-a-shortcut-for-wavedump][Extra: Creating a shortcut for Wavedump]]
+- [[#extra-creating-short-cut][Extra: Creating short cut]]
+- [[#extra-creating-short-cut][Extra: Creating short cut]]
 :END:
 
 
 
 * Introduction
+[[#qtcreator][qt]]   
 This documents servers do clarify and help the data acquisition with the CAEN digitizer. All the softwares and drivers are availabe at [[http:://caen.it][caen.it]]. 
 
 The acquisition is done with Wavedump, a free software distributed by CAEN. The versions modified by the me have two minor implementations: (1) continuous writing will save only 10,000 waveforms and stop and (2) one can change the number of points per waveform saved, this decreases the sampling rate from 2 ns to 4 ns, for example, by skipping one point.
@@ -41,7 +47,7 @@ Please, if you find any bug, miss information or some nasty mistake, please feel
 
 * Wavedump
 
-** Installatio
+** Installation
    Clone this repositiory inside the "Documents" folder:
    #+begin_src bash
    cd ~/Documents
@@ -65,9 +71,15 @@ Please, if you find any bug, miss information or some nasty mistake, please feel
 
    The script has also created the folder: “~/Desktop/WaveDumpData”. To use the GUI, you need to execute wavedump while inside that folder, so wavedump will save the data there. 
    
-   There are other customizations you can do, you can take a look at it in the Extra A.
-
+   There are other customizations you can do, you can take a look at it in the [[#extra:-creating-a-shortcut-for-wavedump][Extra: Creating a shortcut for Wavedump]]
    If you want to quicky remove the changes I made in wavedump, please look at Extra B
-   
 
-* [#A] Extra: Creating short cut
+
+
+
+* QtCreator
+** Installation
+
+* Extra: Creating a shortcut for Wavedump
+* Extra: Creating short cut
+* Extra: Creating short cut
