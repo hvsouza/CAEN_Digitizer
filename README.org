@@ -1,0 +1,4 @@
+* CAEN_Digitizer
+
+** This is an installer for CAEN Digitizer
+** A tutorial/description for DAQ is given at DAQ_info.pdf
