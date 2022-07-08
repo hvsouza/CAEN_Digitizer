@@ -39,8 +39,6 @@ Wave0.dat refers to the waveforms of channel 0, while wave1.dat refers to channe
 
 If you want to save several .dat data files you need to move these waveX.dat files to another folder before saving new ones. As this task can be very tedious,  I’ve created a GUI with QtCreator to transfer the files and menage data taking more efficiently. The GUI is not mandatory, it should just make your life easier! 
 
-Text in italic and quoted are commands you can copy and paste at the terminal.
-
 Please, make sure you have “make” and “cmake” installed. The software “gnuplot” is also necessary but it will be installed in the installation scripts.
 Please, if you find any bug, miss information or some nasty mistake, please feel free to talk to me by email.
 
@@ -69,11 +67,12 @@ Please, if you find any bug, miss information or some nasty mistake, please feel
    If you are installing for the first time, you probably need to restart the computer. 
    If the digitizer is connected and installation was successfully, open a terminal and just type “wavedump”, it should show you something like this output:
 
-   The script has also created the folder: “~/Desktop/WaveDumpData”. To use the GUI, you need to execute wavedump while inside that folder, so wavedump will save the data there. 
+   The script has also created the folder: src_bash[:exports code]{~/Desktop/WaveDumpData}. To use the GUI, you need to execute wavedump while inside that folder, so wavedump will save the data there. 
    
-   There are other customizations you can do, you can take a look at it here [[#extra-creating-a-shortcut-for-wavedump]]
+   There are other customizations you can do, you can take a look at [[#extra-creating-a-shortcut-for-wavedump]]
 
-   If you want to quicky remove the changes I made in wavedump, please look at Extra B
+   If you want to enable the option to decrease wavedump writing sample rate, please look at [[#extra-wavedump-decreased-sampling]]
+
 
 
 
@@ -82,5 +81,5 @@ Please, if you find any bug, miss information or some nasty mistake, please feel
 ** Installation
 
 * Extra: Creating a shortcut for Wavedump
-* Extra: Creating short cut
+* Extra: Wavedump decreased sampling
 * Extra: Creating short cut
