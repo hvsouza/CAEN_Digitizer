@@ -66,9 +66,7 @@ Please, if you find any bug, miss information or some nasty mistake, please feel
    If you are installing for the first time, you probably need to restart the computer. 
    If the digitizer is connected and installation was successfully, open a terminal and just type “wavedump”, it should show you something like this output:
 
-   The script has also created the folder: src_sh[:exports code]{~/Desktop/WaveDumpData}. To use the GUI, you need to execute wavedump while inside that folder, so wavedump will save the data there.
- 
-- Inline code src_sh[:exports code]{echo -e "test"}
+   The script has also created the folder: =~/Desktop/WaveDumpData=. To use the GUI, you need to execute wavedump while inside that folder, so wavedump will save the data there 
   
    There are other customizations you can do, you can take a look at [[#extra-creating-a-shortcut-for-wavedump]]
 
@@ -78,9 +76,10 @@ Please, if you find any bug, miss information or some nasty mistake, please feel
 
 
 
+   
 * QtCreator
 ** Installation
 
 * Extra: Creating a shortcut for Wavedump
 * Extra: Wavedump decreased sampling
-* Extra: Creating short cut
+* Extra: Common variables
