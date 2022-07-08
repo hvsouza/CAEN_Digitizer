@@ -28,7 +28,7 @@ Text in italic and quoted are commands you can copy and paste at the terminal.
 Please, make sure you have “make” and “cmake” installed. The software “gnuplot” is also necessary but it will be installed in the installation scripts.
 Please, if you find any bug, miss information or some nasty mistake, please feel free to talk to me by email.
 
-\`come codes\`
+`come codes`
 
 
 # Wavedump
