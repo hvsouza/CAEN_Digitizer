@@ -20,11 +20,15 @@ henriquevieira.souza@gmail.com
   - [[#configuration-file][Configuration file]]
   - [[#using-wavedump][Using wavedump]]
   - [[#debugging-usb][Debugging USB]]
-- [[#qtcreator][QtCreator]]
+- [[#qtcreator-gui][QtCreator GUI]]
   - [[#installation][Installation]]
+  - [[#creating-the-project][Creating the project]]
+  - [[#debugging-installation][Debugging installation]]
+  - [[#using-the-gui][Using the GUI]]
 - [[#extra-creating-a-shortcut-for-wavedump][Extra: Creating a shortcut for Wavedump]]
 - [[#extra-wavedump-decreased-sampling][Extra: Wavedump decreased sampling]]
 - [[#extra-common-variables][Extra: Common variables]]
+- [[#extra-file-structure][Extra: File structure]]
 :END:
 
 
@@ -50,7 +54,7 @@ Please, if you find any bug, miss information or some nasty mistake, please feel
 ** Installation
    Clone this repositiory inside the "Documents" folder:
    #+begin_src bash
-   cd ~/Documents
+   cd ~/Desktop/test
    git clone https://github.com/hvsouza/CAEN_Digitizer.git
    cd CAEN_Digitizer
    #+end_src
