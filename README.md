@@ -7,7 +7,7 @@ Author: Henrique Vieira de Souza, APC – Paris
 henriquevieira.souza@gmail.com 
 
 
-# Table of Contents     :toc:
+# Table of Contents
 
 
 # Introduction
