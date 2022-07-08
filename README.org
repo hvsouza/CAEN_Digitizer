@@ -21,8 +21,9 @@ Text in italic and quoted are commands you can copy and paste at the terminal.
 
 
 Please, make sure you have “make” and “cmake” installed. The software “gnuplot” is also necessary but it will be installed in the installation scripts.
-[[*Some other stuff][Some other stuff]] 
+[click on this link](#some-other-stuff)
 Please, if you find any bug, miss information or some nasty mistake, please feel free to talk to me by email.
 ** Some other stuff
 
+![alt text](https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/continuous_ex.png?raw=true)
 
