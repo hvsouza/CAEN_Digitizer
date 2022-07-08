@@ -71,7 +71,7 @@ Please, if you find any bug, miss information or some nasty mistake, please feel
 
    The script has also created the folder: “~/Desktop/WaveDumpData”. To use the GUI, you need to execute wavedump while inside that folder, so wavedump will save the data there. 
    
-   There are other customizations you can do, you can take a look at it in the [[#extra:-creating-a-shortcut-for-wavedump][here]]
+   There are other customizations you can do, you can take a look at it here [[#extra-creating-a-shortcut-for-wavedump]]
 
    If you want to quicky remove the changes I made in wavedump, please look at Extra B
 
