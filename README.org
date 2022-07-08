@@ -1,6 +1,6 @@
 #+STARTUP: inlineimages
 #+STARTUP: showeverything
-#+OPTIONS: toc:nil        (no default TOC at all)
+
 * CAEN DIGITIZER 
 Author: Henrique Vieira de Souza, APC – Paris
 
