@@ -200,7 +200,8 @@ Now, navigate to WaveDumpData =cd ~/Desktop/WaveDumpData= and run the GUI by exe
 * Extra: Wavedump decreased sampling
 * Extra: File structure
 * Extra: Common variables
-#+begin_export ascii
+
+#+begin_example
 Bellow are the the most used configurations at the /etc/wavedump/WaveDumpConfig.txt.
 
 NOTE: In the example above, trigger is made with Ch0 and Ch1 as or. Ch0, Ch1 and Ch2 are acquired and Ch3  is not. 
@@ -306,5 +307,5 @@ ENABLE_INPUT           NO
 BASELINE_LEVEL         10
 TRIGGER_THRESHOLD      500
 CHANNEL_TRIGGER        DISABLED
-#+end_export
+#+end_example
 
