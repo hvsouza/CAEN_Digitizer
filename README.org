@@ -17,11 +17,14 @@ henriquevieira.souza@gmail.com
 - [[#introduction][Introduction]]
 - [[#wavedump][Wavedump]]
   - [[#installation][Installation]]
+  - [[#configuration-file][Configuration file]]
+  - [[#using-wavedump][Using wavedump]]
+  - [[#debugging-usb][Debugging USB]]
 - [[#qtcreator][QtCreator]]
   - [[#installation][Installation]]
 - [[#extra-creating-a-shortcut-for-wavedump][Extra: Creating a shortcut for Wavedump]]
-- [[#extra-creating-short-cut][Extra: Creating short cut]]
-- [[#extra-creating-short-cut][Extra: Creating short cut]]
+- [[#extra-wavedump-decreased-sampling][Extra: Wavedump decreased sampling]]
+- [[#extra-common-variables][Extra: Common variables]]
 :END:
 
 
@@ -108,10 +111,10 @@ Assuming you have [s] already running, user’s chosen setup done and triggering
 [w] create a .dat file
 [w] make sure you have created it (you can even press [w] once again. 
 [W] save 10,000 or as many waveforms you want
-- Move the .dat files by yourself or with GUI (see 2.D)
+- Move the .dat files by yourself or with GUI (see [[#using-the-gui]])
 For acquire more data, repeat this. 
 
-If you want to understand the binary file structure, please check Extra D. 
+If you want to understand the binary file structure, please check [[#extra-file-structure]]. 
 
 ** Debugging USB
 
@@ -128,9 +131,13 @@ Connect the digitizer and turn it on. Cross your fingers and try again.
 
 
    
-* QtCreator
+* QtCreator GUI
 ** Installation
+** Creating the project
+** Debugging installation
+** Using the GUI
 
 * Extra: Creating a shortcut for Wavedump
 * Extra: Wavedump decreased sampling
 * Extra: Common variables
+* Extra: File structure
