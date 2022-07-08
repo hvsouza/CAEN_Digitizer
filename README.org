@@ -52,9 +52,6 @@ Please, if you find any bug, miss information or some nasty mistake, please feel
    cd CAEN_Digitizer
    #+end_src
 
-   
-   [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/continuous_ex.png]] 
-
    To install the digitizer drivers and wavedump there are a few requirements and steps. I invite the user to read the manual of the digitizer and wavedump and also to search about the installation.
    
    There is a script named “caen_installation.sh”. The script will install the required softwares and drivers and applied the changes to customize to the version created by me. As this is done in a single step, there will be 3 seconds to check for errors output. If you see any, please, try to fix it before installing everything. NOTE: you need to disable “Secure Boot” at the BIOS.
@@ -66,13 +63,42 @@ Please, if you find any bug, miss information or some nasty mistake, please feel
    If you are installing for the first time, you probably need to restart the computer. 
    If the digitizer is connected and installation was successfully, open a terminal and just type “wavedump”, it should show you something like this output:
 
+      [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/startup_ex.png]]
+
    The script has also created the folder: =~/Desktop/WaveDumpData=. To use the GUI, you need to execute wavedump while inside that folder, so wavedump will save the data there 
   
    There are other customizations you can do, you can take a look at [[#extra-creating-a-shortcut-for-wavedump]]
 
    If you want to enable the option to decrease wavedump writing sample rate, please look at [[#extra-wavedump-decreased-sampling]]
 
+** Configuration file
 
+   Please, refer to the wavedump manual to better understand the acquisition configuration.
+
+   The configuration file of wavedump is located at =/etc/wavedump/WaveDumpConfig.txt=.
+   If you cd in the WaveDumpData folder =cd ~/Desktop/WaveDumpData= and execute =./WaveDumpExe.sh=, the configuration file should open together with wavedump.
+
+   The current important parameters to take care are reported at [[#extra-common-variables]].
+
+** Using wavedump
+
+   Using wavedump is quite simple, just type =wavedump= at the terminal. By pressing [SPACE] the help menu is printed as bellow. Please keep in mind that [T] means “shift + t key”.
+
+https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/help_ex.png
+
+   The ones you will use most are:
+   [R]
+   [s]
+   [w] (repeating this will overwrite the file with only one waveform)
+   [W] (After the 10,000 events you can press it again to save 10,000 more and so on)
+   [P] also [p]
+   [T] also [t] 
+
+   Please, take a time to understand the acquisition by playing around and making some plots before moving forward. Make sure you memorize the shortcuts.
+
+   When pressing [W], my modifications will save 10,000 waveforms in the .dat files. When it finishes, you should see this in your screen: 
+
+https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/continuous_ex.png
 
 
 
