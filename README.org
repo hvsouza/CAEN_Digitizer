@@ -95,6 +95,7 @@
    [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/help_ex.png]]
 
    The ones you will use most are: \\
+   Test... \\
    [R]\
    [s]\\
    [w] (repeating this will overwrite the file with only one waveform) \\ 
