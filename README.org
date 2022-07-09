@@ -94,15 +94,13 @@
 
    [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/help_ex.png]]
 
-#+begin_verse
-   The ones you will use most are: 
-   [R] 
-   [s] 
+   The ones you will use most are: \\
+   [R] \n
+   [s] \\
    [w] (repeating this will overwrite the file with only one waveform) \\
-   [W] (After the 10,000 events you can press it again to save 10,000 more and so on) 
-   [P] also [p] 
+   [W] (After the 10,000 events you can press it again to save 10,000 more and so on) \\
+   [P] also [p] \\
    [T] also [t]
-#+end_verse
 
    Please, take a time to understand the acquisition by playing around and making some plots before moving forward. Make sure you memorize the shortcuts.
 
