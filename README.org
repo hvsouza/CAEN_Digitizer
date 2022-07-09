@@ -40,6 +40,8 @@ The acquisition is done with Wavedump, a free software distributed by CAEN. The 
 
 Please, keep in mind that the implementation (2) will not reduce the acquisition rate of the digitizer, just of the saved waveforms. 
 
+IF you search "Added by Henrique Souza" in the WaveDump.c file, you will find all the modifications made by me.
+
 Wavedump will only save data in a file named wave0.dat when saving as BINARY (or wave0.txt when saving as ASCII). I am assuming you have wisely chosen binary as format. 
 Wave0.dat refers to the waveforms of channel 0, while wave1.dat refers to channel 1.
 
@@ -70,7 +72,9 @@ Please, if you find any bug, miss information or some nasty mistake, please feel
    If you are installing for the first time, you probably need to restart the computer. 
    If the digitizer is connected and installation was successfully, open a terminal and just type “wavedump”, it should show you something like this output:
 
-      [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/startup_ex.png]]
+   [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/startup_ex.png]]
+   
+   (Wavedump cannot run if there is no ADC connected)
 
    The script has also created the folder: =~/Desktop/WaveDumpData=. To use the GUI, you need to execute wavedump while inside that folder, so wavedump will save the data there 
   
@@ -190,19 +194,67 @@ Now, navigate to WaveDumpData =cd ~/Desktop/WaveDumpData= and run the GUI by exe
 
 [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/qtcreator_gui.png]]
 
-
    Please, keep in mind the the run and subrun numbers can be changed by hand. So if you commit any mistake you can change the value back there, however, the move is done with the tag “-n” so the data is not overwritten, if you need to replace subrun 0, for instance, delete the wrong one first. 
 
 * Extra: Creating a shortcut for Wavedump
 
-  Inside the folder =~/Documents/CAEN_Digitizer/installation_files/install_by_hand= you will find the file WaveDump.desktop. Replace the user from “henrique” to yours. Copy the .desktop file into =~.local/share/applications/=.
+  Inside the folder =~/Documents/CAEN_Digitizer/installation_files/install_by_hand= you will find the file WaveDump.desktop. Replace the user from “henrique” to yours. Copy the .desktop file into =~.local/share/applications/= (the tumbnail should be already placed at =~/Pictures=. Now, of you open the menu (windows key) and search for CAEN you should find the shortcut (if not, try login out and login in). You can place this short cut at your dock/panel, this makes much easier to launch wavedump in a way that is saves the data at =~/Desktop/WaveDumpData/=. 
  
 * Extra: Wavedump decreased sampling
+
+  If you want to decrease the sampling rate of the saved data, for example from 500 MS/s to 250 MS/s, or to 125 MS/s and so on, you need to edit the WaveDump.c file and "enable" my modifications. 
+
+#+begin_src bash
+cd ~/Documents/CAEN_Digitizer/wavedump-3.10.4/src
+#+end_src
+
+Open the file WaveDump.c, set the factor which you want to devide the sample rate at line 1511:
+ #+begin_src c++
+ int factor = 2; // Added by Henrique Souza
+ #+end_src
+
+comment line 1537:
+#+begin_src c++
+// ns = (int)fwrite(Event16->DataChannel[ch] , 1 , Size*2, WDrun->fout[ch]) / 2;
+#+end_src
+
+and uncomment lines 1540 to 1546:
+#+begin_src c++
+  /* Added by Henrique Souza */
+  /* This allows to write at half of the rate*/  
+  ns = 0;
+  int aux = 0;
+  for(j=0; j<Size; j++) {
+    if(aux < 1) ns += (int)fwrite(&Event16->DataChannel[ch][j] , 1 , 2, WDrun->fout[ch])*(factor-1);
+    else if (aux == (factor-1)) aux = -1;
+    aux++;
+  }
+  /* End of addition */
+#+end_src
+
+Now you just need to compile wavedump again:
+(*NOTE*: by doing this, WaveDumpConfig.txt will be overwritten with the default version. Make sure you backup your version if that is important)
+#+begin_src bash
+cd ~/Documents/CAEN_Digitizer/wavedump-3.10.4
+./configure
+make
+sudo make install
+#+end_src
+
+Now, if your digitizer have 500 MHz and you set factor = 2, by setting 
+#+begin_example
+RECORD_LENGTH  5000
+#+end_example
+in the config file, wavedump will save 2500 points per waveform, spaced 4 ns instead of 2 ns. 
+
 * Extra: File structure
+
+The binary file structure is presented at the wavedump manual. Each waveform saved is composed by 6 headers (each header with 4 bytes) and =n = RECORD_LENGTH= (each point with 2 bytes). Here is an illustration:
+
+[[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/data_structure.png]]
 * Extra: Common variables
 
-#+begin_example
-Bellow are the the most used configurations at the /etc/wavedump/WaveDumpConfig.txt.
+Bellow are the the most used variables configuration at the /etc/wavedump/WaveDumpConfig.txt, not all variables are being displayed.
 
 NOTE: In the example above, trigger is made with Ch0 and Ch1 as or. Ch0, Ch1 and Ch2 are acquired and Ch3  is not. 
 Please note that the original config file doesn’t have the individual CHANNEL_TRIGGER option.
@@ -210,7 +262,7 @@ When acquiring with external trigger, one should set
 EXTERNAL_TRIGGER   ACQUISITION_ONLY
 and set to DISABLED each channel trigger. 
 
-
+#+begin_example
 # OPEN: open the digitizer
 # options: USB 0 0      			Desktop/NIM digitizer through USB              
 OPEN USB 0 0 

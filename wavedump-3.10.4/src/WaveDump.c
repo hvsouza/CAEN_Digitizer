@@ -1505,7 +1505,12 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
         if( WDcfg->OutFileFlags& OFF_BINARY) {
             // Binary file format
             uint32_t BinHeader[6];
-            BinHeader[0] = (WDcfg->Nbit == 8) ? Size + 6*sizeof(*BinHeader) : Size*2 + 6*sizeof(*BinHeader);
+            /* Added by Henrique Souza */
+            // factor = 2, 4, 6, etc.. is the reduction in MSamples/s
+            // factor = 2 converts 500 MS/s in to 250 MS/s for example. Whilte factor = 4 will make it 125 MHz
+            int factor = 1;
+
+            BinHeader[0] = (WDcfg->Nbit == 8) ? Size + 6*sizeof(*BinHeader) : Size*2/factor + 6*sizeof(*BinHeader);
             BinHeader[1] = EventInfo->BoardId;
             BinHeader[2] = EventInfo->Pattern;
             BinHeader[3] = ch;
@@ -1529,19 +1534,17 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
             if (WDcfg->Nbit == 8)
                 ns = (int)fwrite(Event8->DataChannel[ch], 1, Size, WDrun->fout[ch]);
             else{
-                // ns = (int)fwrite(Event16->DataChannel[ch] , 1 , Size*2, WDrun->fout[ch]) / 2;
+              ns = (int)fwrite(Event16->DataChannel[ch] , 1 , Size*2, WDrun->fout[ch]) / 2;
               /* Added by Henrique Souza */
               /* This allows to write at half of the rate*/  
-              ns = 0;
-               // factor = 2, 4, 6, etc.. is the reduction in MSamples/s
-              // factor = 2 converts 500 MS/s in to 250 MS/s for example. Whilte factor = 4 will make it 125 MHz
-              int factor = 2;
-              int aux = 0;
-              for(j=0; j<Size; j++) {
-                if(aux < 1) ns += (int)fwrite(&Event16->DataChannel[ch][j] , 1 , 2, WDrun->fout[ch])*(factor-1);
-                else if (aux == (factor-1)) aux = -1;
-                aux++;
-              }
+              // ns = 0;
+              // int aux = 0;
+              // for(j=0; j<Size; j++) {
+              //   if(aux < 1) ns += (int)fwrite(&Event16->DataChannel[ch][j] , 1 , 2, WDrun->fout[ch])*(factor-1);
+              //   else if (aux == (factor-1)) aux = -1;
+              //   aux++;
+              // }
+              /* End of this implement */
             }
             if (ns != Size) {
                 // error writing to file
