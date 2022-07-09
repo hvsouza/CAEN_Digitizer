@@ -5,22 +5,22 @@
   Author: Henrique Vieira de Souza, APC – Paris \\
   henriquevieira.souza@gmail.com 
  
-  This documents servers do clarify and help the data acquisition with the CAEN digitizer. All the softwares and drivers are availabe at [[http:://caen.it][caen.it]]. 
+  This documents servers do clarify and help the data acquisition with CAEN digitizers. All the softwares, drivers and manuals are availabe at [[http:://caen.it][caen.it]]. 
 
-  The acquisition is done with Wavedump, a free software distributed by CAEN. The versions modified by the me have two minor implementations: (1) continuous writing will save only 10,000 waveforms and stop and (2) one can change the number of points per waveform saved, this decreases the sampling rate from 2 ns to 4 ns, for example, by skipping one point.
+  The acquisition is done with Wavedump, a free software distributed by CAEN. The versions modified by me have two minor implementations: (1) continuous writing will save only 10,000 waveforms and stop and (2) one can change the number of points per waveform saved, this decreases the sampling rate from 2 ns to 4 ns, for example, by skipping one point.
 
   Please, keep in mind that the implementation (2) will not reduce the acquisition rate of the digitizer, just of the saved waveforms. 
 
   If you search "Added by Henrique Souza" in the WaveDump.c file, you will find all the modifications made by me.
 
-  Wavedump will only save data in a file named wave0.dat when saving as BINARY (or wave0.txt when saving as ASCII). I am assuming you have wisely chosen binary as format. 
-  Wave0.dat refers to the waveforms of channel 0, while wave1.dat refers to channel 1.
+  Wavedump saved data in a file named =wave0.dat= when saving as BINARY (or =wave0.txt= when saving as ASCII). I am assuming you have wisely chosen binary as format.\\
+  =wave0.dat= refers to the waveforms of channel 0, while =wave1.dat= refers to channel 1.
 
-  If you want to save several .dat data files you need to move these waveX.dat files to another folder before saving new ones. As this task can be very tedious,  I’ve created a GUI with QtCreator to transfer the files and menage data taking more efficiently. The GUI is not mandatory, it should just make your life easier! 
+  If you want to save several .dat data files you need to move these =waveX.dat= files to another folder before saving new ones. As this task can be very tedious,  I’ve created a GUI with QtCreator to transfer the files and menage data taking more efficiently. The GUI is not mandatory, it should just make your life easier! 
 
   Please, make sure you have “make” and “cmake” installed. The software “gnuplot” is also necessary but it will be installed in the installation scripts.
 
-  Please, if you find any bug, miss information or some nasty mistake, please feel free to talk to me by email.
+  Please, if you find any bug, miss information or some nasty mistake, feel free to talk to me by email.
 
 
 * Table of Contents
@@ -59,7 +59,8 @@
 
    To install the digitizer drivers and wavedump there are a few requirements and steps. I invite the user to read the manual of the digitizer and wavedump and also to search about the installation.
    
-   There is a script named “caen_installation.sh”. The script will install the required softwares and drivers and applied the changes to customize to the version created by me. As this is done in a single step, there will be 3 seconds to check for errors output. If you see any, please, try to fix it before installing everything. NOTE: you need to disable “Secure Boot” at the BIOS.
+   The script =caen_installation.sh= will install the required softwares and drivers and applied the changes to customize to the version created by me. As this is done in a single step, there will be 3 seconds pause so you can check for errors output. If you see any, please, try to fix it before installing everything. \\
+ NOTE: you need to disable “Secure Boot” at the BIOS.
    
    #+begin_src bash
    ./caen_installation.sh
@@ -70,11 +71,11 @@
 
    [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/startup_ex.png]]
    
-   (Wavedump cannot run if there is no ADC connected)
+   Wavedump cannot run if there is no ADC connected. If wavedump failed to start, try to reboot the digitizer.
 
-   The script has also created the folder: =~/Desktop/WaveDumpData=. To use the GUI, you need to execute wavedump while inside that folder, so wavedump will save the data there 
+   The script has also created the folder: =~/Desktop/WaveDumpData=. To use the GUI, you need to execute wavedump while inside that folder, so wavedump will save the data there. 
   
-   There are other customizations you can do, you can take a look at [[#extra-creating-a-shortcut-for-wavedump]]
+   You can create a shortcut to execute Wavedump inside the correct folder, you can find instructions at0 [[#extra-creating-a-shortcut-for-wavedump]]
 
    If you want to enable the option to decrease wavedump writing sample rate, please look at [[#extra-wavedump-decreased-sampling]]
 
@@ -89,7 +90,7 @@
 
 ** Using wavedump
 
-   Using wavedump is quite simple, just type =wavedump= at the terminal. By pressing [SPACE] the help menu is printed as bellow. Please keep in mind that [T] means “shift + t key”.
+   Using wavedump is quite simple, just type =wavedump= at the terminal. By pressing [SPACE] the help menu is printed as bellow. Please keep in mind that [T] means “shift + t key”, for instance.
 
    [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/help_ex.png]]
 
