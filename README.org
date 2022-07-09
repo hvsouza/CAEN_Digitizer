@@ -168,27 +168,27 @@ cd ~/Documents/ CAEN_Digitizer
    In the example bellow, the GUI will create a folder named =new_data= at =~/Documents/ADC_data/coldbox_data= (the lock option is just to not change the name by mistake, you don’t need to lock it). \\
    After taking data with two channels, for example, you should have “wave0.dat” and “wave1.dat” at WaveDumpData.
 
-   When pressing “Move files”, a folder named “run0_42V30_20ADC_Ch0” will be created (note: “extra info” will not be placed in the name of the folder), inside the folder “new_data” and the two files will be moved there as: //
-   0_wave0_42V30_20ADC_Ch0.dat //
-   0_wave1_42V30_20ADC_Ch0.dat //
+   When pressing “Move files”, a folder named “run0_42V30_20ADC_Ch0” will be created (note: “extra info” will not be placed in the name of the folder), inside the folder “new_data” and the two files will be moved there as: \\
+   0_wave0_42V30_20ADC_Ch0.dat \\
+   0_wave1_42V30_20ADC_Ch0.dat \\
    (note: if you have written “some_comments” at the “Extra info” field, the name of the file would be “0_wave0_42V30_20ADC_Ch0_some_comments .dat)
 
-   In the GUI, the subrun number should have been changed from 0 to 1. If you take another set of data and click “Move files” again, you should have now four files in total named as: //
-   0_wave0_42V30_20ADC_Ch0.dat //
-   0_wave1_42V30_20ADC_Ch0.dat //
-   1_wave0_42V30_20ADC_Ch0.dat //
+   In the GUI, the subrun number should have been changed from 0 to 1. If you take another set of data and click “Move files” again, you should have now four files in total named as: \\
+   0_wave0_42V30_20ADC_Ch0.dat \\
+   0_wave1_42V30_20ADC_Ch0.dat \\
+   1_wave0_42V30_20ADC_Ch0.dat \\
    1_wave1_42V30_20ADC_Ch0.dat
 
    And subrun should be equal 2.
 
-   Whenever you are finished with this run (lets say, changing SiPM bias, threshold or just because you want a different run in which you will give details on a README file later), you click “Finish run”, a message will pop-out saying “Warning: calibration might not exist. Finish run anyway?”, if you are not using the calibration “feature” you can just click “yes”.  //
+   Whenever you are finished with this run (lets say, changing SiPM bias, threshold or just because you want a different run in which you will give details on a README file later), you click “Finish run”, a message will pop-out saying “Warning: calibration might not exist. Finish run anyway?”, if you are not using the calibration “feature” you can just click “yes”.  \\
    (otherwise click “no” and take the calibration that you forgot) 
 
    This should put subrun back to 0 and Run now will be equal 1. 
 
    (A way to play with the GUI is to simply create empty waveX.dat files and transfer they to see the structure of the data). 
 
-   The Calibration tab will simply transfer the file to a folder named “Calibration” inside the current run folder. It can only support one Calibration file per channel. This is an old and unused feature that I used for placing the waveforms that I would use for the SiPM gain estimation, I would not bother using it and just creating a new “Run” as calibration.  //
+   The Calibration tab will simply transfer the file to a folder named “Calibration” inside the current run folder. It can only support one Calibration file per channel. This is an old and unused feature that I used for placing the waveforms that I would use for the SiPM gain estimation, I would not bother using it and just creating a new “Run” as calibration.  \\
    At “More”, if you have data with different extension of .dat, you can change to anything you need (“.txt”, “.csv”, “.pdf”, etc).
 
    [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/qtcreator_gui.png]]
@@ -231,7 +231,7 @@ cd ~/Documents/CAEN_Digitizer/wavedump-3.10.4/src
   /* End of addition */
   #+end_src
 
-  Now you just need to compile wavedump again: //
+  Now you just need to compile wavedump again: \\
   (*NOTE*: by doing this, WaveDumpConfig.txt will be overwritten with the default version. Make sure you backup your version if that is important)
   #+begin_src bash
   cd ~/Documents/CAEN_Digitizer/wavedump-3.10.4
@@ -256,10 +256,10 @@ cd ~/Documents/CAEN_Digitizer/wavedump-3.10.4/src
 
   Bellow are the the most used variables configuration at the /etc/wavedump/WaveDumpConfig.txt, not all variables are being displayed.
 
-  NOTE: In the example above, trigger is made with Ch0 and Ch1 as or. Ch0, Ch1 and Ch2 are acquired and Ch3  is not.  //
-  Please note that the original config file doesn’t have the individual CHANNEL_TRIGGER option. //
-  When acquiring with external trigger, one should set //
-  EXTERNAL_TRIGGER   ACQUISITION_ONLY //
+  NOTE: In the example above, trigger is made with Ch0 and Ch1 as or. Ch0, Ch1 and Ch2 are acquired and Ch3  is not.  \\
+  Please note that the original config file doesn’t have the individual CHANNEL_TRIGGER option. \\
+  When acquiring with external trigger, one should set \\
+  EXTERNAL_TRIGGER   ACQUISITION_ONLY \\
   and set to DISABLED each channel trigger.
 
   #+begin_example
