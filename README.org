@@ -48,8 +48,8 @@ Wave0.dat refers to the waveforms of channel 0, while wave1.dat refers to channe
 If you want to save several .dat data files you need to move these waveX.dat files to another folder before saving new ones. As this task can be very tedious,  I’ve created a GUI with QtCreator to transfer the files and menage data taking more efficiently. The GUI is not mandatory, it should just make your life easier! 
 
 Please, make sure you have “make” and “cmake” installed. The software “gnuplot” is also necessary but it will be installed in the installation scripts.
-Please, if you find any bug, miss information or some nasty mistake, please feel free to talk to me by email.
 
+Please, if you find any bug, miss information or some nasty mistake, please feel free to talk to me by email.
 
 * Wavedump
 
@@ -69,7 +69,7 @@ Please, if you find any bug, miss information or some nasty mistake, please feel
    ./caen_installation.sh
    #+end_src
    
-   If you are installing for the first time, you probably need to restart the computer. 
+   If you are installing for the first time, you probably need to restart the computer.\\
    If the digitizer is connected and installation was successfully, open a terminal and just type “wavedump”, it should show you something like this output:
 
    [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/startup_ex.png]]
@@ -252,6 +252,7 @@ in the config file, wavedump will save 2500 points per waveform, spaced 4 ns ins
 The binary file structure is presented at the wavedump manual. Each waveform saved is composed by 6 headers (each header with 4 bytes) and =n = RECORD_LENGTH= (each point with 2 bytes). Here is an illustration:
 
 [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/data_structure.png]]
+
 * Extra: Common variables
 
 Bellow are the the most used variables configuration at the /etc/wavedump/WaveDumpConfig.txt, not all variables are being displayed.
