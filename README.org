@@ -1,5 +1,6 @@
 #+STARTUP: inlineimages
 #+STARTUP: showeverything
+#+OPTIONS: \n:t
 
 * Introduction
   Author: Henrique Vieira de Souza, APC – Paris \\
@@ -100,7 +101,7 @@
 
 
    Why? \\
-   [R]\
+   [R] \\
    [s]\\
    [w] (repeating this will overwrite the file with only one waveform) \\ 
    [W] (After the 10,000 events you can press it again to save 10,000 more and so on) \\
