@@ -1,39 +1,10 @@
 #+STARTUP: inlineimages
 #+STARTUP: showeverything
 
-* CAEN DIGITIZER INSTALLER AND USAGE
-  Author: Henrique Vieira de Souza, APC – Paris
-
+* Introduction
+  Author: Henrique Vieira de Souza, APC – Paris \\
   henriquevieira.souza@gmail.com 
-
-
-* Table of Contents
-  :PROPERTIES:
-  :TOC:      :include all
-  :END:
-:CONTENTS:
-- [[#caen-digitizer-installer-and-usage][CAEN DIGITIZER INSTALLER AND USAGE]]
-- [[#table-of-contents][Table of Contents]]
-- [[#introduction][Introduction]]
-- [[#wavedump][Wavedump]]
-  - [[#installation][Installation]]
-  - [[#configuration-file][Configuration file]]
-  - [[#using-wavedump][Using wavedump]]
-  - [[#debugging-usb][Debugging USB]]
-- [[#qtcreator-gui][QtCreator GUI]]
-  - [[#installation][Installation]]
-  - [[#creating-the-project][Creating the project]]
-  - [[#debugging-installation][Debugging installation]]
-  - [[#using-the-gui][Using the GUI]]
-- [[#extra-creating-a-shortcut-for-wavedump][Extra: Creating a shortcut for Wavedump]]
-- [[#extra-wavedump-decreased-sampling][Extra: Wavedump decreased sampling]]
-- [[#extra-file-structure][Extra: File structure]]
-- [[#extra-common-variables][Extra: Common variables]]
-:END:
-
-
-
-* Introduction 
+ 
   This documents servers do clarify and help the data acquisition with the CAEN digitizer. All the softwares and drivers are availabe at [[http:://caen.it][caen.it]]. 
 
   The acquisition is done with Wavedump, a free software distributed by CAEN. The versions modified by the me have two minor implementations: (1) continuous writing will save only 10,000 waveforms and stop and (2) one can change the number of points per waveform saved, this decreases the sampling rate from 2 ns to 4 ns, for example, by skipping one point.
@@ -50,6 +21,31 @@
   Please, make sure you have “make” and “cmake” installed. The software “gnuplot” is also necessary but it will be installed in the installation scripts.
 
   Please, if you find any bug, miss information or some nasty mistake, please feel free to talk to me by email.
+
+
+* Table of Contents
+  :PROPERTIES:
+  :TOC:      :include all
+  :END:
+:CONTENTS:
+- [[#introduction][Introduction]]
+- [[#table-of-contents][Table of Contents]]
+- [[#wavedump][Wavedump]]
+  - [[#installation][Installation]]
+  - [[#configuration-file][Configuration file]]
+  - [[#using-wavedump][Using wavedump]]
+  - [[#debugging-usb][Debugging USB]]
+- [[#qtcreator-gui][QtCreator GUI]]
+  - [[#installation][Installation]]
+  - [[#creating-the-project][Creating the project]]
+  - [[#debugging-installation][Debugging installation]]
+  - [[#using-the-gui][Using the GUI]]
+- [[#extra-creating-a-shortcut-for-wavedump][Extra: Creating a shortcut for Wavedump]]
+- [[#extra-wavedump-decreased-sampling][Extra: Wavedump decreased sampling]]
+- [[#extra-file-structure][Extra: File structure]]
+- [[#extra-common-variables][Extra: Common variables]]
+:END:
+
 
 * Wavedump
 
