@@ -137,7 +137,8 @@ cd ~/Documents/ CAEN_Digitizer
    
 * QtCreator GUI
 ** Installation
-   Requirements to install QtCreator: \\
+   Requirements to install QtCreator:
+
    =sudo apt-get update && sudo apt-get upgrade= \\
    =sudo apt-get -y install build-essential openssl libssl-dev libssl1.0 libgl1-mesa-dev libqt5x11extras5=
 
@@ -154,7 +155,8 @@ cd ~/Documents/ CAEN_Digitizer
    [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/qtcreator_release.png]]
 
    This should pop the project in the screen, close it and close the project.  \\
-   Now, navigate to WaveDumpData =cd ~/Desktop/WaveDumpData= and run the GUI by executing =. ./move_files.sh= the GUI window should pop-out, by executing this way the terminal is closed but the GUI keeps running.  \\
+   Now, navigate to WaveDumpData =cd ~/Desktop/WaveDumpData= and run the GUI by executing =. ./move_files.sh= the GUI window should pop-out, by executing this way the terminal is closed but the GUI keeps running.
+
 ** Debugging installation
    If the GUI did not pop-out after executing move_files.sh, check that the file =~/Documents/QtCreator/build-move_files-Desktop_Qt_6_2_4_GCC_64bit-Release= exist. \\
    If the name of the file is different, you need to update it at =~/Desktop/WaveDumpData/move_files.sh=
@@ -166,16 +168,22 @@ cd ~/Documents/ CAEN_Digitizer
    In the example bellow, the GUI will create a folder named =new_data= at =~/Documents/ADC_data/coldbox_data= (the lock option is just to not change the name by mistake, you don’t need to lock it). \\
    After taking data with two channels, for example, you should have “wave0.dat” and “wave1.dat” at WaveDumpData.
 
-   When pressing “Move files”, a folder named “run0_42V30_20ADC_Ch0” will be created (note: “extra info” will not be placed in the name of the folder), inside the folder “new_data” and the two files will be moved there as: \\
-   0_wave0_42V30_20ADC_Ch0.dat \\
-   0_wave1_42V30_20ADC_Ch0.dat \\
+   When pressing “Move files”, a folder named “run0_42V30_20ADC_Ch0” will be created (note: “extra info” will not be placed in the name of the folder), inside the folder “new_data” and the two files will be moved there as:
+
+#+begin_example
+   0_wave0_42V30_20ADC_Ch0.dat 
+   0_wave1_42V30_20ADC_Ch0.dat
+#+end_example
    (note: if you have written “some_comments” at the “Extra info” field, the name of the file would be “0_wave0_42V30_20ADC_Ch0_some_comments .dat)
 
-   In the GUI, the subrun number should have been changed from 0 to 1. If you take another set of data and click “Move files” again, you should have now four files in total named as: \\
-   0_wave0_42V30_20ADC_Ch0.dat \\
-   0_wave1_42V30_20ADC_Ch0.dat \\
-   1_wave0_42V30_20ADC_Ch0.dat \\
+   In the GUI, the subrun number should have been changed from 0 to 1. If you take another set of data and click “Move files” again, you should have now four files in total named as:
+
+   #+begin_example
+   0_wave0_42V30_20ADC_Ch0.dat 
+   0_wave1_42V30_20ADC_Ch0.dat 
+   1_wave0_42V30_20ADC_Ch0.dat 
    1_wave1_42V30_20ADC_Ch0.dat
+   #+end_example
 
    And subrun should be equal 2.
 
@@ -257,9 +265,11 @@ cd ~/Documents/CAEN_Digitizer/wavedump-3.10.4/src
 
   Bellow are the the most used variables configuration at the /etc/wavedump/WaveDumpConfig.txt, not all variables are being displayed.
 
-  NOTE: In the example above, trigger is made with Ch0 and Ch1 as or. Ch0, Ch1 and Ch2 are acquired and Ch3  is not.  \\
-  Please note that the original config file doesn’t have the individual CHANNEL_TRIGGER option. \\
-  When acquiring with external trigger, one should set \\
+  NOTE: In the example above, trigger is made with Ch0 and Ch1 as or. Ch0, Ch1 and Ch2 are acquired and Ch3  is not.
+
+  Please note that the original config file doesn’t have the individual CHANNEL_TRIGGER option.
+  When acquiring with external trigger, one should set
+
   EXTERNAL_TRIGGER   ACQUISITION_ONLY \\
   and set to DISABLED each channel trigger.
 
