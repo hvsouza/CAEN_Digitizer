@@ -5,7 +5,7 @@
   Author: Henrique Vieira de Souza, APC – Paris \\
   henriquevieira.souza@gmail.com 
  
-  This documents servers do clarify and help the data acquisition with CAEN digitizers. All the softwares, drivers and manuals are availabe at [[http:://caen.it][caen.it]]. 
+  This documents servers do clarify and help the data acquisition with CAEN digitizers. All the software, drivers and manuals are available at [[http:://caen.it][caen.it]]. 
 
   The acquisition is done with Wavedump, a free software distributed by CAEN. The versions modified by me have two minor implementations: (1) continuous writing will save only 10,000 waveforms and stop and (2) one can change the number of points per waveform saved, this decreases the sampling rate from 2 ns to 4 ns, for example, by skipping one point.
 
@@ -50,7 +50,7 @@
 * Wavedump
 
 ** Installation
-   Clone this repositiory inside the "Documents" folder:
+   Clone this repository inside the "Documents" folder:
    #+begin_src bash
    cd ~/Documents
    git clone https://github.com/hvsouza/CAEN_Digitizer.git
@@ -59,7 +59,7 @@
 
    To install the digitizer drivers and wavedump there are a few requirements and steps. I invite the user to read the manual of the digitizer and wavedump and also to search about the installation.
    
-   The script =caen_installation.sh= will install the required softwares and drivers and applied the changes to customize to the version created by me. As this is done in a single step, there will be 3 seconds pause so you can check for errors output. If you see any, please, try to fix it before installing everything. \\
+   The script =caen_installation.sh= will install the required software and drivers and applied the changes to customize to the version created by me. As this is done in a single step, there will be a 3 seconds pause between each installation so you can check for errors output. If you see any, please, try to fix it before installing everything. \\
  NOTE: you need to disable “Secure Boot” at the BIOS.
    
    #+begin_src bash
@@ -71,10 +71,18 @@
 
    [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/startup_ex.png]]
    
-   Wavedump cannot run if there is no ADC connected. If wavedump failed to start, try to reboot the digitizer.
+   Wavedump cannot run if there is no ADC connected, but wavedump was successfully installed if you see the following message:
+   #+begin_example
+   **************************************************************
+                           Wave Dump 3.10.4
+   **************************************************************
+   Opening Configuration File /etc/wavedump/WaveDumpConfig.txt
+   Can't open the digitizer
+   #+end_example
+   If wavedump failed to start, try to reboot the digitizer.
 
    The script has also created the folder: =~/Desktop/WaveDumpData=. To use the GUI, you need to execute wavedump while inside that folder, so wavedump will save the data there. 
-  
+   
    You can create a shortcut to execute Wavedump inside the correct folder, you can find instructions at0 [[#extra-creating-a-shortcut-for-wavedump]]
 
    If you want to enable the option to decrease wavedump writing sample rate, please look at [[#extra-wavedump-decreased-sampling]]
@@ -213,7 +221,7 @@ cd ~/Documents/ CAEN_Digitizer
 cd ~/Documents/CAEN_Digitizer/wavedump-3.10.4/src
   #+end_src
 
-  Open the file WaveDump.c, set the factor which you want to devide the sample rate at line 1511:
+  Open the file WaveDump.c, set the factor which you want to divide the sample rate at line 1511:
   #+begin_src c++
  int factor = 2; // Added by Henrique Souza
   #+end_src
