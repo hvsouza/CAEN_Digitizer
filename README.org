@@ -113,6 +113,7 @@
    Please, take a time to understand the acquisition by playing around and making some plots before moving forward.
    - Make sure you memorize the shortcuts.
    - Learn how to control the graphs at gnuplot
+     (to check the gnuplot keybindings, open a terminal, excute =gnuplot=, type =show bind= and press enter).
    
    When pressing [W], my modifications will save 10,000 waveforms in the .dat files. When it finishes, you should see this in your screen: 
 
@@ -128,9 +129,9 @@
    3. [W] save 10,000 (if you want to save 10,000 more, press [W] again at the end).
    4. Move the .dat files by yourself or with GUI (see [[#using-the-gui]]) 
 
-      For acquire more data, repeat this. 
+   For acquire more data, repeat this. 
 
-      If you want to understand the binary file structure, please check [[#extra-file-structure]]. 
+   If you want to understand the binary file structure, please check [[#extra-file-structure]]. 
 
 ** Debugging USB
 
@@ -156,7 +157,7 @@ cd ~/Documents/ CAEN_Digitizer
 
 ** Creating the project
 
-   Open QtCreator, click at "Open Project" at the right side options (bellow Create Project), open the file =Documents/QtCreator/move_files/move_file.pro= and click at Configure Project.
+   Open QtCreator, click at "Open Project" at the left side options (bellow Create Project), open the file =Documents/QtCreator/move_files/move_file.pro= and click at Configure Project.
 
    [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/qtcreator_proj.png]]
 
@@ -168,23 +169,22 @@ cd ~/Documents/ CAEN_Digitizer
    Now, navigate to WaveDumpData =cd ~/Desktop/WaveDumpData= and run the GUI by executing =. ./move_files.sh= the GUI window should pop-out, by executing this way the terminal is closed but the GUI keeps running.
 
 ** Debugging installation
-   If the GUI did not pop-out after executing move_files.sh, check that the file =~/Documents/QtCreator/build-move_files-Desktop_Qt_6_2_4_GCC_64bit-Release= exist. \\
+   If the GUI did not pop-out after executing move_files.sh, check that the file =~/Documents/QtCreator/build-move_files-Desktop_Qt_6_2_4_GCC_64bit-Release= exists. \\
    If the name of the file is different, you need to update it at =~/Desktop/WaveDumpData/move_files.sh=
 ** Using the GUI
 
-   The GUI is just an interface to automatically move files from the WaveDumpData folder to another folder. It will keep a track of run and subrun number for you naming it with a standard. 
+   The GUI is just an interface to automatically move files from the WaveDumpData folder to another folder. It will keep a track of run and subrun number for you, renaming it with a standard. 
 
    [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/qtcreator_gui.png]]
 
 - “Run” is the run number
 - “subrun” is the subrun number
-- “Voltage” is the bias voltage of the SiPMs (always leave a number with one or two decimal numbers only)
+- “Voltage” is the bias voltage of the SiPMs (always set a number with one or two decimals only, ex: 34.0 or 34.00)
 - “Threshold” is the the threshold set at the ADC (this should always be a integer number)
 - “Trigger Ch” is the channel in which you are triggering, HOWEVER, the field there can be any text, so you can write, for instance, “Ch0_and_Ch1” or even include some extra information and write something like this “Ch0_and_Ch1_cosmic_run_after_lunch_break”
 - “Extra info” is any extra information that will be written at the end of the files (not folders), see bellow. 
 
-
-   In the example bellow, the GUI will create a folder named =new_data= at =~/Documents/ADC_data/coldbox_data= (the lock option is just to not change the name by mistake, you don’t need to lock it). \\
+   In the example from the image above, the GUI will create a folder named =new_data= at =~/Documents/ADC_data/coldbox_data= (the lock option is just to not change the name by mistake, you don’t need to lock it). \\
    After taking data with two channels, for example, you should have “wave0.dat” and “wave1.dat” at WaveDumpData.
 
    When pressing “Move files”, a folder named “run0_42V30_20ADC_Ch0” will be created (note: “extra info” will not be placed in the name of the folder), inside the folder “new_data” and the two files will be moved there as:
@@ -204,7 +204,7 @@ cd ~/Documents/ CAEN_Digitizer
    1_wave1_42V30_20ADC_Ch0.dat
    #+end_example
 
-   And subrun should be equal 2.
+   And subrun should be equal 2 on the GUI.
 
    Whenever you are finished with this run (lets say, changing SiPM bias, threshold or just because you want a different run in which you will give details on a README file later), you click “Finish run”, a message will pop-out saying “Warning: calibration might not exist. Finish run anyway?”, if you are not using the calibration “feature” you can just click “yes”.  \\
    (otherwise click “no” and take the calibration that you forgot) 
@@ -213,14 +213,15 @@ cd ~/Documents/ CAEN_Digitizer
 
    (A way to play with the GUI is to simply create empty waveX.dat files and transfer they to see the structure of the data). 
 
-   The Calibration tab will simply transfer the file to a folder named “Calibration” inside the current run folder. It can only support one Calibration file per channel. This is an old and unused feature that I used for placing the waveforms that I would use for the SiPM gain estimation, I would not bother using it and just creating a new “Run” as calibration.  \\
+   The Calibration tab will simply transfer the data file to a folder named “Calibration” inside the current run folder. It can only support one Calibration file per channel. This is an old and unused feature that I created for placing the waveforms that I would use for the SiPM gain estimation, I would not bother using it and just creating a new “Run” as calibration.
+
    At “More”, if you have data with different extension of .dat, you can change to anything you need (“.txt”, “.csv”, “.pdf”, etc).
 
-   Please, keep in mind the the run and subrun numbers can be changed by hand. So if you commit any mistake you can change the value back there, however, the move is done with the tag “-n” so the data is not overwritten, if you need to replace subrun 0, for instance, delete the wrong one first. 
+   Please, keep in mind that the run and subrun numbers can be changed by hand. So if you make any mistake you can change the value back there, however, the move is done with the tag “-n” so the data is not overwritten, if you need to replace subrun 0, for instance, delete the wrong one first. 
 
 * Extra: Creating a shortcut for Wavedump
 
-  Inside the folder =~/Documents/CAEN_Digitizer/installation_files/install_by_hand= you will find the file WaveDump.desktop. Replace the user from “henrique” to yours. Copy the .desktop file into =~.local/share/applications/= (the tumbnail should be already placed at =~/Pictures=. Now, of you open the menu (windows key) and search for CAEN you should find the shortcut (if not, try login out and login in). You can place this short cut at your dock/panel, this makes much easier to launch wavedump in a way that is saves the data at =~/Desktop/WaveDumpData/=. 
+  Inside the folder =~/Documents/CAEN_Digitizer/installation_files/install_by_hand= you will find the file WaveDump.desktop. Replace the user from “henrique” to yours. Copy the .desktop file into =~.local/share/applications/= (the tumbnail should be already placed at =~/Pictures=). Now, open the menu (windows key) and search for CAEN you should find the shortcut (if not, try login out and login in). You can place this short cut at your dock/panel, this makes much easier to launch wavedump in a way that is saves the data at =~/Desktop/WaveDumpData/=. 
  
 * Extra: Wavedump decreased sampling
 
