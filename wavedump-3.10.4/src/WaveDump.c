@@ -1544,6 +1544,7 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
               //   else if (aux == (factor-1)) aux = -1;
               //   aux++;
               // }
+              // fflush(WDrun->fout[ch]); // Added by Henrique Souza 
               /* End of addition */
             }
             if (ns != Size) {
