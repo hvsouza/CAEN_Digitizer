@@ -53,7 +53,7 @@
 ** Installation
    Clone this repository inside the "Documents" folder:
    #+begin_src bash
-   cd ~/Documents
+   cd ~/Documents 
    git clone https://github.com/hvsouza/CAEN_Digitizer.git
    cd CAEN_Digitizer
    #+end_src
@@ -156,6 +156,8 @@ cd ~/Documents/ CAEN_Digitizer
 
    Install QtCreator following the instructions (https://www.qt.io/download-qt-installer).
 
+   During installation, at "installation Folder" step, check the option =Qt 6.3 for desktop development= instead of =custom installation=. 
+
 ** Creating the project
 
    Open QtCreator, click at "Open Project" at the left side options (bellow Create Project), open the file =Documents/QtCreator/move_files/move_file.pro= and click at Configure Project.
@@ -168,7 +170,7 @@ cd ~/Documents/ CAEN_Digitizer
 
    This should pop the GUI in the screen, close it and close the project.  \\
    Now, navigate to WaveDumpData =cd ~/Desktop/WaveDumpData= and run the GUI by executing =. ./move_files.sh= the GUI window should pop-out, by executing this way the terminal is closed but the GUI keeps running.
-
+   
 ** Debugging installation
    If the GUI did not pop-out after executing move_files.sh, check that the file =~/Documents/QtCreator/build-move_files-Desktop_Qt_6_2_4_GCC_64bit-Release= exists. \\
    If the name of the file is different, you need to update it at =~/Desktop/WaveDumpData/move_files.sh=
@@ -225,7 +227,7 @@ cd ~/Documents/ CAEN_Digitizer
 
 * Extra: Creating a shortcut for Wavedump
 
-  Inside the folder =~/Documents/CAEN_Digitizer/installation_files/install_by_hand= you will find the file WaveDump.desktop. Replace the user from “henrique” to yours. Copy the .desktop file into =~.local/share/applications/= (the tumbnail should be already placed at =~/Pictures=). Now, open the menu (windows key) and search for CAEN you should find the shortcut (if not, try login out and login in). You can place this short cut at your dock/panel, this makes much easier to launch wavedump in a way that is saves the data at =~/Desktop/WaveDumpData/=. 
+  Inside the folder =~/Documents/CAEN_Digitizer/installation_files/install_by_hand= you will find the file WaveDump.desktop. Replace the user from “henrique” to yours. Copy the .desktop file into =~/.local/share/applications/= (the tumbnail should be already placed at =~/Pictures=). Now, open the menu (windows key) and search for CAEN you should find the shortcut (if not, try login out and login in). You can place this short cut at your dock/panel, this makes much easier to launch wavedump in a way that is saves the data at =~/Desktop/WaveDumpData/=. 
  
 * Extra: Wavedump decreased sampling
 
