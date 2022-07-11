@@ -73,6 +73,8 @@
    If the digitizer is connected and installation was successfully, open a terminal and just type “wavedump”, it should show you something like this output:
 
    [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/startup_ex.png]]
+
+   #+HTML: <img src=".repo_img/startup_ex.png" align="center" width="200" />
    
    Wavedump cannot run if there is no ADC connected, but wavedump was successfully installed if you see the following message:
    #+begin_example
