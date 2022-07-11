@@ -1,3 +1,6 @@
+#+TITLE: CAEN Digitizer
+#+AUTHOR: Henrique Vieira de Souza
+#+DESCRIPTION: CAEN Digitizer DAQ installer and description
 #+STARTUP: inlineimages
 #+STARTUP: showeverything
 
@@ -179,7 +182,6 @@ cd ~/Documents/ CAEN_Digitizer
    The GUI is just an interface to automatically move files from the WaveDumpData folder to another folder. It will keep a track of run and subrun number for you, renaming it with a standard. 
 
 *Default Acquisition*
-
    [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/qtcreator_gui.png]]
 
 - “Run” is the run number
@@ -236,6 +238,7 @@ run0_two_different_blocks
    At “More”, if you have data with different extension of .dat, you can change to anything you need (“.txt”, “.csv”, “.pdf”, etc).
 
    Please, keep in mind that the run and subrun numbers can be changed by hand. So if you make any mistake you can change the value back there, however, the move is done with the tag “-n” so the data is not overwritten, if you need to replace subrun 0, for instance, delete the wrong one first. 
+
 
 * Extra: Creating a shortcut for Wavedump
 
