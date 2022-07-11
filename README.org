@@ -72,6 +72,7 @@
    If you are installing for the first time, you probably need to restart the computer.\\
    If the digitizer is connected and installation was successfully, open a terminal and just type “wavedump”, it should show you something like this output:
 
+   # this is another way to do it
    # [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/startup_ex.png]]
 
    #+HTML: <img src=".repo_img/startup_ex.png" align="center" width="600" />
@@ -105,8 +106,7 @@
 
    Using wavedump is quite simple, just type =wavedump= at the terminal. By pressing [SPACE] the help menu is printed as bellow. Please keep in mind that [T] means “shift + t key”, for instance.
 
-   [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/help_ex.png]]
-
+   #+HTML: <img src=".repo_img/help_ex.png" align="center" width="600" />
    The commands you will use most are:
    * [R]
    * [s] 
