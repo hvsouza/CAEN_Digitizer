@@ -643,7 +643,7 @@ conftest.c:57:6: warning: conflicting types for built-in function 'pow'; expecte
 conftest.c:45:1: note: 'pow' is declared in header '<math.h>'
    44 | # include <limits.h>
    45 | #else
-/usr/bin/ld: /tmp/cc4alfYH.o: in function `main':
+/usr/bin/ld: /tmp/ccc9WP5G.o: in function `main':
 /home/henrique/Documents/CAEN_Digitizer/Installation/CAENUpgrader-1.7.2/conftest.c:68: undefined reference to `pow'
 collect2: error: ld returned 1 exit status
 configure:5880: $? = 1
@@ -732,7 +732,7 @@ conftest.c:58:6: warning: conflicting types for built-in function 'sqrt'; expect
 conftest.c:46:1: note: 'sqrt' is declared in header '<math.h>'
    45 | # include <limits.h>
    46 | #else
-/usr/bin/ld: /tmp/ccsSK22v.o: in function `main':
+/usr/bin/ld: /tmp/ccFEMGKy.o: in function `main':
 /home/henrique/Documents/CAEN_Digitizer/Installation/CAENUpgrader-1.7.2/conftest.c:69: undefined reference to `sqrt'
 collect2: error: ld returned 1 exit status
 configure:5880: $? = 1

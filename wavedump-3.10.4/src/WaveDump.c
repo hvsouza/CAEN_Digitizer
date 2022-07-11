@@ -1505,11 +1505,10 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
         if( WDcfg->OutFileFlags& OFF_BINARY) {
             // Binary file format
             uint32_t BinHeader[6];
-            /* Added by Henrique Souza */
+            
             // factor = 2, 4, 6, etc.. is the reduction in MSamples/s
             // factor = 2 converts 500 MS/s in to 250 MS/s for example. Whilte factor = 4 will make it 125 MHz
-            int factor = 1;
-
+            int factor = 1; // Added by Henrique Souza
             BinHeader[0] = (WDcfg->Nbit == 8) ? Size + 6*sizeof(*BinHeader) : Size*2/factor + 6*sizeof(*BinHeader);
             BinHeader[1] = EventInfo->BoardId;
             BinHeader[2] = EventInfo->Pattern;
@@ -1544,7 +1543,7 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
               //   else if (aux == (factor-1)) aux = -1;
               //   aux++;
               // }
-              /* End of this implement */
+              /* End of addition */
             }
             if (ns != Size) {
                 // error writing to file
@@ -1576,7 +1575,7 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
                 else
                     fprintf(WDrun->fout[ch], "%d\n", Event16->DataChannel[ch][j]);
             }
-            fflush(WDrun->fout[ch]);
+            fflush(WDrun->fout[ch]); // Added by Henrique Souza
         }
         if (WDrun->SingleWrite) {
             fclose(WDrun->fout[ch]);
@@ -1739,8 +1738,8 @@ int main(int argc, char *argv[])
     char ConfigFileName[100];
     int isVMEDevice= 0, MajorNumber;
     uint64_t CurrentTime, PrevRateTime, ElapsedTime;
-    uint64_t max_events = 0;
-    uint64_t mymaximum = 10000;
+    uint64_t max_events = 0; // Added by Henrique Souza
+    uint64_t mymaximum = 10000; // Added by Henrique Souza
     int nCycles= 0;
     CAEN_DGTZ_BoardInfo_t       BoardInfo;
     CAEN_DGTZ_EventInfo_t       EventInfo;
@@ -2206,7 +2205,7 @@ InterruptTimeout:
                     
                     
                 }
-
+                /* End of addition */
                 /* Write Event data to file */
                 if (WDrun.ContinuousWrite || WDrun.SingleWrite) {
                     // Note: use a thread here to allow parallel readout and file writing
@@ -2225,13 +2224,12 @@ InterruptTimeout:
                     }
                     if (WDrun.SingleWrite) {
                         printf("Single Event saved to output files\n");
-                        max_events = -1;
+                        max_events = -1; // Added by Henrique Souza 
                         WDrun.SingleWrite = 0;
                     }
                     
-                    max_events++;
+                    max_events++; // Added by Henrique Souza 
                 }
-                    
 
                 /* Plot Waveforms */
                 if ((WDrun.ContinuousPlot || WDrun.SinglePlot) && !IsPlotterBusy()) {

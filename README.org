@@ -40,6 +40,8 @@
   - [[#creating-the-project][Creating the project]]
   - [[#debugging-installation][Debugging installation]]
   - [[#using-the-gui][Using the GUI]]
+    - [[#default-acquisition][Default Acquisition]]
+    - [[#style-acquisition][Style Acquisition]]
 - [[#extra-creating-a-shortcut-for-wavedump][Extra: Creating a shortcut for Wavedump]]
 - [[#extra-wavedump-decreased-sampling][Extra: Wavedump decreased sampling]]
 - [[#extra-file-structure][Extra: File structure]]
@@ -48,7 +50,6 @@
 
 
 * Wavedump
-
 ** Installation
    Clone this repository inside the "Documents" folder:
    #+begin_src bash
@@ -175,6 +176,7 @@ cd ~/Documents/ CAEN_Digitizer
 
    The GUI is just an interface to automatically move files from the WaveDumpData folder to another folder. It will keep a track of run and subrun number for you, renaming it with a standard. 
 
+*** Default Acquisition
    [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/qtcreator_gui.png]]
 
 - “Run” is the run number
@@ -211,7 +213,9 @@ cd ~/Documents/ CAEN_Digitizer
 
    This should put subrun back to 0 and Run now will be equal 1. 
 
-   (A way to play with the GUI is to simply create empty waveX.dat files and transfer they to see the structure of the data). 
+   (A way to play with the GUI is to simply create empty waveX.dat files and transfer they to see the structure of the data).
+
+*** Style Acquisition 
 
    The Calibration tab will simply transfer the data file to a folder named “Calibration” inside the current run folder. It can only support one Calibration file per channel. This is an old and unused feature that I created for placing the waveforms that I would use for the SiPM gain estimation, I would not bother using it and just creating a new “Run” as calibration.
 
