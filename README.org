@@ -179,6 +179,7 @@ cd ~/Documents/ CAEN_Digitizer
    The GUI is just an interface to automatically move files from the WaveDumpData folder to another folder. It will keep a track of run and subrun number for you, renaming it with a standard. 
 
 *Default Acquisition*
+
    [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/qtcreator_gui.png]]
 
 - “Run” is the run number
