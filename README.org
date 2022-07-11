@@ -123,7 +123,7 @@
    
    When pressing [W], my modifications will save 10,000 waveforms in the .dat files. When it finishes, you should see this in your screen: 
 
-   #+HTML: <img src=".repo_img/continuous_ex.png" align="center" width="400" />   
+   #+HTML: <img src=".repo_img/continuous_ex.png" align="center" width="300" />   
 
    When you press [P] for continuous plot, what can happen is that gnuplot window will keep in your way (that is very annoying!). One way to stop this is to make sure that the plot is not over the windows you are trying to use, for example the terminal. If the two windows are not overlapping you should be able to use it normally. Another way is to enable “Prevent windows which require attention from stealing focus” (search this configuration for your Linux distribution). 
 
@@ -167,11 +167,11 @@ cd ~/Documents/ CAEN_Digitizer
 
    Open QtCreator, click at "Open Project" at the left side options (bellow Create Project), open the file =Documents/QtCreator/move_files/move_file.pro= and click at Configure Project.
 
-   #+HTML: <img src=".repo_img/qtcreator_proj.png" align="center" width="800" />   
+   #+HTML: <img src=".repo_img/qtcreator_proj.png" align="center" width="600" />   
 
    Now, on the bottom left, change the building from *Debug* to *Release*. Run the project (Green arrow or Ctrl+R). 
 
-   #+HTML: <img src=".repo_img/qtcreator_release.png" align="center" width="800" />   
+   #+HTML: <img src=".repo_img/qtcreator_release.png" align="center" width="600" />   
 
    This should pop the GUI in the screen, close it and close the project.  \\
    Now, navigate to WaveDumpData =cd ~/Desktop/WaveDumpData= and run the GUI by executing =. ./move_files.sh= the GUI window should pop-out, by executing this way the terminal is closed but the GUI keeps running.
