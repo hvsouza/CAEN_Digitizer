@@ -56,11 +56,11 @@ FPIO_LEVEL  NIM
 # OUTPUT_FILE_FORMAT: output file can be either ASCII (column of decimal numbers) or binary 
 # (2 bytes per sample, except for Mod 721 and Mod 731 that is 1 byte per sample)
 # options: BINARY, ASCII
-OUTPUT_FILE_FORMAT  ASCII
+OUTPUT_FILE_FORMAT  BINARY
 
 # OUTPUT_FILE_HEADER: if enabled, the header is included in the output file data
 # options: YES, NO
-OUTPUT_FILE_HEADER  NO
+OUTPUT_FILE_HEADER  YES
 
 # TEST_PATTERN: if enabled, data from ADC are replaced by test pattern (triangular wave)
 # options: YES, NO
@@ -130,6 +130,7 @@ CHANNEL_TRIGGER        ACQUISITION_ONLY
 ENABLE_INPUT           YES
 BASELINE_LEVEL         10
 TRIGGER_THRESHOLD      50
+CHANNEL_TRIGGER        ACQUISTION_ONLY
 
 [1]
 

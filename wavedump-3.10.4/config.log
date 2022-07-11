@@ -376,7 +376,7 @@ conftest.c:65:6: warning: conflicting types for built-in function 'pow'; expecte
 conftest.c:53:1: note: 'pow' is declared in header '<math.h>'
    52 | # include <limits.h>
    53 | #else
-/usr/bin/ld: /tmp/ccF3yASD.o: in function `main':
+/usr/bin/ld: /tmp/ccj40ZcS.o: in function `main':
 /home/henrique/Documents/CAEN_Digitizer/wavedump-3.10.4/conftest.c:76: undefined reference to `pow'
 collect2: error: ld returned 1 exit status
 configure:4754: $? = 1
