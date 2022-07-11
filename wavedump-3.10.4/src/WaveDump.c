@@ -1509,6 +1509,7 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
             // factor = 2, 4, 6, etc.. is the reduction in MSamples/s
             // factor = 2 converts 500 MS/s in to 250 MS/s for example. Whilte factor = 4 will make it 125 MHz
             int factor = 1; // Added by Henrique Souza
+            
             BinHeader[0] = (WDcfg->Nbit == 8) ? Size + 6*sizeof(*BinHeader) : Size*2/factor + 6*sizeof(*BinHeader);
             BinHeader[1] = EventInfo->BoardId;
             BinHeader[2] = EventInfo->Pattern;
@@ -1575,7 +1576,7 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
                 else
                     fprintf(WDrun->fout[ch], "%d\n", Event16->DataChannel[ch][j]);
             }
-            fflush(WDrun->fout[ch]); // Added by Henrique Souza
+            fflush(WDrun->fout[ch]); // Added by Henrique Souza 
         }
         if (WDrun->SingleWrite) {
             fclose(WDrun->fout[ch]);
@@ -1738,8 +1739,8 @@ int main(int argc, char *argv[])
     char ConfigFileName[100];
     int isVMEDevice= 0, MajorNumber;
     uint64_t CurrentTime, PrevRateTime, ElapsedTime;
-    uint64_t max_events = 0; // Added by Henrique Souza
-    uint64_t mymaximum = 10000; // Added by Henrique Souza
+    uint64_t max_events = 0; // Added by Henrique Souza 
+    uint64_t mymaximum = 10000; // Added by Henrique Souza 
     int nCycles= 0;
     CAEN_DGTZ_BoardInfo_t       BoardInfo;
     CAEN_DGTZ_EventInfo_t       EventInfo;
