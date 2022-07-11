@@ -1,4 +1,3 @@
-#+TITLE: CAEN Digitizer
 #+AUTHOR: Henrique Vieira de Souza
 #+DESCRIPTION: CAEN Digitizer DAQ installer and description
 #+STARTUP: inlineimages
