@@ -114,7 +114,7 @@
    Please, take a time to understand the acquisition by playing around and making some plots before moving forward.
    - Make sure you memorize the shortcuts.
    - Learn how to control the graphs at gnuplot
-     (to check the gnuplot keybindings, open a terminal, excute =gnuplot=, type =show bind= and press enter).
+     (to check the gnuplot keybindings, open a terminal, execute =gnuplot=, type =show bind= and press enter).
    
    When pressing [W], my modifications will save 10,000 waveforms in the .dat files. When it finishes, you should see this in your screen: 
 
@@ -122,7 +122,7 @@
    
    When you press [P] for continuous plot, what can happen is that gnuplot window will keep in your way (that is very annoying!). One way to stop this is to make sure that the plot is not over the windows you are trying to use, for example the terminal. If the two windows are not overlapping you should be able to use it normally. Another way is to enable “Prevent windows which require attention from stealing focus” (search this configuration for your Linux distribution). 
 
-   For the acquition and in order to properly use the GUI, you should do the following during the acquisition: \\
+   For the acquisition and in order to properly use the GUI, you should do the following during the acquisition: \\
    Assuming you have [s] already running, user’s chosen setup done and triggering events.
 
    1. [w] create a .dat file 
@@ -152,7 +152,7 @@ cd ~/Documents/ CAEN_Digitizer
    Requirements to install QtCreator:
 
    =sudo apt-get update && sudo apt-get upgrade= \\
-   =sudo apt-get -y install build-essential openssl libssl-dev libssl1.0 libgl1-mesa-dev libqt5x11extras5=
+   =sudo apt-get -y install build-essential opens libels-dev libssl1.0 libgl1-mesa-dev libqt5x11extras5=
 
    Install QtCreator following the instructions (https://www.qt.io/download-qt-installer).
 
@@ -178,7 +178,7 @@ cd ~/Documents/ CAEN_Digitizer
 
    The GUI is just an interface to automatically move files from the WaveDumpData folder to another folder. It will keep a track of run and subrun number for you, renaming it with a standard. 
 
-*** Default Acquisition
+*Default Acquisition*
    [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/qtcreator_gui.png]]
 
 - “Run” is the run number
@@ -217,7 +217,18 @@ cd ~/Documents/ CAEN_Digitizer
 
    (A way to play with the GUI is to simply create empty waveX.dat files and transfer they to see the structure of the data).
 
-*** Style Acquisition 
+*Style2 Acquisition*
+
+   [[https://github.com/hvsouza/CAEN_Digitizer/blob/master/.repo_img/qtcreator_style2.png]]
+
+   Another way to save data is by using "Style2". In this case, the named will be composed by the two blocks as =block1_block2= (you can use only one of the two blocks if desired, just leave it as blank). The option "Extra info" keeps the same functionality. In the example above folders and files would be named as:
+
+#+begin_example
+run0_two_different_blocks
+0_wave0_two_different_blocks
+#+end_example
+
+
 
    The Calibration tab will simply transfer the data file to a folder named “Calibration” inside the current run folder. It can only support one Calibration file per channel. This is an old and unused feature that I created for placing the waveforms that I would use for the SiPM gain estimation, I would not bother using it and just creating a new “Run” as calibration.
 

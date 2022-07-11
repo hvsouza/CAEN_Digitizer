@@ -19,6 +19,33 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::on_pushButton_4_clicked()
+{
+    bool cali_status = ui->calibration_check_3->isChecked();
+    int answer;
+    if(cali_status){
+        answer = QMessageBox::question(this,"","Finish this run?",QMessageBox::Yes,QMessageBox::No);
+    }
+    else{
+        answer = QMessageBox::question(this,"","<b>Warning</b>: calibration might not exist.\nFinish run anyway?",QMessageBox::Yes,QMessageBox::No);
+    }
+
+    if(answer==QMessageBox::Yes){
+
+        QMessageBox::about(this,"","New Run!");
+        int runNo = std::stoi(ui->run_3->text().toStdString());
+        runNo++;
+        std::string newRun = std::to_string(runNo);
+
+        ui->run_3->setText(QString::fromStdString(newRun));
+        ui->subrun3->setText("0");
+        ui->subrun_2->setText("0");
+
+        ui->calibration_check_3->setChecked(false);
+    }
+
+}
+
 void MainWindow::on_pushButton_2_clicked()
 {
     bool cali_status = ui->calibration_check->isChecked();
@@ -44,6 +71,30 @@ void MainWindow::on_pushButton_2_clicked()
         ui->calibration_check->setChecked(false);
     }
 
+}
+
+void MainWindow::on_button_movefile_5_clicked()
+{
+    QMessageBox::about(this,"","File was moved, new subrun");
+
+    // This take the necessary info to create the folder and files
+    int runNo = std::stoi(ui->run_3->text().toStdString());
+    int subRunNo = std::stoi(ui->subrun3->text().toStdString());
+    std::string block1 = ui->block1->text().toStdString();
+    std::string block2 = ui->block2->text().toStdString();
+    std::string extra = ui->extra_3->text().toStdString();
+    std::string primary = ui->primary_name->text().toStdString();
+    std::string file_type = ui->file_type->text().toStdString();
+    //
+
+    // here we create the folder and the move the files
+    move_data_file_style2(runNo,subRunNo,block1,block2,extra,primary,file_type);
+
+    // update subrun number
+    subRunNo++;
+    std::string newSubRun = std::to_string(subRunNo);
+
+    ui->subrun3->setText(QString::fromStdString(newSubRun));
 }
 
 void MainWindow::on_button_movefile_clicked()
@@ -130,6 +181,100 @@ bool MainWindow::move_data_file(int run, int subrun, double voltage, double thre
         mvi[i] = mvi[i]+file_type;
     }
 
+    out = system(mkdir.c_str());
+
+    //QMessageBox::about(this,"",QString::fromStdString(mv0));
+    for(int i = 0; i<channels; i++){
+        //std::cout << mvi[i] << std::endl;
+        out = system(mvi[i].c_str());
+    }
+
+    return true;
+
+}
+bool MainWindow::checkSpaces(std::string var){
+    // checking if there is no space in the extra
+    if(var=="") return true;
+    char varChar[var.size()+1];
+    strcpy(varChar,var.c_str());
+    char c;
+    int aux = 0;
+    bool noSpace = true;
+    while(varChar[aux]){
+         c = varChar[aux];
+         if(isspace(c)){
+             noSpace = false;
+         }
+         aux++;
+    }
+
+    return noSpace;
+}
+
+bool MainWindow::move_data_file_style2(int run, int subrun, std::string block1, std::string block2, std::string extra, std::string primary, std::string file_type)
+{
+    int out = 0;
+    std::string mkdir = "mkdir -p ~/Documents/ADC_data/coldbox_data/" + primary + "/";
+    out = system(mkdir.c_str());
+    std::string folder = "";
+
+    bool noSpaceB1 = checkSpaces(block1);
+    bool noSpaceB2 = checkSpaces(block2);
+    bool noSpace = checkSpaces(extra);
+
+    folder = "run" + std::to_string(run);
+
+    if(!noSpaceB1){
+        QMessageBox::about(this,"","Warning: block1 has space");
+        return false;
+    }
+    if(!noSpaceB2){
+        QMessageBox::about(this,"","Warning: block2 has space");
+        return false;
+    }
+    if(!noSpace){
+        QMessageBox::about(this,"","Warning: extra has space");
+        return false;
+    }
+
+     if(block1!=""){
+         folder = folder + "_" + block1;
+     }
+     if(block2!=""){
+         folder = folder + "_" + block2;
+     }
+     folder = folder + "/";
+
+    std::vector<std::string> mvi(channels);
+    for(int i = 0; i<channels; i++){
+        mvi[i] = "mv -n ~/Desktop/WaveDumpData/wave" + std::to_string(i) + file_type +" ~/Documents/ADC_data/coldbox_data/" + primary + "/";
+    }
+
+    //QMessageBox::about(this,"",QString::fromStdString(folder0));
+    mkdir = mkdir+folder;
+    for(int i = 0; i<channels; i++){
+        mvi[i] = mvi[i] + folder;
+    }
+
+    for(int i = 0; i<channels; i++){
+         mvi[i] = mvi[i] + std::to_string(subrun) + "_wave"+ std::to_string(i);
+         if(block1!=""){
+             mvi[i] = mvi[i] + "_" + block1;
+         }
+         if(block2!=""){
+             mvi[i] = mvi[i] + "_" + block2;
+         }
+    }
+    if(extra!=""){
+        if(noSpace){
+            for(int i = 0; i<channels; i++){
+                 mvi[i] = mvi[i] + "_" + extra;
+            }
+        }
+    }
+    for(int i = 0; i<channels; i++){
+        mvi[i] = mvi[i]+file_type;
+    }
 
     out = system(mkdir.c_str());
 
@@ -139,11 +284,7 @@ bool MainWindow::move_data_file(int run, int subrun, double voltage, double thre
         out = system(mvi[i].c_str());
     }
 
-
-
-
     return true;
-
 
 }
 
@@ -164,6 +305,7 @@ void MainWindow::on_button_movefile_2_clicked()
     QMessageBox::about(this,"","Calibration file moved. Check it!");
 
     ui->calibration_check->setChecked(true);
+    ui->calibration_check_3->setChecked(true);
     // Take info from the data tab, so it is possible to go to the right folder
     int runNo = std::stoi(ui->run->text().toStdString());
     int subRunNo = std::stoi(ui->subrun_2->text().toStdString());
