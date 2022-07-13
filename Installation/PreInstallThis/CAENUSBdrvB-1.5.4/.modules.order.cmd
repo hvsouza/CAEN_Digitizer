@@ -1,1 +1,0 @@
-cmd_/home/henrique/Documents/CAEN_Digitizer/Installation/PreInstallThis/CAENUSBdrvB-1.5.4/modules.order := {   echo /home/henrique/Documents/CAEN_Digitizer/Installation/PreInstallThis/CAENUSBdrvB-1.5.4/CAENUSBdrvB.ko; :; } | awk '!x[$$0]++' - > /home/henrique/Documents/CAEN_Digitizer/Installation/PreInstallThis/CAENUSBdrvB-1.5.4/modules.order
