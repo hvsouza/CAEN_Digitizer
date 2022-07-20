@@ -97,6 +97,9 @@ sudo apt install gnuplot
 make
 sudo make install
 
+# replacing config file
+cp -r $ROOTPATH/$SOURCEFILES/install_by_hand/WaveDumpConfig.txt /etc/wavedump/
+
 # creates a shortcut at Desktop. The move_files GUI must be installed by hand
 mkdir -p ~/Desktop/WaveDumpData
 cp $ROOTPATH/$SOURCEFILES/{WaveDumpExe.sh,move_files.sh} ~/Desktop/WaveDumpData/

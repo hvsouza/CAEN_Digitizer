@@ -142,16 +142,34 @@
 ** Debugging USB
 
    Some times, the digitizer will not be recognized by the computer (this usually happens after using different digitizers, usb devices or cables). One way to fix it:
-
+   
    Disconnect the digitizer, turn it off 
    #+begin_src bash
 cd ~/Documents/ CAEN_Digitizer
 ./fix_usb.sh
    #+end_src
 
-   Connect the digitizer and turn it on. Cross your fingers and try again. 
+   Connect the digitizer and turn it on. Cross your fingers and try again.
 
-   
+   If the USB is still failling to connect, check if the CAEN Digitizer is being recognized by the system: =lsusb=, which should result in some lines and one should look like this:
+
+   #+begin_example
+   Bus 003 Device 007: ID 413c:2514 Dell Computer Corp. Dell Universal Receiver
+   #+end_example
+
+   If the output is like this and wavedump is still not recognizing the ADC. Check the file at =/dev/usb/= folder:
+
+   #+begin_src bash
+   ls /dev/usb/
+   #+end_src
+
+   If there is a file named =V1718_X=, you should set the USB port at the config file [[#extra-common-variables]]:
+
+   #+begin_example
+   OPEN USB X 0
+   #+end_example
+
+
 * QtCreator GUI
 ** Installation
    Requirements to install QtCreator:
