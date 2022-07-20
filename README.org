@@ -154,7 +154,7 @@ cd ~/Documents/ CAEN_Digitizer
    If the USB is still failling to connect, check if the CAEN Digitizer is being recognized by the system: =lsusb=, which should result in some lines and one should look like this:
 
    #+begin_example
-   Bus 003 Device 007: ID 413c:2514 Dell Computer Corp. Dell Universal Receiver
+   Bus 003 Device 010: ID 21e1:0000 CAEN CAEN DT5xxx USB 1.0
    #+end_example
 
    If the output is like this and wavedump is still not recognizing the ADC. Check the file at =/dev/usb/= folder:
