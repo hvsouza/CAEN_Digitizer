@@ -1,4 +1,4 @@
-#!/bin/bash
+I#!/bin/bash
 
 
 function check_n_exec(){
@@ -33,7 +33,7 @@ tar -C $ROOTPATH/$INSTALLPATH/$PreInstall -xvf $( ls CAENVMELib* | grep -e ".tgz
 tar -C $ROOTPATH/$INSTALLPATH/$PreInstall -xvf $( ls CAENUSB* | grep -e ".tgz" -e ".tar.gz")
 tar -C $ROOTPATH/$INSTALLPATH -xvf $( ls CAENUpgrader* | grep -e ".tgz" -e ".tar.gz")
 tar -C $ROOTPATH/$INSTALLPATH -xvf $( ls CAENDigitizer* | grep -e ".tgz" -e ".tar.gz")
-tar -C $ROOTPATH/ -xvf $( ls CAENwavedump* | grep -e ".tgz" -e ".tar.gz")
+tar -C $ROOTPATH/ -xvf $( ls *wavedump* | grep -e ".tgz" -e ".tar.gz")
 
 #installing requirements
 echo ""
