@@ -23,15 +23,17 @@ ROOTPATH=$( pwd )
 sleeptime=3
 
 check_n_exec "sudo rm -r $INSTALLPATH"
+check_n_exec "sudo rm -r wavedump*"
 
 mkdir -p $INSTALLPATH/$PreInstall
+
 
 cd $ROOTPATH/$SOURCEFILES
 
 tar -C $ROOTPATH/$INSTALLPATH/$PreInstall -xvf $( ls CAENComm* | grep -e ".tgz" -e ".tar.gz")
 tar -C $ROOTPATH/$INSTALLPATH/$PreInstall -xvf $( ls CAENVMELib* | grep -e ".tgz" -e ".tar.gz")
 tar -C $ROOTPATH/$INSTALLPATH/$PreInstall -xvf $( ls CAENUSB* | grep -e ".tgz" -e ".tar.gz")
-tar -C $ROOTPATH/$INSTALLPATH -xvf $( ls CAENUpgrader* | grep -e ".tgz" -e ".tar.gz")
+tar -C $ROOTPATH/$INSTALLPATH -xvf $( ls CAENUpgrader* | grep -e ".tgz" -e ".tar.gz" -e ".tar")
 tar -C $ROOTPATH/$INSTALLPATH -xvf $( ls CAENDigitizer* | grep -e ".tgz" -e ".tar.gz")
 tar -C $ROOTPATH/ -xvf $( ls *wavedump* | grep -e ".tgz" -e ".tar.gz")
 
