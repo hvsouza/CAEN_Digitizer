@@ -28,9 +28,9 @@ mkdir -p $INSTALLPATH/$PreInstall
 
 cd $ROOTPATH/$SOURCEFILES
 
-tar -C $ROOTPATH/$INSTALLPATH/$PreInstall -xvf $( ls CAENComm* | grep -e ".tgz" -e ".tar.gz")
-tar -C $ROOTPATH/$INSTALLPATH/$PreInstall -xvf $( ls CAENVMELib* | grep -e ".tgz" -e ".tar.gz")
-tar -C $ROOTPATH/$INSTALLPATH/$PreInstall -xvf $( ls CAENUSB* | grep -e ".tgz" -e ".tar.gz")
+tar -C $ROOTPATH/$INSTALLPATH/$PreInstall -xvf $( /bin/ls CAENComm* | grep -e ".tgz" -e ".tar.gz")
+tar -C $ROOTPATH/$INSTALLPATH/$PreInstall -xvf $( /bin/ls CAENVMELib* | grep -e ".tgz" -e ".tar.gz")
+tar -C $ROOTPATH/$INSTALLPATH/$PreInstall -xvf $( /bin/ls CAENUSB* | grep -e ".tgz" -e ".tar.gz")
 
 #installing requirements
 echo ""
