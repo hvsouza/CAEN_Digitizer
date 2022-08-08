@@ -1490,21 +1490,8 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
     int ch, j, ns;
     CAEN_DGTZ_UINT16_EVENT_t  *Event16 = NULL;
     CAEN_DGTZ_UINT8_EVENT_t   *Event8 = NULL;
+    uint64_t mymaximum = 10000; // Added by Henrique Souza
 
-    /* Added by Henrique Souza */
-    /* This will save a maximum number of events */
-    if(*max_events == 10000){
-        printf("\n\n\n\n\n\n\n\n\n\nEvents have reached the maximum of %ld... \n", max_events);
-        printf("Continuous writing is disabled\n\n\n\n\n\n\n\n\n\n");
-        *max_events = 0;
-        WDrun->ContinuousWrite = 0;
-        for(int ch=0; ch<WDcfg->Nch; ch++){
-          fclose(WDrun->fout[ch]);
-        }
-        *after_max = 1;
-        return  0;
-    }
-    /* End of addition */
     /* Write Event data to file */
     if (WDcfg->Nbit == 8)
       Event8 = (CAEN_DGTZ_UINT8_EVENT_t *)Event;
@@ -1532,29 +1519,25 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
             BinHeader[3] = ch;
             BinHeader[4] = EventInfo->EventCounter;
             BinHeader[5] = EventInfo->TriggerTimeTag;
+            /* Added by Henrique Souza */
+            /* This allows to keep implementing the file, but not after moving it */
             if (!WDrun->fout[ch]) {
                 char fname[100];
                 sprintf(fname, "%swave%d.dat", path,ch);
-                    /* Added by Henrique Souza */
-                    /* This allows to keep implementing the file, but not after moving it */
-                     if (!WDrun->fout[ch]) {
-                      char fname[100];
-                      sprintf(fname, "%swave%d.dat", path,ch);
-                      if(WDrun->ContinuousWrite && *after_max == 1){
-                        if ((WDrun->fout[ch] = fopen(fname, "wb+")) == NULL)
-                          return -1;
-                      }
-                      *after_max = 0;
-                    }
-                    else  {
-                      if ((WDrun->fout[ch] = fopen(fname, "wb")) == NULL)
-                       return -1;
-                    }
-                    /* End of addition */
-
+                if(WDrun->ContinuousWrite && *after_max == 1){
+                    if ((WDrun->fout[ch] = fopen(fname, "ab")) == NULL)
+                        return -1;
+                }
+                else{
+                    if ((WDrun->fout[ch] = fopen(fname, "wb")) == NULL)
+                        return -1;
+                }
+                *after_max = 0;
+            }
                 // if ((WDrun->fout[ch] = fopen(fname, "wb")) == NULL)
                 // return -1;
-            }
+            /* End of addition */
+
             if( WDcfg->OutFileFlags & OFF_HEADER) {
                 // Write the Channel Header
                 if(fwrite(BinHeader, sizeof(*BinHeader), 6, WDrun->fout[ch]) != 6) {
@@ -1612,6 +1595,18 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
             }
             fflush(WDrun->fout[ch]); // Added by Henrique Souza
           }
+
+        /* Added by Henrique Souza */
+        /* This will save a maximum number of events */
+        if(*max_events == mymaximum-1){
+            printf("\n\n\n\n\n\n\n\n\n\nEvents have reached the maximum of %ld... \n", *max_events+1);
+            printf("Continuous writing is disabled\n\n\n\n\n\n\n\n\n\n");
+            *max_events = 0;
+            WDrun->ContinuousWrite = 0;
+            WDrun->SingleWrite = 1;
+            *after_max = 1;
+        }
+        /* End of addition */
         if (WDrun->SingleWrite) {
             fclose(WDrun->fout[ch]);
             WDrun->fout[ch]= NULL;
@@ -1774,7 +1769,6 @@ int main(int argc, char *argv[])
     int isVMEDevice= 0, MajorNumber;
     uint64_t CurrentTime, PrevRateTime, ElapsedTime;
     uint64_t max_events = 0; // Added by Henrique Souza
-    uint64_t mymaximum = 10000; // Added by Henrique Souza
     int after_max = 0;
     int nCycles= 0;
     CAEN_DGTZ_BoardInfo_t       BoardInfo;
