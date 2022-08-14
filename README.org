@@ -129,15 +129,15 @@
 
    For the acquisition and in order to properly use the GUI, you should do the following during the acquisition: \\
    Assuming you have [s] already running, user’s chosen setup done and triggering events.
-
+   
    1. [W] save 10,000 (if you want to save 10,000 more, press [W] again at the end).
-   2. Move the .dat files by yourself or with GUI (see [[#using-the-gui]])
+   2. Move the .dat files by yourself or with GUI (see [[#using-the-gui]]) 
 
    For acquire more data, repeat this. 
 
-   If you want to understand the binary file structure, please check [[#extra-file-structure]].
+   If you want to understand the binary file structure, please check [[#extra-file-structure]]. 
 
-   *NOTE*: if you are using the standard version of wavedump, when you move the file it is kept open, so if you press [w] one more time after the continuous read, it will save one extra waveform and close the file.
+   *NOTE*: if you are using the standard version of wavedump, when you move the file it is kept open, so if you press [w] one more time after the continuous read, it will save one extra waveform and close the file. 
 
 ** Debugging USB
 
@@ -169,7 +169,7 @@ cd ~/Documents/ CAEN_Digitizer
    OPEN USB X 0
    #+end_example
 
-
+   
 * QtCreator GUI
 ** Installation
    Requirements to install QtCreator:
@@ -267,7 +267,7 @@ run0_two_different_blocks
  
 * Extra: Wavedump decreased sampling
 
-  If you want to decrease/increase the sampling rate of the saved data, for example from 500 MS/s to 250 MS/s, or to 125 MS/s and so on, you need to edit the WaveDump.c file and "enable" my modifications.
+  If you want to decrease/increase the sampling rate of the saved data, for example from 500 MS/s to 250 MS/s, or to 125 MS/s and so on, you need to edit the WaveDump.c file and "enable" my modifications. 
 
   #+begin_src bash
 cd ~/Documents/CAEN_Digitizer/wavedump-3.10.3/src
@@ -413,3 +413,8 @@ cd ~/Documents/CAEN_Digitizer/wavedump-3.10.3/src
   CHANNEL_TRIGGER        DISABLED
   #+end_example
 
+
+* NOTES
+
+- There is a problem with CAENUpgrader on Ubuntu 21.10 and 22.04 (possibly 20.04). It will crash and you cannot perform any action. The easiest solution is to create a virtual machine with linux Cinnamon (v. 23.3 tested) so you can use CAENUpgrader.
+- Wavedump version 3.10.4 have a problem with the baseline level, already reported to CAEN.
