@@ -80,7 +80,7 @@
    Wavedump cannot run if there is no ADC connected, but wavedump was successfully installed if you see the following message:
    #+begin_example
    **************************************************************
-                           Wave Dump 3.10.4
+                           Wave Dump 3.10.3
    **************************************************************
    Opening Configuration File /etc/wavedump/WaveDumpConfig.txt
    Can't open the digitizer
@@ -130,14 +130,14 @@
    For the acquisition and in order to properly use the GUI, you should do the following during the acquisition: \\
    Assuming you have [s] already running, user’s chosen setup done and triggering events.
 
-   1. [w] create a .dat file 
-   2. [w] make sure you have created it (you can even press [w] once again)
-   3. [W] save 10,000 (if you want to save 10,000 more, press [W] again at the end).
-   4. Move the .dat files by yourself or with GUI (see [[#using-the-gui]]) 
+   1. [W] save 10,000 (if you want to save 10,000 more, press [W] again at the end).
+   2. Move the .dat files by yourself or with GUI (see [[#using-the-gui]])
 
    For acquire more data, repeat this. 
 
-   If you want to understand the binary file structure, please check [[#extra-file-structure]]. 
+   If you want to understand the binary file structure, please check [[#extra-file-structure]].
+
+   *NOTE*: if you are using the standard version of wavedump, when you move the file it is kept open, so if you press [w] one more time after the continuous read, it will save one extra waveform and close the file.
 
 ** Debugging USB
 
@@ -267,40 +267,21 @@ run0_two_different_blocks
  
 * Extra: Wavedump decreased sampling
 
-  If you want to decrease the sampling rate of the saved data, for example from 500 MS/s to 250 MS/s, or to 125 MS/s and so on, you need to edit the WaveDump.c file and "enable" my modifications. 
+  If you want to decrease/increase the sampling rate of the saved data, for example from 500 MS/s to 250 MS/s, or to 125 MS/s and so on, you need to edit the WaveDump.c file and "enable" my modifications.
 
   #+begin_src bash
-cd ~/Documents/CAEN_Digitizer/wavedump-3.10.4/src
+cd ~/Documents/CAEN_Digitizer/wavedump-3.10.3/src
   #+end_src
 
-  Open the file WaveDump.c, set the factor which you want to divide the sample rate at line 1511:
+  Open the file WaveDump.c, set the factor which you want to divide the sample rate at line 1514:
   #+begin_src c++
  int factor = 2; // Added by Henrique Souza
-  #+end_src
-
-  comment line 1537:
-  #+begin_src c++
-// ns = (int)fwrite(Event16->DataChannel[ch] , 1 , Size*2, WDrun->fout[ch]) / 2;
-  #+end_src
-
-  and uncomment lines 1540 to 1546:
-  #+begin_src c++
-  /* Added by Henrique Souza */
-  /* This allows to write at half of the rate*/  
-  ns = 0;
-  int aux = 0;
-  for(j=0; j<Size; j++) {
-    if(aux < 1) ns += (int)fwrite(&Event16->DataChannel[ch][j] , 1 , 2, WDrun->fout[ch])*(factor-1);
-    else if (aux == (factor-1)) aux = -1;
-    aux++;
-  }
-  /* End of addition */
   #+end_src
 
   Now you just need to compile wavedump again: \\
   (*NOTE*: by doing this, WaveDumpConfig.txt will be overwritten with the default version. Make sure you backup your version if that is important)
   #+begin_src bash
-  cd ~/Documents/CAEN_Digitizer/wavedump-3.10.4
+  cd ~/Documents/CAEN_Digitizer/wavedump-3.10.3
   ./configure
   make
   sudo make install
