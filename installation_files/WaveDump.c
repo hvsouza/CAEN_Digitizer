@@ -1550,7 +1550,7 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
             if (WDcfg->Nbit == 8)
                 ns = (int)fwrite(Event8->DataChannel[ch], 1, Size, WDrun->fout[ch]);
             else{
-              if(factor!=2){
+              if(factor!=1){
                 /* Added by Henrique Souza */
                 /* This allows to write at half of the rate*/
                 ns = 0;
