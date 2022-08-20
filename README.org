@@ -42,12 +42,11 @@
   - [[#creating-the-project][Creating the project]]
   - [[#debugging-installation][Debugging installation]]
   - [[#using-the-gui][Using the GUI]]
-    - [[#default-acquisition][Default Acquisition]]
-    - [[#style-acquisition][Style Acquisition]]
 - [[#extra-creating-a-shortcut-for-wavedump][Extra: Creating a shortcut for Wavedump]]
 - [[#extra-wavedump-decreased-sampling][Extra: Wavedump decreased sampling]]
 - [[#extra-file-structure][Extra: File structure]]
 - [[#extra-common-variables][Extra: Common variables]]
+- [[#notes][NOTES]]
 :END:
 
 
