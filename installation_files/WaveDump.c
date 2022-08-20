@@ -1512,8 +1512,8 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
             // factor = 2, 4, 6, etc.. is the reduction in MSamples/s
             // factor = 2 converts 500 MS/s in to 250 MS/s for example. Whilte factor = 4 will make it 125 MHz
             int factor = 2; // Added by Henrique Souza
-
-            BinHeader[0] = (WDcfg->Nbit == 8) ? Size + 6*sizeof(*BinHeader) : Size*2 + 6*sizeof(*BinHeader);
+            int mysize = Size/factor; // Added by Henrique Souza
+            BinHeader[0] = (WDcfg->Nbit == 8) ? Size + 6*sizeof(*BinHeader) : mysize*2 + 6*sizeof(*BinHeader);
             BinHeader[1] = EventInfo->BoardId;
             BinHeader[2] = EventInfo->Pattern;
             BinHeader[3] = ch;
