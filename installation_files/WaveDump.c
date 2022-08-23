@@ -1465,7 +1465,7 @@ void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *W
             printf("  [g]   Change the index of the group to plot (XX740 family)\n");
             printf("  [m]   Single ADC temperature monitor (XX751/30/25 only)\n");
             printf("  [c]   ADC Calibration (XX751/30/25 only)\n");
-			printf("  [D]   DAC offset calibration\n");
+            printf("  [D]   DAC offset calibration\n");
             printf(" [0-7]  Enable/Disable one channel on the plot\n");
             printf("        For x740 family this is the plotted group's relative channel index\n");
             printf("[SPACE] This help\n");
@@ -1491,6 +1491,7 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
     CAEN_DGTZ_UINT16_EVENT_t  *Event16 = NULL;
     CAEN_DGTZ_UINT8_EVENT_t   *Event8 = NULL;
     uint64_t mymaximum = 10000; // Added by Henrique Souza
+    int nchannels = WDcfg->Nch; // Added by Henrique Souza
 
     /* Write Event data to file */
     if (WDcfg->Nbit == 8)
@@ -1532,7 +1533,7 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
                     if ((WDrun->fout[ch] = fopen(fname, "wb")) == NULL)
                         return -1;
                 }
-                *after_max = 0;
+                if(ch == nchannels-1) *after_max = 0;
             }
                 // if ((WDrun->fout[ch] = fopen(fname, "wb")) == NULL)
                 // return -1;
