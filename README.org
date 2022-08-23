@@ -435,7 +435,7 @@ cd ~/Documents/CAEN_Digitizer/wavedump-3.10.3/src
 There are quite a few possibilities here and it is hard to debug (remember, this installer is nothing official, it should just help you out).
 - First of all, check if each installation was done correctly. There is a 3 seconds pause between each driver/software installation, make sure there is no error messages (you can edit the bash script and increase the pause).
 - If there is an error in any installation, check if the problem is the script it self or if you need to download any new release (please, inform the author of this project).
-- If everthing is working probably, try following the instructions to debug the USB at #debugging_usb.
+- If everthing is working probably, try following the instructions to debug the USB at #debugging-usb.
 - If none of this works, please refer to the documentation to understand the installation and contact CAEN Support.
 
 ** Wavedump related:
