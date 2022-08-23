@@ -24,6 +24,7 @@
 
   Please, if you find any bug, miss information or some nasty mistake, feel free to talk to me by email.
 
+  Test #debugging-usb
 
 * Table of Contents
 :PROPERTIES:
