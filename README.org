@@ -412,8 +412,33 @@ cd ~/Documents/CAEN_Digitizer/wavedump-3.10.3/src
   CHANNEL_TRIGGER        DISABLED
   #+end_example
 
+* FAQ
 
-* NOTES
+** ADC related:
+*** I have an old adc stored for some time, can I just plugin and use it?
+- Probably not. You should update your digitizer firmware. Download the newest digitizer firmware from [[caen.it][CAEN]] and install it using CAENUpgrader.
+*** I cannot use CAENUpgrader, what is happening?
+- Make sure you have java installed. This will change from system to system, but make sure you google it properly and you will find normal solutions of how to install java (jdk). Here is my output from =java --version=:
+  #+begin_example
+  openjdk 11.0.16 2022-07-19
+  OpenJDK Runtime Environment (build 11.0.16+8-post-Ubuntu-0ubuntu122.04)
+  OpenJDK 64-Bit Server VM (build 11.0.16+8-post-Ubuntu-0ubuntu122.04, mixed mode, sharing)
+  #+end_example
 
 - There is a problem with CAENUpgrader on Ubuntu 21.10 and 22.04 (possibly 20.04). It will crash and you cannot perform any action. The easiest solution is to create a virtual machine with linux Cinnamon (v. 23.3 tested) so you can use CAENUpgrader.
+*** At the CAEN website I see wavedump version 3.10.4, why are you not using that?
 - Wavedump version 3.10.4 have a problem with the baseline level, already reported to CAEN.
+*** There are newer versions of wavedump, drivers, or so. Why are you nothing using them?
+- It could be that I do not have time right now, or that I have not worked with the digitizer for I while or that I just don't care because it is working for me like that. In any case, you can add it by yourself, downloading the proper softwares/drivers and installing either manually or by editing the installation bash script. Feel free to contribute to the project. Or, please do send me an email and I will be glad to update if necessary.
+*** I cannot connect to the ADC and get data, what is happening?
+There are quite a few possibilities here and it is hard to debug (remember, this installer is nothing official, it should just help you out).
+- First of all, check if each installation was done correctly. There is a 3 seconds pause between each driver/software installation, make sure there is no error messages (you can edit the bash script and increase the pause).
+- If there is an error in any installation, check if the problem is the script it self or if you need to download any new release (please, inform the author of this project).
+- If everthing is working probably, try following the instructions to debug the USB at #wavedump_debugging_usb.
+- If none of this works, please refer to the documentation to understand the installation and contact CAEN Support.
+
+** Wavedump related:
+*** TODO
+** GUI related:
+*** Do you really need to use this lame GUI?
+- Absolutely not! The GUI was created to make your life easier :) if it is making it worse, kick it.
