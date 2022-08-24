@@ -415,7 +415,7 @@ cd ~/Documents/CAEN_Digitizer/wavedump-3.10.3/src
   #+end_example
 
 * FAQ
-** ADC related:
+** ADC related
 *** I have an old adc stored for some time, can I just plugin and use it?
 - Probably not. You should update your digitizer firmware. Download the newest digitizer firmware from [[caen.it][CAEN]] and install it using CAENUpgrader.
 *** I cannot use CAENUpgrader, what is happening?
@@ -435,11 +435,11 @@ cd ~/Documents/CAEN_Digitizer/wavedump-3.10.3/src
 There are quite a few possibilities here and it is hard to debug (remember, this installer is nothing official, it should just help you out).
 - First of all, check if each installation was done correctly. There is a 3 seconds pause between each driver/software installation, make sure there is no error messages (you can edit the bash script and increase the pause).
 - If there is an error in any installation, check if the problem is the script it self or if you need to download any new release (please, inform the author of this project).
-- If everthing is working probably, try following the instructions to debug the USB at [[#debugging-usb]].
-- If none of this works, please refer to the documentation to understand the installation and contact CAEN Support.
+- In the case everything is being properly installed, try following the instructions to debug the USB at [[#debugging-usb]].
+- If none of those work, please refer to the documentation to understand the installation and contact CAEN Support.
 
-** Wavedump related:
+** Wavedump related
 *** TODO
-** GUI related:
-*** Do you really need to use this lame GUI?
+** GUI related
+*** Do I really need to use this lame GUI?
 - Absolutely not! The GUI was created to make your life easier :) if it is making it worse, kick it.
