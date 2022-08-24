@@ -319,7 +319,7 @@ cd ~/Documents/CAEN_Digitizer/wavedump-3.10.3/src
   # OPEN: open the digitizer
   # options: USB 0 0      			Desktop/NIM digitizer through USB              
   OPEN USB 0 0 
-  (if you have some USB devices connected, you might need to change this value to 1 or 2) 
+  #(if you have some USB devices connected, you might need to change this value to 1 or 2)
 
   # RECORD_LENGTH = number of samples in the acquisition window
   RECORD_LENGTH  2000
@@ -435,7 +435,7 @@ cd ~/Documents/CAEN_Digitizer/wavedump-3.10.3/src
 There are quite a few possibilities here and it is hard to debug (remember, this installer is nothing official, it should just help you out).
 - First of all, check if each installation was done correctly. There is a 3 seconds pause between each driver/software installation, make sure there is no error messages (you can edit the bash script and increase the pause).
 - If there is an error in any installation, check if the problem is the script it self or if you need to download any new release (please, inform the author of this project).
-- In the case everything is being properly installed, try following the instructions to debug the USB at [[#debugging-usb]].
+-  try following the instructions to debug the USB at [[#debugging-usb]].
 - If none of those work, please refer to the documentation to understand the installation and contact CAEN Support.
 
 ** Wavedump related
