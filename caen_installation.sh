@@ -1,4 +1,4 @@
-I#!/bin/bash
+#!/bin/bash
 
 
 function check_n_exec(){
