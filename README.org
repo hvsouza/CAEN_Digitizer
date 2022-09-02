@@ -146,8 +146,8 @@
    
    Disconnect the digitizer, turn it off 
    #+begin_src bash
-cd ~/Documents/ CAEN_Digitizer
-./fix_usb.sh
+   cd ~/Documents/ CAEN_Digitizer
+   ./fix_usb.sh
    #+end_src
 
    Connect the digitizer and turn it on. Cross your fingers and try again.
