@@ -2247,6 +2247,7 @@ InterruptTimeout:
                     if (WDrun.SingleWrite) {
                         printf("Single Event saved to output files\n");
                         max_events = -1; // Added by Henrique Souza
+                        after_max = 0;
                         WDrun.SingleWrite = 0;
                     }
 
