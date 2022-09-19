@@ -30,18 +30,18 @@ mkdir -p $INSTALLPATH/$PreInstall
 
 cd $ROOTPATH/$SOURCEFILES
 
-tar -C $ROOTPATH/$INSTALLPATH/$PreInstall -xvf $( ls CAENComm* | grep -e ".tgz" -e ".tar.gz")
-tar -C $ROOTPATH/$INSTALLPATH/$PreInstall -xvf $( ls CAENVMELib* | grep -e ".tgz" -e ".tar.gz")
-tar -C $ROOTPATH/$INSTALLPATH/$PreInstall -xvf $( ls CAENUSB* | grep -e ".tgz" -e ".tar.gz")
-tar -C $ROOTPATH/$INSTALLPATH -xvf $( ls CAENUpgrader* | grep -e ".tgz" -e ".tar.gz" -e ".tar")
-tar -C $ROOTPATH/$INSTALLPATH -xvf $( ls CAENDigitizer* | grep -e ".tgz" -e ".tar.gz")
-tar -C $ROOTPATH/ -xvf $( ls *wavedump* | grep -e ".tgz" -e ".tar.gz")
+tar -C $ROOTPATH/$INSTALLPATH/$PreInstall -xvf $( /bin/ls CAENComm* | grep -e ".tgz" -e ".tar.gz")
+tar -C $ROOTPATH/$INSTALLPATH/$PreInstall -xvf $( /bin/ls CAENVMELib* | grep -e ".tgz" -e ".tar.gz")
+tar -C $ROOTPATH/$INSTALLPATH/$PreInstall -xvf $( /bin/ls CAENUSB* | grep -e ".tgz" -e ".tar.gz")
+tar -C $ROOTPATH/$INSTALLPATH -xvf $( /bin/ls CAENUpgrader* | grep -e ".tgz" -e ".tar.gz" -e ".tar")
+tar -C $ROOTPATH/$INSTALLPATH -xvf $( /bin/ls CAENDigitizer* | grep -e ".tgz" -e ".tar.gz")
+tar -C $ROOTPATH/ -xvf $( /bin/ls *wavedump* | grep -e ".tgz" -e ".tar.gz")
 
 #installing requirements
 echo ""
 echo "Installing CAENVMELib"
 cd $ROOTPATH/$INSTALLPATH/$PreInstall
-cd $( ls | grep CAENVMELib* )/lib
+cd $( /bin/ls | grep CAENVMELib* )/lib
 sudo bash install_x64
 
 echo "CAENVMELib hopefully installed, check for errors"
@@ -49,7 +49,7 @@ echo ""
 sleep $sleeptime
 echo "Installing CAENComm"
 cd ../../
-cd $( ls | grep CAENComm* )/lib
+cd $( /bin/ls | grep CAENComm* )/lib
 sudo bash install_x64
 
 
@@ -58,7 +58,7 @@ echo ""
 sleep $sleeptime
 echo "Installing CAENUSB"
 cd ../../
-cd $( ls | grep CAENUSB* )
+cd $( /bin/ls | grep CAENUSB* )
 make
 sudo make install
 
@@ -67,7 +67,7 @@ echo ""
 sleep $sleeptime
 echo "Installing CAENDigitizer"
 cd $ROOTPATH/$INSTALLPATH
-cd $( ls | grep CAENDigitizer* )
+cd $( /bin/ls | grep CAENDigitizer* )
 sudo bash install_64
 
 echo "CAENDigitizer hopefully installed, check for errors"
@@ -75,7 +75,7 @@ echo ""
 sleep $sleeptime
 echo "Installing CAENUpgrader"
 cd $ROOTPATH/$INSTALLPATH
-cd $( ls | grep CAENUpgrader* )
+cd $( /bin/ls | grep CAENUpgrader* )
 ./configure
 sudo make
 sudo make install
@@ -86,7 +86,7 @@ echo ""
 sleep $sleeptime
 echo "Installing Wavedump"
 cd $ROOTPATH
-cd $( ls | grep wavedump* )
+cd $( /bin/ls | grep wavedump* )
 cd src
 #replacing the .c file with my custom one
 cp $ROOTPATH/$SOURCEFILES/WaveDump.c .
