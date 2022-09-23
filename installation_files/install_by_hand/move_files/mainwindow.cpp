@@ -381,3 +381,348 @@ void MainWindow::on_lock_folder_clicked(bool checked)
     }
 }
 
+int MainWindow::getFactor()
+{
+    std::string max_samplingRate = ui->adcMaximumRate->currentText().toStdString();
+    std::string samplingRate = ui->samplingRate_2->currentText().toStdString();
+    double sampling=1;
+    double maxsampling=1;
+    if(samplingRate == "500 MSamples/s") sampling = 500;
+    if(samplingRate == "250 MSamples/s") sampling = 250;
+    if(samplingRate == "125 MSamples/s") sampling = 125;
+    if(samplingRate == "62.5 MSamples/s") sampling = 62.5;
+
+    if(max_samplingRate == "500 MSamples/s") maxsampling = 500;
+    if(max_samplingRate == "250 MSamples/s") maxsampling = 250;
+
+    int factor = (int)maxsampling/sampling;
+    return factor;
+}
+
+
+void MainWindow::on_pushButtonRecompile_clicked()
+{
+    std::string nwaveforms= ui->nwvfs->text().toStdString();
+    if(nwaveforms == "") nwaveforms = "10000";
+    std::string passwrd= ui->passwrd->text().toStdString();
+    passwrd = passwrd+"\n";
+
+    std::string max_samplingRate = ui->adcMaximumRate->currentText().toStdString();
+    std::string samplingRate = ui->samplingRate_2->currentText().toStdString();
+
+    int factor = getFactor();
+
+    if(factor==0){
+        std::string errormessage = "ADC Nominal sampling should be higher or equal to Sampling rate!";
+        QMessageBox::about(this,"ERROR!",errormessage.c_str());
+        return;
+    }
+
+    std::string message = "Recompiling wavedump\nSetting " + nwaveforms + " as maximum for continous writting.\nSampling Rate set to " + samplingRate;
+    QMessageBox::about(this,"",message.c_str());
+
+    std::string validate_sudo = "printf '" + passwrd + "' | sudo -S -v";
+    system(validate_sudo.c_str());
+
+    std::string recompile_command = "bash ~/Documents/CAEN_Digitizer/recompile_wavedump.sh " + nwaveforms + " " + std::to_string(factor);
+    system(recompile_command.c_str());
+
+    ui->samplingRate->setCurrentText(ui->samplingRate_2->currentText());
+    on_pushButton_SetConfig_clicked();
+
+    QMessageBox::about(this,"","Done!\n\Please restart wavedump.");
+
+}
+
+
+void MainWindow::on_FileTypeSet_currentTextChanged(const QString &arg1)
+{
+    if(arg1 == "Binary"){
+        ui->file_type->setText(".dat");
+    }
+    else{
+        int answer = QMessageBox::question(this,"","Are you sure? Binary is awesome...",QMessageBox::Yes,QMessageBox::No);
+        if(answer==QMessageBox::Yes){
+            QMessageBox::about(this,"",":(");
+            ui->file_type->setText(".txt");
+        }
+        else{
+            ui->FileTypeSet->setCurrentText("Binary");
+        }
+    }
+}
+
+
+void MainWindow::enable_and_trigger(bool checked, QCheckBox* myt)
+{
+    if(checked){
+        if(!ui->externaltrigger->isChecked()){
+            setEnabledTrigger(myt);
+        }
+    }
+    else{
+        setDisabledTrigger(myt);
+    }
+}
+void MainWindow::setEnabledTrigger(QCheckBox *myt)
+{
+    myt->setDisabled(false);
+}
+void MainWindow::setDisabledTrigger(QCheckBox *myt)
+{
+    myt->setChecked(false);
+    myt->setDisabled(true);
+}
+
+
+void MainWindow::disabletriggers()
+{
+        ui->trigger1->setChecked(false);
+        ui->trigger2->setChecked(false);
+        ui->trigger3->setChecked(false);
+        ui->trigger4->setChecked(false);
+        ui->trigger5->setChecked(false);
+        ui->trigger6->setChecked(false);
+        ui->trigger7->setChecked(false);
+        ui->trigger8->setChecked(false);
+
+
+        ui->trigger1->setDisabled(true);
+        ui->trigger2->setDisabled(true);
+        ui->trigger3->setDisabled(true);
+        ui->trigger4->setDisabled(true);
+        ui->trigger5->setDisabled(true);
+        ui->trigger6->setDisabled(true);
+        ui->trigger7->setDisabled(true);
+        ui->trigger8->setDisabled(true);
+
+
+}
+
+void MainWindow::on_externaltrigger_clicked(bool checked)
+{
+    if(checked){
+        disabletriggers();
+    }
+    else{
+        if(ui->enable1->isChecked()) ui->trigger1->setDisabled(false);
+        if(ui->enable2->isChecked()) ui->trigger2->setDisabled(false);
+        if(ui->enable3->isChecked()) ui->trigger3->setDisabled(false);
+        if(ui->enable4->isChecked()) ui->trigger4->setDisabled(false);
+        if(ui->enable5->isChecked()) ui->trigger5->setDisabled(false);
+        if(ui->enable6->isChecked()) ui->trigger6->setDisabled(false);
+        if(ui->enable7->isChecked()) ui->trigger7->setDisabled(false);
+        if(ui->enable8->isChecked()) ui->trigger8->setDisabled(false);
+    }
+
+}
+
+
+void MainWindow::on_enable1_clicked(bool checked)
+{
+    enable_and_trigger(checked,ui->trigger1);
+}
+
+void MainWindow::on_enable2_clicked(bool checked)
+{
+    enable_and_trigger(checked,ui->trigger2);
+}
+
+void MainWindow::on_enable3_clicked(bool checked)
+{
+    enable_and_trigger(checked,ui->trigger3);
+}
+
+void MainWindow::on_enable4_clicked(bool checked)
+{
+    enable_and_trigger(checked,ui->trigger4);
+}
+
+void MainWindow::on_enable5_clicked(bool checked)
+{
+    enable_and_trigger(checked,ui->trigger5);
+}
+
+void MainWindow::on_enable6_clicked(bool checked)
+{
+    enable_and_trigger(checked,ui->trigger6);
+}
+
+void MainWindow::on_enable7_clicked(bool checked)
+{
+    enable_and_trigger(checked,ui->trigger7);
+}
+
+void MainWindow::on_enable8_clicked(bool checked)
+{
+    enable_and_trigger(checked,ui->trigger8);
+}
+
+
+
+
+
+
+
+
+void MainWindow::on_pushButton_SetConfig_clicked()
+{
+    bool enable_ch[8];
+    enable_ch[0] = ui->enable1->isChecked();
+    enable_ch[1] = ui->enable2->isChecked();
+    enable_ch[2] = ui->enable3->isChecked();
+    enable_ch[3] = ui->enable4->isChecked();
+    enable_ch[4] = ui->enable5->isChecked();
+    enable_ch[5] = ui->enable6->isChecked();
+    enable_ch[6] = ui->enable7->isChecked();
+    enable_ch[7] = ui->enable8->isChecked();
+
+    bool trigger_ch[8];
+    trigger_ch[0] = ui->trigger1->isChecked();
+    trigger_ch[1] = ui->trigger2->isChecked();
+    trigger_ch[2] = ui->trigger3->isChecked();
+    trigger_ch[3] = ui->trigger4->isChecked();
+    trigger_ch[4] = ui->trigger5->isChecked();
+    trigger_ch[5] = ui->trigger6->isChecked();
+    trigger_ch[6] = ui->trigger7->isChecked();
+    trigger_ch[7] = ui->trigger8->isChecked();
+
+    int trigger_level_ch[8];
+    trigger_level_ch[0] = std::stoi(ui->triggerL1->text().toStdString());
+    trigger_level_ch[1] = std::stoi(ui->triggerL2->text().toStdString());
+    trigger_level_ch[2] = std::stoi(ui->triggerL3->text().toStdString());
+    trigger_level_ch[3] = std::stoi(ui->triggerL4->text().toStdString());
+    trigger_level_ch[4] = std::stoi(ui->triggerL5->text().toStdString());
+    trigger_level_ch[5] = std::stoi(ui->triggerL6->text().toStdString());
+    trigger_level_ch[6] = std::stoi(ui->triggerL7->text().toStdString());
+    trigger_level_ch[7] = std::stoi(ui->triggerL8->text().toStdString());
+
+    bool externaltrigger = ui->externaltrigger->isChecked();
+
+    std::string trigger_type = "";
+    if(externaltrigger){
+        trigger_type = "External trigger";
+    }
+    else{
+        trigger_type = "Self trigger";
+    }
+
+    int baseline_ch[8];
+    baseline_ch[0] = std::stoi(ui->base1->text().toStdString());
+    baseline_ch[1] = std::stoi(ui->base2->text().toStdString());
+    baseline_ch[2] = std::stoi(ui->base3->text().toStdString());
+    baseline_ch[3] = std::stoi(ui->base4->text().toStdString());
+    baseline_ch[4] = std::stoi(ui->base5->text().toStdString());
+    baseline_ch[5] = std::stoi(ui->base6->text().toStdString());
+    baseline_ch[6] = std::stoi(ui->base7->text().toStdString());
+    baseline_ch[7] = std::stoi(ui->base8->text().toStdString());
+
+    std::string filetype = ui->FileTypeSet->currentText().toStdString();
+    std::transform(filetype.begin(), filetype.end(),filetype.begin(), ::toupper);
+
+    double time = std::stod(ui->time_in_us->text().toStdString());
+    time = time*1e-6;
+    double sampling = 0;
+    std::string samplingRate = ui->samplingRate->currentText().toStdString();
+    if(samplingRate == "500 MSamples/s") sampling = 2e-9;
+    if(samplingRate == "250 MSamples/s") sampling = 4e-9;
+    if(samplingRate == "125 MSamples/s") sampling = 8e-9;
+    if(samplingRate == "62.5 MSamples/s") sampling = 16e-9;
+
+    double dnpts = time/sampling;
+    int npts = (int)round(dnpts);
+
+
+    int timeCheck = int(round(time*1e9));
+    int samplingCheck = sampling*1e9;
+    int res = timeCheck%samplingCheck;
+    if(res!=0){
+        int finaltime = npts*samplingCheck;
+        std::string message = "Time duration and sampling rate are not compatible!\nRecord length set to " + std::to_string(npts) + "\nCorresponding to " + std::to_string(finaltime) + " ns";
+        QMessageBox::about(this,"WARNING!!!",message.c_str());
+    }
+
+    std::string samplingRate2 = ui->samplingRate_2->currentText().toStdString();
+
+    if(samplingRate!=samplingRate2){
+        QMessageBox::about(this,"ERROR!!!","Sampling rate does not match the what is set at ''Recompile'.\nPlease, check if the configuration is correct or recompile wavedump");
+    }
+
+    int factor = getFactor();
+
+    int record_length = npts*factor;
+
+    std::string polarity = ui->setPolarity->currentText().toStdString();
+    std::transform(polarity.begin(), polarity.end(),polarity.begin(), ::toupper);
+
+
+
+    std::string setmessage = "Trigger type: " + trigger_type + "\nRecord length: " + std::to_string(npts) + " pts\nPulse polarity: " + polarity + "\nFile type: " + filetype;
+    QMessageBox::about(this,"",setmessage.c_str());
+
+    writeConfigFile(enable_ch,trigger_ch,trigger_level_ch,externaltrigger,baseline_ch,filetype,record_length,polarity);
+
+
+
+}
+
+
+void MainWindow::writeConfigFile(bool enable_ch[], bool trigger_ch[], int trigger_level_ch[], bool externaltrigger, int baseline_ch[],std::string filetype,int record_length,std::string polarity)
+{
+
+   std::ofstream f;
+   f.open("/etc/wavedump/WaveDumpConfig.txt", std::ofstream::out);
+
+   if(!f.is_open()){
+       std::cout << "PROBLENS ! ";
+   }
+   else{
+       std::cout << "NO PROBLENS ! ";
+   }
+   std::string setexternaltrigger = "DISABLED";
+   if(externaltrigger){
+       setexternaltrigger = "ACQUISITION_ONLY";
+   }
+
+   std::string output[15];
+   int nout = 15;
+   output[0] = "[COMMON]";
+   output[1] = "OPEN USB " + std::to_string(ui->usbPort->value()) + " 0";
+   output[2] = "RECORD_LENGTH  " + std::to_string(record_length);
+   output[3] = "DECIMATION_FACTOR  1";
+   output[4] = "POST_TRIGGER  " + ui->postTrigger->text().toStdString();
+   output[5] = "PULSE_POLARITY  " + polarity;
+   output[6] = "EXTERNAL_TRIGGER   " + setexternaltrigger;
+   output[7] = "FPIO_LEVEL  " + ui->externalType->currentText().toStdString();
+   output[8] = "OUTPUT_FILE_FORMAT  " + filetype;
+   output[9] = "OUTPUT_FILE_HEADER  YES";
+   output[10] = "TEST_PATTERN  NO";
+   output[11] = "ENABLE_INPUT  NO";
+   output[12] = "BASELINE_LEVEL  10";
+   output[13] = "TRIGGER_THRESHOLD  100";
+   output[14] = "CHANNEL_TRIGGER  DISABLED";
+
+   std::string tstate[2] = {"DISABLED","ACQUISITION_ONLY"};
+   std::string estate[2] = {"NO","YES"};
+
+   for(int i = 0; i<nout; i++){
+       f << output[i] << "\n\n";
+   }
+   for(int i = 0; i<channels; i++){
+       int aux = enable_ch[i] ? 1 : 0;
+       int aux2 = trigger_ch[i] ? 1 : 0;
+       f << "[" + std::to_string(i) + "]" + "\n";
+       f << "ENABLE_INPUT\t\t\t\t" + estate[aux] + "\n";
+       if(enable_ch[i]){
+            f << "BASELINE_LEVEL\t\t\t" + std::to_string(baseline_ch[i]) + "\n";
+            f << "TRIGGER_THRESHOLD\t" + std::to_string(trigger_level_ch[i]) + "\n";
+            f << "CHANNEL_TRIGGER\t\t" + tstate[aux2] + "\n";
+       }
+    f << "\n";
+   }
+   f << "\n";
+   f.close();
+
+
+
+}

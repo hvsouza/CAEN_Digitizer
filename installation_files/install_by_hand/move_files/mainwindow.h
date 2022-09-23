@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <string>
 #include <vector>
+#include <QCheckBox>
+#include <fstream>
+
 namespace Ui {
 class MainWindow;
 }
@@ -15,6 +18,8 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    void disabletriggers();
+
     ~MainWindow();
 
 private:
@@ -26,6 +31,10 @@ private:
     std::string folder_name(int run, int subrun, double voltage, double threshold, std::string triggerCh);
     std::string changeVoltage(double voltage);
     bool checkSpaces(std::string var);
+    int getFactor();
+    void writeConfigFile(bool enable_ch[], bool trigger_ch[], int trigger_level_ch[], bool externaltrigger, int baseline_ch[],std::string filetype,int record_length,std::string polarity);
+
+
 
 private slots:
     void on_pushButton_2_clicked();
@@ -38,7 +47,31 @@ private slots:
 
     //void on_radioButton_2_clicked(bool checked);
 
+    void on_pushButtonRecompile_clicked();
+
     void on_lock_folder_clicked(bool checked);
+
+    void enable_and_trigger(bool checked, QCheckBox* myt);
+    void setEnabledTrigger(QCheckBox *myt);
+    void setDisabledTrigger(QCheckBox *myt);
+    void on_externaltrigger_clicked(bool checked);
+
+
+
+    void on_enable1_clicked(bool checked);
+    void on_enable2_clicked(bool checked);
+    void on_enable3_clicked(bool checked);
+    void on_enable4_clicked(bool checked);
+    void on_enable5_clicked(bool checked);
+    void on_enable6_clicked(bool checked);
+    void on_enable7_clicked(bool checked);
+    void on_enable8_clicked(bool checked);
+
+
+
+    void on_FileTypeSet_currentTextChanged(const QString &arg1);
+
+    void on_pushButton_SetConfig_clicked();
 
 private:
     Ui::MainWindow *ui;
