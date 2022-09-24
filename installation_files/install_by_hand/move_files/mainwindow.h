@@ -32,8 +32,7 @@ private:
     std::string changeVoltage(double voltage);
     bool checkSpaces(std::string var);
     int getFactor();
-    void writeConfigFile(bool enable_ch[], bool trigger_ch[], int trigger_level_ch[], bool externaltrigger, int baseline_ch[],std::string filetype,int record_length,std::string polarity);
-
+    void writeConfigFile(bool extra);
 
 
 private slots:

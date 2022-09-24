@@ -428,7 +428,7 @@ void MainWindow::on_pushButtonRecompile_clicked()
     system(recompile_command.c_str());
 
     ui->samplingRate->setCurrentText(ui->samplingRate_2->currentText());
-    on_pushButton_SetConfig_clicked();
+    writeConfigFile(false);
 
     QMessageBox::about(this,"","Done!\n\Please restart wavedump.");
 
@@ -567,6 +567,15 @@ void MainWindow::on_enable8_clicked(bool checked)
 
 void MainWindow::on_pushButton_SetConfig_clicked()
 {
+
+    writeConfigFile(true);
+
+}
+
+
+void MainWindow::writeConfigFile(bool extra)
+{
+
     bool enable_ch[8];
     enable_ch[0] = ui->enable1->isChecked();
     enable_ch[1] = ui->enable2->isChecked();
@@ -645,7 +654,7 @@ void MainWindow::on_pushButton_SetConfig_clicked()
     std::string samplingRate2 = ui->samplingRate_2->currentText().toStdString();
 
     if(samplingRate!=samplingRate2){
-        QMessageBox::about(this,"ERROR!!!","Sampling rate does not match the what is set at ''Recompile'.\nPlease, check if the configuration is correct or recompile wavedump");
+        QMessageBox::about(this,"ERROR!!!","Sampling rate does not match the what is set at ''Recompile''.\nPlease, check if the configuration is correct or recompile wavedump");
     }
 
     int factor = getFactor();
@@ -655,29 +664,11 @@ void MainWindow::on_pushButton_SetConfig_clicked()
     std::string polarity = ui->setPolarity->currentText().toStdString();
     std::transform(polarity.begin(), polarity.end(),polarity.begin(), ::toupper);
 
-
-
-    std::string setmessage = "Trigger type: " + trigger_type + "\nRecord length: " + std::to_string(npts) + " pts\nPulse polarity: " + polarity + "\nFile type: " + filetype;
-    QMessageBox::about(this,"",setmessage.c_str());
-
-    writeConfigFile(enable_ch,trigger_ch,trigger_level_ch,externaltrigger,baseline_ch,filetype,record_length,polarity);
-
-
-
-}
-
-
-void MainWindow::writeConfigFile(bool enable_ch[], bool trigger_ch[], int trigger_level_ch[], bool externaltrigger, int baseline_ch[],std::string filetype,int record_length,std::string polarity)
-{
-
    std::ofstream f;
    f.open("/etc/wavedump/WaveDumpConfig.txt", std::ofstream::out);
 
    if(!f.is_open()){
-       std::cout << "PROBLENS ! ";
-   }
-   else{
-       std::cout << "NO PROBLENS ! ";
+       QMessageBox::about(this,"ERROR!","WaveDumpConfig.txt not opened");
    }
    std::string setexternaltrigger = "DISABLED";
    if(externaltrigger){
@@ -722,6 +713,15 @@ void MainWindow::writeConfigFile(bool enable_ch[], bool trigger_ch[], int trigge
    }
    f << "\n";
    f.close();
+
+   std::string setmessage = "Trigger type: " + trigger_type + "\nRecord length: " + std::to_string(npts) + " pts\nPulse polarity: " + polarity + "\nFile type: " + filetype;
+   if(extra){
+       setmessage = setmessage + "\nClick 'Ok' and reaload wavedump (shift+r)";
+   }
+   QMessageBox::about(this,"",setmessage.c_str());
+
+
+
 
 
 

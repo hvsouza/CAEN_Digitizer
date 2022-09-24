@@ -67,7 +67,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>3</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -2489,7 +2489,7 @@
        </rect>
       </property>
       <property name="currentText">
-       <string>500 MSamples/s</string>
+       <string>250 MSamples/s</string>
       </property>
       <item>
        <property name="text">
@@ -2785,7 +2785,7 @@ The password is the same you use to login the computer.</string>
        </rect>
       </property>
       <property name="currentText">
-       <string>500 MSamples/s</string>
+       <string>250 MSamples/s</string>
       </property>
       <item>
        <property name="text">
