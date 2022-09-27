@@ -67,7 +67,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -83,13 +83,16 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_16">
        <attribute name="title">
         <string>Default</string>
        </attribute>
        <widget class="QRadioButton" name="calibration_check_3">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
           <x>310</x>
@@ -103,6 +106,18 @@
         </property>
         <property name="text">
          <string>Calibration done</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <property name="autoRepeat">
+         <bool>false</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>false</bool>
         </property>
        </widget>
        <widget class="QLabel" name="label_22">
@@ -566,6 +581,19 @@
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
+       <widget class="QPushButton" name="button_save_config_2">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>290</y>
+          <width>161</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Save config. file</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="tab_15">
        <attribute name="title">
@@ -574,7 +602,7 @@
        <widget class="QLabel" name="label_7">
         <property name="geometry">
          <rect>
-          <x>6</x>
+          <x>16</x>
           <y>180</y>
           <width>81</width>
           <height>20</height>
@@ -588,10 +616,13 @@
         </property>
        </widget>
        <widget class="QRadioButton" name="calibration_check">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
-          <x>314</x>
-          <y>230</y>
+          <x>320</x>
+          <y>190</y>
           <width>161</width>
           <height>23</height>
          </rect>
@@ -602,11 +633,23 @@
         <property name="text">
          <string>Calibration done</string>
         </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+        <property name="autoRepeat">
+         <bool>false</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>false</bool>
+        </property>
        </widget>
        <widget class="QLabel" name="triggerCh">
         <property name="geometry">
          <rect>
-          <x>6</x>
+          <x>16</x>
           <y>150</y>
           <width>81</width>
           <height>20</height>
@@ -622,7 +665,7 @@
        <widget class="QLabel" name="label">
         <property name="geometry">
          <rect>
-          <x>20</x>
+          <x>30</x>
           <y>30</y>
           <width>67</width>
           <height>17</height>
@@ -638,7 +681,7 @@
        <widget class="QLabel" name="label_4">
         <property name="geometry">
          <rect>
-          <x>6</x>
+          <x>16</x>
           <y>120</y>
           <width>81</width>
           <height>20</height>
@@ -654,7 +697,7 @@
        <widget class="QLabel" name="label_2">
         <property name="geometry">
          <rect>
-          <x>20</x>
+          <x>30</x>
           <y>60</y>
           <width>67</width>
           <height>17</height>
@@ -670,7 +713,7 @@
        <widget class="QLineEdit" name="voltage">
         <property name="geometry">
          <rect>
-          <x>90</x>
+          <x>100</x>
           <y>90</y>
           <width>111</width>
           <height>21</height>
@@ -686,7 +729,7 @@
        <widget class="QLineEdit" name="trigger_channel">
         <property name="geometry">
          <rect>
-          <x>90</x>
+          <x>100</x>
           <y>150</y>
           <width>111</width>
           <height>21</height>
@@ -705,7 +748,7 @@
        <widget class="QLineEdit" name="run">
         <property name="geometry">
          <rect>
-          <x>90</x>
+          <x>100</x>
           <y>30</y>
           <width>111</width>
           <height>21</height>
@@ -724,8 +767,8 @@
        <widget class="QPushButton" name="button_movefile">
         <property name="geometry">
          <rect>
-          <x>370</x>
-          <y>100</y>
+          <x>380</x>
+          <y>40</y>
           <width>89</width>
           <height>25</height>
          </rect>
@@ -737,7 +780,7 @@
        <widget class="QLabel" name="label_6">
         <property name="geometry">
          <rect>
-          <x>210</x>
+          <x>220</x>
           <y>120</y>
           <width>41</width>
           <height>16</height>
@@ -750,7 +793,7 @@
        <widget class="QLineEdit" name="subrun">
         <property name="geometry">
          <rect>
-          <x>90</x>
+          <x>100</x>
           <y>60</y>
           <width>111</width>
           <height>21</height>
@@ -766,8 +809,8 @@
        <widget class="QPushButton" name="pushButton_2">
         <property name="geometry">
          <rect>
-          <x>370</x>
-          <y>190</y>
+          <x>380</x>
+          <y>160</y>
           <width>89</width>
           <height>25</height>
          </rect>
@@ -1048,7 +1091,7 @@
        <widget class="QLineEdit" name="threshold">
         <property name="geometry">
          <rect>
-          <x>90</x>
+          <x>100</x>
           <y>120</y>
           <width>111</width>
           <height>21</height>
@@ -1064,7 +1107,7 @@
        <widget class="QLabel" name="label_5">
         <property name="geometry">
          <rect>
-          <x>210</x>
+          <x>220</x>
           <y>90</y>
           <width>16</width>
           <height>16</height>
@@ -1077,7 +1120,7 @@
        <widget class="QLabel" name="label_3">
         <property name="geometry">
          <rect>
-          <x>20</x>
+          <x>30</x>
           <y>90</y>
           <width>67</width>
           <height>17</height>
@@ -1093,7 +1136,7 @@
        <widget class="QLineEdit" name="extra">
         <property name="geometry">
          <rect>
-          <x>90</x>
+          <x>100</x>
           <y>180</y>
           <width>111</width>
           <height>21</height>
@@ -1107,6 +1150,19 @@
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="button_save_config">
+        <property name="geometry">
+         <rect>
+          <x>310</x>
+          <y>290</y>
+          <width>161</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Save config. file</string>
         </property>
        </widget>
       </widget>

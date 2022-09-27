@@ -28,11 +28,14 @@ private:
 
     bool move_calibration_file(int run, int subrun, double voltage, double threshold, std::string triggerCh, std::string extra, std::string primary, std::string file_type);
 
-    std::string folder_name(int run, int subrun, double voltage, double threshold, std::string triggerCh);
+    std::string folder_name();
+    std::string folder_name2();
+
     std::string changeVoltage(double voltage);
     bool checkSpaces(std::string var);
     int getFactor();
     void writeConfigFile(bool extra);
+    void save_config_file(std::string folder);
 
 
 private slots:
@@ -71,6 +74,10 @@ private slots:
     void on_FileTypeSet_currentTextChanged(const QString &arg1);
 
     void on_pushButton_SetConfig_clicked();
+
+    void on_button_save_config_2_clicked();
+
+    void on_button_save_config_clicked();
 
 private:
     Ui::MainWindow *ui;

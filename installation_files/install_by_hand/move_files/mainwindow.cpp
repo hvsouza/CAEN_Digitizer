@@ -41,7 +41,7 @@ void MainWindow::on_pushButton_4_clicked()
         ui->subrun3->setText("0");
         ui->subrun_2->setText("0");
 
-        ui->calibration_check_3->setChecked(false);
+//        ui->calibration_check_3->setChecked(false);
     }
 
 }
@@ -68,7 +68,7 @@ void MainWindow::on_pushButton_2_clicked()
         ui->subrun->setText("0");
         ui->subrun_2->setText("0");
 
-        ui->calibration_check->setChecked(false);
+       // ui->calibration_check->setChecked(false);
     }
 
 }
@@ -122,19 +122,27 @@ void MainWindow::on_button_movefile_clicked()
     ui->subrun->setText(QString::fromStdString(newSubRun));
 }
 
-std::string MainWindow::folder_name(int run, int subrun, double voltage, double threshold, std::string triggerCh){
+std::string MainWindow::folder_name(){
+    // This take the necessary info to create the folder and files
+    int run = std::stoi(ui->run->text().toStdString());
+    double voltage = std::stod(ui->voltage->text().toStdString());
+    double threshold = std::stod(ui->threshold->text().toStdString());
+    std::string triggerCh = ui->trigger_channel->text().toStdString();
+
     std::string folder = "";
     std::string voltageS = changeVoltage(voltage);
     folder = "run" + std::to_string(run) + "_" + voltageS + "_" + std::to_string(static_cast<int>(threshold)) + "ADC_" + triggerCh + "/";
     return folder;
 }
 
+
+
 bool MainWindow::move_data_file(int run, int subrun, double voltage, double threshold, std::string triggerCh, std::string extra, std::string primary, std::string file_type)
 {
     int out = 0;
     std::string mkdir = "mkdir -p ~/Documents/ADC_data/coldbox_data/" + primary + "/";
     out = system(mkdir.c_str());
-    std::string folder = folder_name(run,subrun,voltage,threshold,triggerCh);
+    std::string folder = folder_name();
 
     std::vector<std::string> mvi(channels);
     for(int i = 0; i<channels; i++){
@@ -183,10 +191,20 @@ bool MainWindow::move_data_file(int run, int subrun, double voltage, double thre
 
     out = system(mkdir.c_str());
 
+    bool enable_ch[8];
+    enable_ch[0] = ui->enable1->isChecked();
+    enable_ch[1] = ui->enable2->isChecked();
+    enable_ch[2] = ui->enable3->isChecked();
+    enable_ch[3] = ui->enable4->isChecked();
+    enable_ch[4] = ui->enable5->isChecked();
+    enable_ch[5] = ui->enable6->isChecked();
+    enable_ch[6] = ui->enable7->isChecked();
+    enable_ch[7] = ui->enable8->isChecked();
+
     //QMessageBox::about(this,"",QString::fromStdString(mv0));
     for(int i = 0; i<channels; i++){
         //std::cout << mvi[i] << std::endl;
-        out = system(mvi[i].c_str());
+        if(enable_ch[i]) out = system(mvi[i].c_str());
     }
 
     return true;
@@ -211,12 +229,14 @@ bool MainWindow::checkSpaces(std::string var){
     return noSpace;
 }
 
-bool MainWindow::move_data_file_style2(int run, int subrun, std::string block1, std::string block2, std::string extra, std::string primary, std::string file_type)
-{
-    int out = 0;
-    std::string mkdir = "mkdir -p ~/Documents/ADC_data/coldbox_data/" + primary + "/";
-    out = system(mkdir.c_str());
+std::string MainWindow::folder_name2(){
+
     std::string folder = "";
+    int run = std::stoi(ui->run_3->text().toStdString());
+    std::string block1 = ui->block1->text().toStdString();
+    std::string block2 = ui->block2->text().toStdString();
+    std::string extra = ui->extra_3->text().toStdString();
+
 
     bool noSpaceB1 = checkSpaces(block1);
     bool noSpaceB2 = checkSpaces(block2);
@@ -226,15 +246,15 @@ bool MainWindow::move_data_file_style2(int run, int subrun, std::string block1, 
 
     if(!noSpaceB1){
         QMessageBox::about(this,"","Warning: block1 has space");
-        return false;
+        return "false";
     }
     if(!noSpaceB2){
         QMessageBox::about(this,"","Warning: block2 has space");
-        return false;
+        return "false";
     }
     if(!noSpace){
         QMessageBox::about(this,"","Warning: extra has space");
-        return false;
+        return "false";
     }
 
      if(block1!=""){
@@ -244,6 +264,18 @@ bool MainWindow::move_data_file_style2(int run, int subrun, std::string block1, 
          folder = folder + "_" + block2;
      }
      folder = folder + "/";
+     return folder;
+}
+
+bool MainWindow::move_data_file_style2(int run, int subrun, std::string block1, std::string block2, std::string extra, std::string primary, std::string file_type)
+{
+    int out = 0;
+    std::string mkdir = "mkdir -p ~/Documents/ADC_data/coldbox_data/" + primary + "/";
+    out = system(mkdir.c_str());
+
+    std::string folder = folder_name2();
+    if(folder=="false") return false;
+
 
     std::vector<std::string> mvi(channels);
     for(int i = 0; i<channels; i++){
@@ -266,11 +298,10 @@ bool MainWindow::move_data_file_style2(int run, int subrun, std::string block1, 
          }
     }
     if(extra!=""){
-        if(noSpace){
-            for(int i = 0; i<channels; i++){
-                 mvi[i] = mvi[i] + "_" + extra;
-            }
+        for(int i = 0; i<channels; i++){
+            mvi[i] = mvi[i] + "_" + extra;
         }
+
     }
     for(int i = 0; i<channels; i++){
         mvi[i] = mvi[i]+file_type;
@@ -278,10 +309,20 @@ bool MainWindow::move_data_file_style2(int run, int subrun, std::string block1, 
 
     out = system(mkdir.c_str());
 
+    bool enable_ch[8];
+    enable_ch[0] = ui->enable1->isChecked();
+    enable_ch[1] = ui->enable2->isChecked();
+    enable_ch[2] = ui->enable3->isChecked();
+    enable_ch[3] = ui->enable4->isChecked();
+    enable_ch[4] = ui->enable5->isChecked();
+    enable_ch[5] = ui->enable6->isChecked();
+    enable_ch[6] = ui->enable7->isChecked();
+    enable_ch[7] = ui->enable8->isChecked();
+
     //QMessageBox::about(this,"",QString::fromStdString(mv0));
     for(int i = 0; i<channels; i++){
         //std::cout << mvi[i] << std::endl;
-        out = system(mvi[i].c_str());
+        if(enable_ch[i]) out = system(mvi[i].c_str());
     }
 
     return true;
@@ -331,7 +372,7 @@ bool MainWindow::move_calibration_file(int run, int subrun, double voltage, doub
     int out = 0;
     std::string mkdir = "mkdir -p ~/Documents/ADC_data/coldbox_data/" + primary + "/";
     out = system(mkdir.c_str());
-    std::string folder = folder_name(run,subrun,voltage,threshold,triggerCh);
+    std::string folder = folder_name();
     folder = folder + "Calibration/";
 
     std::vector<std::string> mvi(channels);
@@ -360,10 +401,20 @@ bool MainWindow::move_calibration_file(int run, int subrun, double voltage, doub
 
     out = system(mkdir.c_str());
 
+    bool enable_ch[8];
+    enable_ch[0] = ui->enable1->isChecked();
+    enable_ch[1] = ui->enable2->isChecked();
+    enable_ch[2] = ui->enable3->isChecked();
+    enable_ch[3] = ui->enable4->isChecked();
+    enable_ch[4] = ui->enable5->isChecked();
+    enable_ch[5] = ui->enable6->isChecked();
+    enable_ch[6] = ui->enable7->isChecked();
+    enable_ch[7] = ui->enable8->isChecked();
+
     //QMessageBox::about(this,"",QString::fromStdString(mv0));
     for(int i = 0; i<channels; i++){
         // std::cout << mvi[i] << std::endl;
-        out = system(mvi[i] .c_str());
+        if(enable_ch[i]) out = system(mvi[i] .c_str());
     }
 
 
@@ -703,11 +754,11 @@ void MainWindow::writeConfigFile(bool extra)
        int aux = enable_ch[i] ? 1 : 0;
        int aux2 = trigger_ch[i] ? 1 : 0;
        f << "[" + std::to_string(i) + "]" + "\n";
-       f << "ENABLE_INPUT\t\t\t\t" + estate[aux] + "\n";
+       f << "ENABLE_INPUT		" + estate[aux] + "\n";
        if(enable_ch[i]){
-            f << "BASELINE_LEVEL\t\t\t" + std::to_string(baseline_ch[i]) + "\n";
-            f << "TRIGGER_THRESHOLD\t" + std::to_string(trigger_level_ch[i]) + "\n";
-            f << "CHANNEL_TRIGGER\t\t" + tstate[aux2] + "\n";
+            f << "BASELINE_LEVEL		" + std::to_string(baseline_ch[i]) + "\n";
+            f << "TRIGGER_THRESHOLD	" + std::to_string(trigger_level_ch[i]) + "\n";
+            f << "CHANNEL_TRIGGER		" + tstate[aux2] + "\n";
        }
     f << "\n";
    }
@@ -726,3 +777,49 @@ void MainWindow::writeConfigFile(bool extra)
 
 
 }
+
+void MainWindow::save_config_file(std::string folder){
+    std::string primary = ui->primary_name->text().toStdString();
+    std::string cpy_command = "cp /etc/wavedump/WaveDumpConfig.txt ~/Documents/ADC_data/coldbox_data/" + primary + "/" + folder + "config_used.log";
+    system(cpy_command.c_str());
+
+    QMessageBox::about(this,"","Config. file saved to corresponding run folder");
+};
+
+
+void MainWindow::on_button_save_config_2_clicked()
+{
+    std::string primary = ui->primary_name->text().toStdString();
+
+    std::string mkdir = "mkdir -p ~/Documents/ADC_data/coldbox_data/" + primary + "/";
+    system(mkdir.c_str());
+    std::string folder = folder_name2();
+
+
+    mkdir = mkdir+folder;
+
+    system(mkdir.c_str());
+
+    save_config_file(folder);
+}
+
+
+void MainWindow::on_button_save_config_clicked()
+{
+
+
+    // This take the necessary info to create the folder and files
+    std::string primary = ui->primary_name->text().toStdString();
+
+    std::string mkdir = "mkdir -p ~/Documents/ADC_data/coldbox_data/" + primary + "/";
+    system(mkdir.c_str());
+    std::string folder = folder_name();
+
+    mkdir = mkdir+folder;
+
+    system(mkdir.c_str());
+
+
+    save_config_file(folder);
+}
+
