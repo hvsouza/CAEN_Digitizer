@@ -99,9 +99,12 @@
    Please, refer to the wavedump manual to better understand the acquisition configuration.
 
    The configuration file of wavedump is located at =/etc/wavedump/WaveDumpConfig.txt=. \\
-   If you cd in the WaveDumpData folder =cd ~/Desktop/WaveDumpData= and execute =./WaveDumpExe.sh=, the configuration file should open together with wavedump.
+   #   #   Old version:
+   #   If you cd in the WaveDumpData folder =cd ~/Desktop/WaveDumpData= and execute =./WaveDumpExe.sh=, the configuration file should open together with wavedump.
 
-   The current important parameters to take care are reported at [[#extra-common-variables]].
+   The current important parameters to take care are reported at [[#extra-common-variables]]. \\
+
+   You can configure wavedump using the GUI instead (see [[#using-the-gui]]) \\
 
 ** Using wavedump
 
@@ -132,7 +135,7 @@
    Assuming you have [s] already running, user’s chosen setup done and triggering events.
    
    1. [W] save 10,000 (if you want to save 10,000 more, press [W] again at the end).
-   2. Move the .dat files by yourself or with GUI (see [[#using-the-gui]]) 
+   2. Move the .dat files by yourself or with GUI (see [[#using-the-gui]])
 
    For acquire more data, repeat this. 
 
@@ -170,7 +173,7 @@
    OPEN USB X 0
    #+end_example
 
-   
+
 * QtCreator GUI
 ** Installation
    Requirements to install QtCreator:
@@ -200,18 +203,71 @@
    If the name of the file is different, you need to update it at =~/Desktop/WaveDumpData/move_files.sh=
 ** Using the GUI
 
-   The GUI is just an interface to automatically move files from the WaveDumpData folder to another folder. It will keep a track of run and subrun number for you, renaming it with a standard. 
+   The GUI is just an interface to automatically move files from the WaveDumpData folder to another folder. It will keep a track of run and subrun number for you, renaming it with a standard.
+
+
+*** Acquisition
 
 *Default Acquisition*
 
    #+HTML: <img src=".repo_img/qtcreator_gui.png" align="center" width="400" />   
+
+
+- “Run” is the run number
+- “subrun” is the subrun number
+- "Block1" is a block of text to compose the name of folder and files (separated by underline, not spaces)
+- "Block2" is a second block of text in case you want to keep block1 fixed and change only block2.
+- “Extra info” is any extra information that will be written at the end of the files (not folders), see bellow.
+
+  In example above, the named will be composed by the two blocks as =block1_block2= (you can use only one of the two blocks if desired, just leave it as blank). The option "Extra info" keeps the same functionality. In the example above folders and files would be named as:
+
+   In the example from the image above, the GUI will create a folder named =new_data= at =~/Documents/ADC_data/coldbox_data= (the lock option is just to not change the name by mistake, you don’t need to lock it). \\
+   After taking data with two channels, for example, you should have “wave0.dat” and “wave1.dat” at WaveDumpData.
+
+   When pressing “Move files”, a folder named “run0_two_different_blocks_of_text” will be created (note: “extra info” will not be placed in the name of the folder), inside the folder “new_data” and the two files will be moved there as:
+
+
+#+begin_example
+0_wave0_two_different_blocks_of_text
+0_wave1_two_different_blocks_of_text
+#+end_example
+   (note: if you have written “some_comments” at the “Extra info” field, the name of the file would be “0_wave0_42V30_20ADC_Ch0_some_comments .dat)\\
+   (note: the GUI will only transfer the data of the enabled channels configured at "Config.", see [[#config]])\\
+
+   In the GUI, the subrun number should have been changed from 0 to 1. If you take another set of data and click “Move files” again, you should have now four files in total named as:
+
+#+begin_example
+0_wave0_two_different_blocks_of_text
+0_wave1_two_different_blocks_of_text
+1_wave0_two_different_blocks_of_text
+1_wave1_two_different_blocks_of_text
+#+end_example
+
+   And subrun should be equal 2 on the GUI. \\
+
+   Whenever you are finished with this run (lets say, changing SiPM bias, threshold or just because you want a different run in which you will give details on a README file later), you click “Finish run”. \\
+
+   # , a message will pop-out saying “Warning: calibration might not exist. Finish run anyway?”, if you are not using the calibration “feature” you can just click “yes”.  \\
+   # (otherwise click “no” and take the calibration that you forgot)
+
+   This should put subrun back to 0 and Run now will be equal 1.
+
+   (A way to play with the GUI is to simply create empty waveX.dat files and transfer they to see the structure of the data).
+
+   The buttom "Save config. file" will save the current wavedump configuration file as "used_config.log" in the corresponding run folder.
+
+   Please, keep in mind that the run and subrun numbers can be changed by hand. So if you make any mistake you can change the value back there, however, the move is done with the tag “-n” so the data is not overwritten, if you need to replace subrun 0, for instance, delete the wrong one first.
+
+*Style2 Acquisition*
+
+   #+HTML: <img src=".repo_img/qtcreator_style2.png" align="center" width="400" />   
 
 - “Run” is the run number
 - “subrun” is the subrun number
 - “Voltage” is the bias voltage of the SiPMs (always set a number with one or two decimals only, ex: 34.0 or 34.00)
 - “Threshold” is the the threshold set at the ADC (this should always be a integer number)
 - “Trigger Ch” is the channel in which you are triggering, HOWEVER, the field there can be any text, so you can write, for instance, “Ch0_and_Ch1” or even include some extra information and write something like this “Ch0_and_Ch1_cosmic_run_after_lunch_break”
-- “Extra info” is any extra information that will be written at the end of the files (not folders), see bellow. 
+- “Extra info” is any extra information that will be written at the end of the files (not folders), see bellow.
 
    In the example from the image above, the GUI will create a folder named =new_data= at =~/Documents/ADC_data/coldbox_data= (the lock option is just to not change the name by mistake, you don’t need to lock it). \\
    After taking data with two channels, for example, you should have “wave0.dat” and “wave1.dat” at WaveDumpData.
@@ -219,47 +275,28 @@
    When pressing “Move files”, a folder named “run0_42V30_20ADC_Ch0” will be created (note: “extra info” will not be placed in the name of the folder), inside the folder “new_data” and the two files will be moved there as:
 
 #+begin_example
-   0_wave0_42V30_20ADC_Ch0.dat 
+   0_wave0_42V30_20ADC_Ch0.dat
    0_wave1_42V30_20ADC_Ch0.dat
 #+end_example
-   (note: if you have written “some_comments” at the “Extra info” field, the name of the file would be “0_wave0_42V30_20ADC_Ch0_some_comments .dat)
-
-   In the GUI, the subrun number should have been changed from 0 to 1. If you take another set of data and click “Move files” again, you should have now four files in total named as:
-
-   #+begin_example
-   0_wave0_42V30_20ADC_Ch0.dat 
-   0_wave1_42V30_20ADC_Ch0.dat 
-   1_wave0_42V30_20ADC_Ch0.dat 
-   1_wave1_42V30_20ADC_Ch0.dat
-   #+end_example
-
-   And subrun should be equal 2 on the GUI.
-
-   Whenever you are finished with this run (lets say, changing SiPM bias, threshold or just because you want a different run in which you will give details on a README file later), you click “Finish run”, a message will pop-out saying “Warning: calibration might not exist. Finish run anyway?”, if you are not using the calibration “feature” you can just click “yes”.  \\
-   (otherwise click “no” and take the calibration that you forgot) 
-
-   This should put subrun back to 0 and Run now will be equal 1. 
-
-   (A way to play with the GUI is to simply create empty waveX.dat files and transfer they to see the structure of the data).
-
-*Style2 Acquisition*
-
-   #+HTML: <img src=".repo_img/qtcreator_style2.png" align="center" width="400" />   
-
-   Another way to save data is by using "Style2". In this case, the named will be composed by the two blocks as =block1_block2= (you can use only one of the two blocks if desired, just leave it as blank). The option "Extra info" keeps the same functionality. In the example above folders and files would be named as:
-
-#+begin_example
-run0_two_different_blocks
-0_wave0_two_different_blocks
-#+end_example
 
 
 
-   The Calibration tab will simply transfer the data file to a folder named “Calibration” inside the current run folder. It can only support one Calibration file per channel. This is an old and unused feature that I created for placing the waveforms that I would use for the SiPM gain estimation, I would not bother using it and just creating a new “Run” as calibration.
+   # The Calibration tab will simply transfer the data file to a folder named “Calibration” inside the current run folder. It can only support one Calibration file per channel. This is an old and unused feature that I created for placing the waveforms that I would use for the SiPM gain estimation, I would not bother using it and just creating a new “Run” as calibration.
 
-   At “More”, if you have data with different extension of .dat, you can change to anything you need (“.txt”, “.csv”, “.pdf”, etc).
+   # At “More”, if you have data with different extension of .dat, you can change to anything you need (“.txt”, “.csv”, “.pdf”, etc).
 
-   Please, keep in mind that the run and subrun numbers can be changed by hand. So if you make any mistake you can change the value back there, however, the move is done with the tag “-n” so the data is not overwritten, if you need to replace subrun 0, for instance, delete the wrong one first. 
+*** Config.
+
+   #+HTML: <img src=".repo_img/qtcreator_config.png" align="center" width="400" />
+
+   The GUI can also control the configuration file of wavedump. In the example above, channel 0 and 1 are enabled, the trigger is set to Ch0 on a trigger level of 10 ADC channels.
+
+   The baseline is set to 10\% for ch0 and 20\% for ch1.
+
+   The acquisition window is set to 20~us with a sampling rate of 250 MSamples/s, this corresponds to 5,000 points per waveform.\\
+   Please, note that this is calculating the number of points to be acquired. The ADC sampling rate is fixed (at 500 or 250 MSamples/s) and so we are ignoring points to virtually have the requested sampling rage. In the example, a ADC of 500 MSamples/s will still take 10,000 points, but we will only save 5,000 by skipping one point out of two (see [[#recompile]]).
+
+*** Recompile
 
 
 * Extra: Creating a shortcut for Wavedump

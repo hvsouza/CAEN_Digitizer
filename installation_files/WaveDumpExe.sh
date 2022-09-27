@@ -7,6 +7,6 @@
 
 cd ~/Desktop/WaveDumpData/
 
-gedit /etc/wavedump/WaveDumpConfig.txt &
+# gedit /etc/wavedump/WaveDumpConfig.txt &
 
 wavedump
