@@ -1557,7 +1557,7 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
                 ns = 0;
                 int aux = 0;
                 for(j=0; j<Size; j++) {
-                  if(aux < 1) ns += (int)fwrite(&Event16->DataChannel[ch][j] , 1 , 2, WDrun->fout[ch])*(factor-1);
+                  if(aux < 1) ns += (int)fwrite(&Event16->DataChannel[ch][j] , 1 , 2, WDrun->fout[ch])*(factor/2);
                   else if (aux == (factor-1) || factor == 1) aux = -1;
                   aux++;
                 }
