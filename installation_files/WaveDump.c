@@ -1505,15 +1505,15 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
             continue;
         }
 
+
+        // factor = 2, 4, 6, etc.. is the reduction in MSamples/s
+        // factor = 2 converts 500 MS/s in to 250 MS/s for example. Whilte factor = 4 will make it 125 MHz
+        int factor = 2; // Added by Henrique Souza
+        int mysize = Size/factor; // Added by Henrique Souza
         // Check the file format type
         if( WDcfg->OutFileFlags& OFF_BINARY) {
             // Binary file format
             uint32_t BinHeader[6];
-
-            // factor = 2, 4, 6, etc.. is the reduction in MSamples/s
-            // factor = 2 converts 500 MS/s in to 250 MS/s for example. Whilte factor = 4 will make it 125 MHz
-            int factor = 2; // Added by Henrique Souza
-            int mysize = Size/factor; // Added by Henrique Souza
             BinHeader[0] = (WDcfg->Nbit == 8) ? Size + 6*sizeof(*BinHeader) : mysize*2 + 6*sizeof(*BinHeader);
             BinHeader[1] = EventInfo->BoardId;
             BinHeader[2] = EventInfo->Pattern;
@@ -1531,7 +1531,7 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
                 }
                 else{
                     if ((WDrun->fout[ch] = fopen(fname, "wb")) == NULL)
-                        return -1;
+                      return -1;
                 }
                 if(ch == nchannels-1) *after_max = 0;
             }
@@ -1576,15 +1576,28 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
             }
         } else {
             // Ascii file format
+            /* Added by Henrique Souza */
+            /* This allows to keep implementing the file, but not after moving it */
             if (!WDrun->fout[ch]) {
                 char fname[100];
-                sprintf(fname, "%swave%d.txt", path, ch);
-                if ((WDrun->fout[ch] = fopen(fname, "w")) == NULL)
-                    return -1;
+                sprintf(fname, "%swave%d.txt", path,ch);
+                if(WDrun->ContinuousWrite && *after_max == 1){
+                    if ((WDrun->fout[ch] = fopen(fname, "a")) == NULL)
+                        return -1;
+                }
+                else{
+                    if ((WDrun->fout[ch] = fopen(fname, "w")) == NULL)
+                      return -1;
+                }
+                if(ch == nchannels-1) *after_max = 0;
             }
+                // if ((WDrun->fout[ch] = fopen(fname, "wb")) == NULL)
+                // return -1;
+            /* End of addition */
+
             if( WDcfg->OutFileFlags & OFF_HEADER) {
                 // Write the Channel Header
-                fprintf(WDrun->fout[ch], "Record Length: %d\n", Size);
+                fprintf(WDrun->fout[ch], "Record Length: %d\n", mysize);
                 fprintf(WDrun->fout[ch], "BoardID: %2d\n", EventInfo->BoardId);
                 fprintf(WDrun->fout[ch], "Channel: %d\n", ch);
                 fprintf(WDrun->fout[ch], "Event Number: %d\n", EventInfo->EventCounter);
@@ -1592,11 +1605,26 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
                 fprintf(WDrun->fout[ch], "Trigger Time Stamp: %u\n", EventInfo->TriggerTimeTag);
                 fprintf(WDrun->fout[ch], "DC offset (DAC): 0x%04X\n", WDcfg->DCoffset[ch] & 0xFFFF);
             }
+              else{
+                 ns = (int)fwrite(Event16->DataChannel[ch] , 1 , Size*2, WDrun->fout[ch]) / 2;
+              }
+
+            int aux = 0;
             for(j=0; j<Size; j++) {
                 if (WDcfg->Nbit == 8)
                     fprintf(WDrun->fout[ch], "%d\n", Event8->DataChannel[ch][j]);
-                else
+                else{
+                  if(factor!=1){
+                    /* Added by Henrique Souza */
+                    /* This allows to write at half of the rate*/
+                    if(aux < 1) fprintf(WDrun->fout[ch], "%d\n", Event16->DataChannel[ch][j]);
+                    else if (aux == (factor-1) || factor == 1) aux = -1;
+                    aux++;
+                  }
+                  else{
                     fprintf(WDrun->fout[ch], "%d\n", Event16->DataChannel[ch][j]);
+                  }
+                }
             }
             fflush(WDrun->fout[ch]); // Added by Henrique Souza
           }
@@ -2229,7 +2257,6 @@ InterruptTimeout:
                     }
                 }
                 if (WDrun.ContinuousWrite || WDrun.SingleWrite) {
-
                     // Note: use a thread here to allow parallel readout and file writing
                     if (BoardInfo.FamilyCode == CAEN_DGTZ_XX742_FAMILY_CODE) {
                         ret = WriteOutputFilesx742(&WDcfg, &WDrun, &EventInfo, Event742);

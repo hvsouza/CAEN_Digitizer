@@ -25,7 +25,7 @@ sed -i "$linenumber i \ \ \ \ uint64_t mymaximum = $npts; \/\/ Added by Henrique
 
 linenumber_factor=$(eval "sed -n '/int factor/=' WaveDump.c") # search line with pathern
 sed -i "$linenumber_factor d" WaveDump.c
-sed -i "$linenumber_factor i \ \ \ \ \ \ \ \ \ \ \ \ int factor = $factor; \/\/ Added by Henrique Souza" WaveDump.c
+sed -i "$linenumber_factor i \ \ \ \ \ \ \ \ int factor = $factor; \/\/ Added by Henrique Souza" WaveDump.c
 
 
 
