@@ -92,7 +92,7 @@
    
    You can create a shortcut to execute Wavedump inside the correct folder, you can find instructions at [[#extra-creating-a-shortcut-for-wavedump]]
 
-   If you want to enable the option to decrease wavedump writing sample rate, please look at [[#extra-wavedump-decreased-sampling]]
+   If you want to enable the option to decrease wavedump writing sample rate or to change the number of waveforms saved each time, please look at [[#extra-recompiling wavedump]].
 
 ** Configuration file
 
@@ -291,21 +291,45 @@
 
    The GUI can also control the configuration file of wavedump. In the example above, channel 0 and 1 are enabled, the trigger is set to Ch0 on a trigger level of 10 ADC channels.
 
-   The baseline is set to 10\% for ch0 and 20\% for ch1.
+   The baseline is set to 10\% for ch0 and 20\% for ch1. And post trigger set to 50\%.
 
    The acquisition window is set to 20~us with a sampling rate of 250 MSamples/s, this corresponds to 5,000 points per waveform.\\
    Please, note that this is calculating the number of points to be acquired. The ADC sampling rate is fixed (at 500 or 250 MSamples/s) and so we are ignoring points to virtually have the requested sampling rage. In the example, a ADC of 500 MSamples/s will still take 10,000 points, but we will only save 5,000 by skipping one point out of two (see [[#recompile]]).
 
+   Pulse polarity is set to positive and file type as binary.
+
+   If External trigger is selected, the individual trigger is disabled and one should set the type of sync (TTL or NIM).
+
+   Please, refer to [[#extra-common-variables]] and the wavedump manual for a better understanding of the configuration.
+
 *** Recompile
 
+   #+HTML: <img src=".repo_img/qtcreator_recompile.png" align="center" width="400" />
+
+   The default configuration of wavedump (done following the instructions at [[#wavedump]]) is to reduce the sampling rate by a factor of 2. That is, if the digitizer nominal sampling rate is equal to 500 MSamples/s, wavedump will virtually reduce it to 250 MSamples/s by skipping one point out of two. This can be changed by informing the digitizer nominal sampling rate and the desired sampling rate. \\
+   Please, keep in mind that this will not reduce the dead time of the digitizer.
+
+   Besides, when "Continuous writting" is enabled at wavedump, the default configuration set wavedump to save 10,000 waveforms and then stop. To change the maximum number of events change the value of "# of waveforms" to the desired one. If not value is given, the default of 10,000 is used. To set non-stop continuous writting, set the value to a negative number.
+
+   In the example above, wavedump will be recompiled setting a maximum of 500 waveforms per continous writting and a sampling rate of 250 MSamples/s (half of the digitizer capability).
 
 * Extra: Creating a shortcut for Wavedump
 
   Inside the folder =~/Documents/CAEN_Digitizer/installation_files/install_by_hand= you will find the file WaveDump.desktop. Replace the user from “henrique” to yours. Copy the .desktop file into =~/.local/share/applications/= (the tumbnail should be already placed at =~/Pictures=). Now, open the menu (windows key) and search for CAEN you should find the shortcut (if not, try login out and login in). You can place this short cut at your dock/panel, this makes much easier to launch wavedump in a way that is saves the data at =~/Desktop/WaveDumpData/=. 
  
-* Extra: Wavedump decreased sampling
+* Extra: recompiling wavedump
 
-  If you want to decrease/increase the sampling rate of the saved data, for example from 500 MS/s to 250 MS/s, or to 125 MS/s and so on, you need to edit the WaveDump.c file and "enable" my modifications. 
+  If you want to decrease/increase the sampling rate of the saved data, for example from 500 MS/s to 250 MS/s, or to 125 MS/s and so on, you need to edit the WaveDump.c file and "enable" my modifications. The same goes for changing the number of waveforms saved each time you enable continuous writting.
+
+  If you are using the GUI, that fairly easy (see [[#recompile]]).
+
+  Another alternative is to use the script =recompile_wavedump.sh= followed by the number of waveforms you want to save and by the reduction factor of your sampling rate. Ex.:
+#+begin_example
+. recompile_waveform.sh 2000 4
+#+end_example
+This will change the maximum number of waveforms to 2,000 and will reduce a 500 MSamples/s digitizer to 125 MSamples/s.
+
+Another way to do it is to change manually
 
   #+begin_src bash
 cd ~/Documents/CAEN_Digitizer/wavedump-3.10.3/src
