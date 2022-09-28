@@ -42,13 +42,13 @@
   - [[#debugging-installation][Debugging installation]]
   - [[#using-the-gui][Using the GUI]]
 - [[#extra-creating-a-shortcut-for-wavedump][Extra: Creating a shortcut for Wavedump]]
-- [[#extra-wavedump-decreased-sampling][Extra: Wavedump decreased sampling]]
+- [[#extra-recompiling-wavedump][Extra: recompiling wavedump]]
 - [[#extra-file-structure][Extra: File structure]]
 - [[#extra-common-variables][Extra: Common variables]]
 - [[#faq][FAQ]]
-  - [[#adc-related][ADC related:]]
-  - [[#wavedump-related][Wavedump related:]]
-  - [[#gui-related][GUI related:]]
+  - [[#adc-related][ADC related]]
+  - [[#wavedump-related][Wavedump related]]
+  - [[#gui-related][GUI related]]
 :END:
 
 
@@ -219,22 +219,22 @@
 - "Block2" is a second block of text in case you want to keep block1 fixed and change only block2.
 - “Extra info” is any extra information that will be written at the end of the files (not folders), see bellow.
 
-  In example above, the named will be composed by the two blocks as =block1_block2= (you can use only one of the two blocks if desired, just leave it as blank). The option "Extra info" keeps the same functionality. In the example above folders and files would be named as:
+In example above, the named will be composed by the two blocks as =block1_block2= (you can use only one of the two blocks if desired, just leave it as blank). The option "Extra info" keeps the same functionality. In the example above folders and files would be named as:
 
-   In the example from the image above, the GUI will create a folder named =new_data= at =~/Documents/ADC_data/coldbox_data= (the lock option is just to not change the name by mistake, you don’t need to lock it). \\
-   After taking data with two channels, for example, you should have “wave0.dat” and “wave1.dat” at WaveDumpData.
+In the example from the image above, the GUI will create a folder named =new_data= at =~/Documents/ADC_data/coldbox_data= (the lock option is just to not change the name by mistake, you don’t need to lock it). \\
+After taking data with two channels, for example, you should have “wave0.dat” and “wave1.dat” at WaveDumpData.
 
-   When pressing “Move files”, a folder named “run0_two_different_blocks_of_text” will be created (note: “extra info” will not be placed in the name of the folder), inside the folder “new_data” and the two files will be moved there as:
+When pressing “Move files”, a folder named “run0_two_different_blocks_of_text” will be created (note: “extra info” will not be placed in the name of the folder), inside the folder “new_data” and the two files will be moved there as:
 
 
 #+begin_example
 0_wave0_two_different_blocks_of_text
 0_wave1_two_different_blocks_of_text
 #+end_example
-   (note: if you have written “some_comments” at the “Extra info” field, the name of the file would be “0_wave0_42V30_20ADC_Ch0_some_comments .dat)\\
-   (note: the GUI will only transfer the data of the enabled channels configured at "Config.", see [[#config]])\\
+(note: if you have written “some_comments” at the “Extra info” field, the name of the file would be “0_wave0_42V30_20ADC_Ch0_some_comments .dat)\\
+(note: the GUI will only transfer the data of the enabled channels configured at "Config.", see [[#config]])
 
-   In the GUI, the subrun number should have been changed from 0 to 1. If you take another set of data and click “Move files” again, you should have now four files in total named as:
+In the GUI, the subrun number should have been changed from 0 to 1. If you take another set of data and click “Move files” again, you should have now four files in total named as:
 
 #+begin_example
 0_wave0_two_different_blocks_of_text
@@ -269,10 +269,10 @@
 - “Trigger Ch” is the channel in which you are triggering, HOWEVER, the field there can be any text, so you can write, for instance, “Ch0_and_Ch1” or even include some extra information and write something like this “Ch0_and_Ch1_cosmic_run_after_lunch_break”
 - “Extra info” is any extra information that will be written at the end of the files (not folders), see bellow.
 
-   In the example from the image above, the GUI will create a folder named =new_data= at =~/Documents/ADC_data/coldbox_data= (the lock option is just to not change the name by mistake, you don’t need to lock it). \\
-   After taking data with two channels, for example, you should have “wave0.dat” and “wave1.dat” at WaveDumpData.
+In the example from the image above, the GUI will create a folder named =new_data= at =~/Documents/ADC_data/coldbox_data= (the lock option is just to not change the name by mistake, you don’t need to lock it). \\
+After taking data with two channels, for example, you should have “wave0.dat” and “wave1.dat” at WaveDumpData.
 
-   When pressing “Move files”, a folder named “run0_42V30_20ADC_Ch0” will be created (note: “extra info” will not be placed in the name of the folder), inside the folder “new_data” and the two files will be moved there as:
+When pressing “Move files”, a folder named “run0_42V30_20ADC_Ch0” will be created (note: “extra info” will not be placed in the name of the folder), inside the folder “new_data” and the two files will be moved there as:
 
 #+begin_example
    0_wave0_42V30_20ADC_Ch0.dat
@@ -291,7 +291,7 @@
 
    The GUI can also control the configuration file of wavedump. In the example above, channel 0 and 1 are enabled, the trigger is set to Ch0 on a trigger level of 10 ADC channels.
 
-   The baseline is set to 10\% for ch0 and 20\% for ch1. And post trigger set to 50\%.
+   The baseline is set to 10% for ch0 and 20% for ch1. And post trigger set to 50%.
 
    The acquisition window is set to 20~us with a sampling rate of 250 MSamples/s, this corresponds to 5,000 points per waveform.\\
    Please, note that this is calculating the number of points to be acquired. The ADC sampling rate is fixed (at 500 or 250 MSamples/s) and so we are ignoring points to virtually have the requested sampling rage. In the example, a ADC of 500 MSamples/s will still take 10,000 points, but we will only save 5,000 by skipping one point out of two (see [[#recompile]]).
@@ -335,10 +335,17 @@ Another way to do it is to change manually
 cd ~/Documents/CAEN_Digitizer/wavedump-3.10.3/src
   #+end_src
 
-  Open the file WaveDump.c, set the factor which you want to divide the sample rate at line 1514:
+  Set the maximum number of waveforms by changing the value at line 1493:
+
+  #+begin_src
+ uint64_t mymaximum = -1; // Added by Henrique Souza
+  #+end_src
+
+  Open the file WaveDump.c, set the factor which you want to divide the sample rate at line 1515:
   #+begin_src c++
  int factor = 2; // Added by Henrique Souza
   #+end_src
+
 
   Now you just need to compile wavedump again: \\
   (*NOTE*: by doing this, WaveDumpConfig.txt will be overwritten with the default version. Make sure you backup your version if that is important)
@@ -362,9 +369,6 @@ cd ~/Documents/CAEN_Digitizer/wavedump-3.10.3/src
   #+HTML: <img src=".repo_img/data_structure.png" align="center" width="600" />
 
 * Extra: Common variables
-  :PROPERTIES:
-  :TOC:      :include all
-  :END:
 
   Bellow are the the most used variables configuration at the /etc/wavedump/WaveDumpConfig.txt, not all variables are being displayed.
 
