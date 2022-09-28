@@ -19,6 +19,47 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+bool MainWindow::transfer_files(std::vector<std::string> mvi)
+{
+    bool enable_ch[channels];
+    enable_ch[0] = ui->enable1->isChecked();
+    enable_ch[1] = ui->enable2->isChecked();
+    enable_ch[2] = ui->enable3->isChecked();
+    enable_ch[3] = ui->enable4->isChecked();
+    enable_ch[4] = ui->enable5->isChecked();
+    enable_ch[5] = ui->enable6->isChecked();
+    enable_ch[6] = ui->enable7->isChecked();
+    enable_ch[7] = ui->enable8->isChecked();
+    bool checkall = false;
+    bool check_message_ch[channels];
+    bool messagestatus = false;
+    for(int i = 0; i<channels; i++){
+        //std::cout << mvi[i] << std::endl;
+        check_message_ch[i] = false;
+        if(enable_ch[i])
+        {
+            check_message_ch[i] = system(mvi[i].c_str());
+            if(check_message_ch[i]){
+                std::string ermessage = "Error! There was an output message from the system while transfering the data of ch" + std::to_string(i);
+                ermessage = ermessage+"\nYou can check it in the file 'nohup.out'";
+                messagestatus = true;
+                QMessageBox::about(this,"WARNING!",ermessage.c_str());
+            }
+            checkall = true;
+        }
+    }
+    if(!checkall){
+        QMessageBox::about(this,"ERROR !","Please, enable the channels you want to transfer in the config. tab");
+        return false;
+    }
+    if(messagestatus){
+        QMessageBox::about(this,"WARNING !","One or more files had error messages output!!!\nThe subrun number was changed, please check if everything is fine.");
+        return true;
+    }
+    QMessageBox::about(this,"","File was moved, new subrun");
+    return true;
+}
+
 void MainWindow::on_pushButton_4_clicked()
 {
     bool cali_status = ui->calibration_check_3->isChecked();
@@ -75,7 +116,7 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_button_movefile_5_clicked()
 {
-    QMessageBox::about(this,"","File was moved, new subrun");
+
 
     // This take the necessary info to create the folder and files
     int runNo = std::stoi(ui->run_3->text().toStdString());
@@ -88,7 +129,8 @@ void MainWindow::on_button_movefile_5_clicked()
     //
 
     // here we create the folder and the move the files
-    move_data_file_style2(runNo,subRunNo,block1,block2,extra,primary,file_type);
+    bool status_transfer = move_data_file_style2(runNo,subRunNo,block1,block2,extra,primary,file_type);
+    if(status_transfer==false) return;
 
     // update subrun number
     subRunNo++;
@@ -99,7 +141,6 @@ void MainWindow::on_button_movefile_5_clicked()
 
 void MainWindow::on_button_movefile_clicked()
 {
-    QMessageBox::about(this,"","File was moved, new subrun");
 
     // This take the necessary info to create the folder and files
     int runNo = std::stoi(ui->run->text().toStdString());
@@ -113,7 +154,8 @@ void MainWindow::on_button_movefile_clicked()
     //
 
     // here we create the folder and the move the files
-    move_data_file(runNo,subRunNo,voltage,threshold,triggerCh,extra,primary,file_type);
+    bool status_transfer = move_data_file(runNo,subRunNo,voltage,threshold,triggerCh,extra,primary,file_type);
+    if(status_transfer==false) return;
 
     // update subrun number
     subRunNo++;
@@ -191,23 +233,8 @@ bool MainWindow::move_data_file(int run, int subrun, double voltage, double thre
 
     out = system(mkdir.c_str());
 
-    bool enable_ch[8];
-    enable_ch[0] = ui->enable1->isChecked();
-    enable_ch[1] = ui->enable2->isChecked();
-    enable_ch[2] = ui->enable3->isChecked();
-    enable_ch[3] = ui->enable4->isChecked();
-    enable_ch[4] = ui->enable5->isChecked();
-    enable_ch[5] = ui->enable6->isChecked();
-    enable_ch[6] = ui->enable7->isChecked();
-    enable_ch[7] = ui->enable8->isChecked();
-
-    //QMessageBox::about(this,"",QString::fromStdString(mv0));
-    for(int i = 0; i<channels; i++){
-        //std::cout << mvi[i] << std::endl;
-        if(enable_ch[i]) out = system(mvi[i].c_str());
-    }
-
-    return true;
+    bool status_transfer = transfer_files(mvi);
+    return status_transfer;
 
 }
 bool MainWindow::checkSpaces(std::string var){
@@ -309,23 +336,8 @@ bool MainWindow::move_data_file_style2(int run, int subrun, std::string block1, 
 
     out = system(mkdir.c_str());
 
-    bool enable_ch[8];
-    enable_ch[0] = ui->enable1->isChecked();
-    enable_ch[1] = ui->enable2->isChecked();
-    enable_ch[2] = ui->enable3->isChecked();
-    enable_ch[3] = ui->enable4->isChecked();
-    enable_ch[4] = ui->enable5->isChecked();
-    enable_ch[5] = ui->enable6->isChecked();
-    enable_ch[6] = ui->enable7->isChecked();
-    enable_ch[7] = ui->enable8->isChecked();
-
-    //QMessageBox::about(this,"",QString::fromStdString(mv0));
-    for(int i = 0; i<channels; i++){
-        //std::cout << mvi[i] << std::endl;
-        if(enable_ch[i]) out = system(mvi[i].c_str());
-    }
-
-    return true;
+    bool status_transfer = transfer_files(mvi);
+    return status_transfer;
 
 }
 
@@ -357,7 +369,8 @@ void MainWindow::on_button_movefile_2_clicked()
     std::string primary = ui->primary_name->text().toStdString();
     std::string file_type = ui->file_type->text().toStdString();
 
-    move_calibration_file(runNo,subRunNo,voltage,threshold,triggerCh,extra,primary,file_type);
+    bool status_transfer = move_calibration_file(runNo,subRunNo,voltage,threshold,triggerCh,extra,primary,file_type);
+    if(status_transfer==false) return;
 
     // update subrun number
     subRunNo++;
@@ -398,27 +411,11 @@ bool MainWindow::move_calibration_file(int run, int subrun, double voltage, doub
     }
 
 
-
     out = system(mkdir.c_str());
 
-    bool enable_ch[8];
-    enable_ch[0] = ui->enable1->isChecked();
-    enable_ch[1] = ui->enable2->isChecked();
-    enable_ch[2] = ui->enable3->isChecked();
-    enable_ch[3] = ui->enable4->isChecked();
-    enable_ch[4] = ui->enable5->isChecked();
-    enable_ch[5] = ui->enable6->isChecked();
-    enable_ch[6] = ui->enable7->isChecked();
-    enable_ch[7] = ui->enable8->isChecked();
+    bool status_transfer = transfer_files(mvi);
+    return status_transfer;
 
-    //QMessageBox::about(this,"",QString::fromStdString(mv0));
-    for(int i = 0; i<channels; i++){
-        // std::cout << mvi[i] << std::endl;
-        if(enable_ch[i]) out = system(mvi[i] .c_str());
-    }
-
-
-    return true;
 }
 
 

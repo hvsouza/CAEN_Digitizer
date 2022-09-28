@@ -36,6 +36,8 @@ private:
     int getFactor();
     void writeConfigFile(bool extra);
     void save_config_file(std::string folder);
+    bool transfer_files(std::vector<std::string> mvi);
+
 
 
 private slots:
