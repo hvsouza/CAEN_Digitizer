@@ -2536,6 +2536,9 @@
       </property>
      </widget>
      <widget class="QComboBox" name="samplingRate">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>399</x>
@@ -2545,7 +2548,7 @@
        </rect>
       </property>
       <property name="currentText">
-       <string>250 MSamples/s</string>
+       <string>500 MSamples/s</string>
       </property>
       <item>
        <property name="text">
@@ -2841,7 +2844,7 @@ The password is the same you use to login the computer.</string>
        </rect>
       </property>
       <property name="currentText">
-       <string>250 MSamples/s</string>
+       <string>500 MSamples/s</string>
       </property>
       <item>
        <property name="text">

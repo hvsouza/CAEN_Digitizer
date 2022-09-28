@@ -8,6 +8,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
     w.disabletriggers();
+    w.setRate();
 
     return a.exec();
 }

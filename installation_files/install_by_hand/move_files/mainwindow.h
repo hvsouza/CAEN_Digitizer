@@ -19,6 +19,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     void disabletriggers();
+    void setRate();
 
     ~MainWindow();
 
@@ -80,6 +81,8 @@ private slots:
     void on_button_save_config_2_clicked();
 
     void on_button_save_config_clicked();
+
+    void on_samplingRate_2_currentTextChanged(const QString &arg1);
 
 private:
     Ui::MainWindow *ui;

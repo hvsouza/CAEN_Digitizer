@@ -429,6 +429,12 @@ void MainWindow::on_lock_folder_clicked(bool checked)
     }
 }
 
+void MainWindow::setRate(){
+    ui->samplingRate->setCurrentText("250 MSamples/s");
+    ui->samplingRate_2->setCurrentText("250 MSamples/s");
+
+}
+
 int MainWindow::getFactor()
 {
     std::string max_samplingRate = ui->adcMaximumRate->currentText().toStdString();
@@ -818,5 +824,11 @@ void MainWindow::on_button_save_config_clicked()
 
 
     save_config_file(folder);
+}
+
+
+void MainWindow::on_samplingRate_2_currentTextChanged(const QString &arg1)
+{
+    ui->samplingRate->setCurrentText(arg1);
 }
 
