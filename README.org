@@ -228,8 +228,8 @@ When pressing “Move files”, a folder named “run0_two_different_blocks_of_t
 
 
 #+begin_example
-0_wave0_two_different_blocks_of_text
-0_wave1_two_different_blocks_of_text
+0_wave0_two_different_blocks_of_text.dat
+0_wave1_two_different_blocks_of_text.dat
 #+end_example
 (note: if you have written “some_comments” at the “Extra info” field, the name of the file would be “0_wave0_42V30_20ADC_Ch0_some_comments .dat)\\
 (note: the GUI will only transfer the data of the enabled channels configured at "Config.", see [[#config]])
@@ -237,10 +237,10 @@ When pressing “Move files”, a folder named “run0_two_different_blocks_of_t
 In the GUI, the subrun number should have been changed from 0 to 1. If you take another set of data and click “Move files” again, you should have now four files in total named as:
 
 #+begin_example
-0_wave0_two_different_blocks_of_text
-0_wave1_two_different_blocks_of_text
-1_wave0_two_different_blocks_of_text
-1_wave1_two_different_blocks_of_text
+0_wave0_two_different_blocks_of_text.dat
+0_wave1_two_different_blocks_of_text.dat
+1_wave0_two_different_blocks_of_text.dat
+1_wave1_two_different_blocks_of_text.dat
 #+end_example
 
    And subrun should be equal 2 on the GUI. \\
