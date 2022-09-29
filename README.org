@@ -142,37 +142,52 @@
    If you want to understand the binary file structure, please check [[#extra-file-structure]]. 
 
    *NOTE*: if you are using the standard version of wavedump, when you move the file it is kept open, so if you press [w] one more time after the continuous read, it will save one extra waveform and close the file. 
+** Troubleshooting
+*** Debugging USB
 
-** Debugging USB
-
-   Some times, the digitizer will not be recognized by the computer (this usually happens after using different digitizers, usb devices or cables). One way to fix it:
+Some times, the digitizer will not be recognized by the computer (this usually happens after using different digitizers, usb devices or cables). One way to fix it:
    
-   Disconnect the digitizer, turn it off 
-   #+begin_src bash
-   cd ~/Documents/ CAEN_Digitizer
-   ./fix_usb.sh
-   #+end_src
+Disconnect the digitizer, turn it off
+#+begin_src bash
+cd ~/Documents/ CAEN_Digitizer
+./fix_usb.sh
+#+end_src
 
-   Connect the digitizer and turn it on. Cross your fingers and try again.
+Connect the digitizer and turn it on. Cross your fingers and try again.
 
-   If the USB is still failling to connect, check if the CAEN Digitizer is being recognized by the system: =lsusb=, which should result in some lines and one should look like this:
+If the USB is still failling to connect, check if the CAEN Digitizer is being recognized by the system: =lsusb=, which should result in some lines and one should look like this:
 
-   #+begin_example
+#+begin_example
    Bus 003 Device 010: ID 21e1:0000 CAEN CAEN DT5xxx USB 1.0
-   #+end_example
+#+end_example
 
-   If the output is like this and wavedump is still not recognizing the ADC. Check the file at =/dev/usb/= folder:
+If the output is like this and wavedump is still not recognizing the ADC. Check the file at =/dev/usb/= folder:
 
-   #+begin_src bash
-   ls /dev/usb/
-   #+end_src
+#+begin_src bash
+ls /dev/usb/
+#+end_src
 
-   If there is a file named =V1718_X=, you should set the USB port at the config file [[#extra-common-variables]]:
+If there is a file named =V1718_X=, you should set the USB port at the config file [[#extra-common-variables]]:
 
-   #+begin_example
+#+begin_example
    OPEN USB X 0
-   #+end_example
+#+end_example
 
+*** Debian headers
+A reported problem at Debian was the following error when trying to install the usb driver:
+#+begin_example
+Installing CAENUSB
+make -C /lib/modules/5.10.0-18-amd64/build M=/home/user/Documents/CAEN_Digitizer/Installation/PreInstallThis/CAENUSBdrvB-1.5.4 LDDINCDIR=/home/user/Documents/CAEN_Digitizer/Installation/PreInstallThis/CAENUSBdrvB-1.5.4/../include modules
+make[1]: * /lib/modules/5.10.0-18-amd64/build: No such file or directory.  Stop.
+make: * [Makefile:36: default] Error 2
+cp: cannot stat 'CAENUSBdrvB.ko': No such file or directory
+make: * [Makefile:43: install] Error 1
+#+end_example
+
+This solved the problem:
+#+begin_src
+sudo apt install linux-headers-$(uname -r)
+#+end_src
 
 * QtCreator GUI
 ** QtCreator installation
