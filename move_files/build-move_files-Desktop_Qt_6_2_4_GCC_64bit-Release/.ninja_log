@@ -1,0 +1,9 @@
+# ninja log v5
+1	180	1664466413948681175	move_files_autogen/timestamp	b4ab93a76ba41c50
+1	180	1664466413948681175	move_files_autogen/mocs_compilation.cpp	b4ab93a76ba41c50
+1	180	1664466413948681175	/home/henrique/Documents/CAEN_Digitizer/move_files/build-move_files-Desktop_Qt_6_2_4_GCC_64bit-Release/move_files_autogen/timestamp	b4ab93a76ba41c50
+1	180	1664466413948681175	/home/henrique/Documents/CAEN_Digitizer/move_files/build-move_files-Desktop_Qt_6_2_4_GCC_64bit-Release/move_files_autogen/mocs_compilation.cpp	b4ab93a76ba41c50
+180	1167	1664466414936681187	CMakeFiles/move_files.dir/move_files_autogen/mocs_compilation.cpp.o	9862a4cb607833b2
+181	1168	1664466414936681187	CMakeFiles/move_files.dir/main.cpp.o	92f40132b0f45285
+181	3421	1664466417188681214	CMakeFiles/move_files.dir/mainwindow.cpp.o	4f967d1fd909cf1a
+3421	3738	1664466417500681218	move_files	f7a38b4d1de1f28c

@@ -1,0 +1,5 @@
+/home/henrique/Documents/CAEN_Digitizer/move_files/build-move_files-Desktop_Qt_6_2_4_GCC_64bit-Debug/CMakeFiles/rebuild_cache.dir
+/home/henrique/Documents/CAEN_Digitizer/move_files/build-move_files-Desktop_Qt_6_2_4_GCC_64bit-Debug/CMakeFiles/edit_cache.dir
+/home/henrique/Documents/CAEN_Digitizer/move_files/build-move_files-Desktop_Qt_6_2_4_GCC_64bit-Debug/CMakeFiles/move_files.dir
+/home/henrique/Documents/CAEN_Digitizer/move_files/build-move_files-Desktop_Qt_6_2_4_GCC_64bit-Debug/CMakeFiles/move_files_autogen_timestamp_deps.dir
+/home/henrique/Documents/CAEN_Digitizer/move_files/build-move_files-Desktop_Qt_6_2_4_GCC_64bit-Debug/CMakeFiles/move_files_autogen.dir
