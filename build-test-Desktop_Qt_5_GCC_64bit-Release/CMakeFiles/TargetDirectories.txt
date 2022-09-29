@@ -1,5 +1,0 @@
-/home/henrique/Documents/test/build-test-Desktop_Qt_5_GCC_64bit-Release/CMakeFiles/rebuild_cache.dir
-/home/henrique/Documents/test/build-test-Desktop_Qt_5_GCC_64bit-Release/CMakeFiles/edit_cache.dir
-/home/henrique/Documents/test/build-test-Desktop_Qt_5_GCC_64bit-Release/CMakeFiles/test.dir
-/home/henrique/Documents/test/build-test-Desktop_Qt_5_GCC_64bit-Release/CMakeFiles/test_autogen_timestamp_deps.dir
-/home/henrique/Documents/test/build-test-Desktop_Qt_5_GCC_64bit-Release/CMakeFiles/test_autogen.dir

@@ -1,9 +1,0 @@
-# ninja log v5
-0	134	1664461682588137898	test_autogen/timestamp	d98a194d00f3fb5e
-0	134	1664461682588137898	test_autogen/mocs_compilation.cpp	d98a194d00f3fb5e
-0	134	1664461682588137898	/home/henrique/Documents/test/build-test-Desktop_Qt_5_GCC_64bit-Release/test_autogen/timestamp	d98a194d00f3fb5e
-0	134	1664461682588137898	/home/henrique/Documents/test/build-test-Desktop_Qt_5_GCC_64bit-Release/test_autogen/mocs_compilation.cpp	d98a194d00f3fb5e
-135	1250	1664461683704695930	CMakeFiles/test.dir/test_autogen/mocs_compilation.cpp.o	a6d70811b8a3b19e
-135	1285	1664461683740713930	CMakeFiles/test.dir/main.cpp.o	eeb8055e7c3d7ccf
-135	2127	1664461684581133951	CMakeFiles/test.dir/mainwindow.cpp.o	19eb379fc89f7d60
-2127	2385	1664461684837261956	test	67160f207db9fb69
