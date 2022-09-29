@@ -53,7 +53,7 @@
 
 
 * Wavedump
-** Installation
+** Wavedump installation
    Clone this repository inside the "Documents" folder:
    #+begin_src bash
    cd ~/Documents 
@@ -175,7 +175,7 @@
 
 
 * QtCreator GUI
-** Installation
+** QtCreator installation
    Requirements to install QtCreator:
 
    =sudo apt update && sudo apt-get upgrade= \\
@@ -184,8 +184,17 @@
 
    Install QtCreator following the instructions (https://www.qt.io/download-qt-installer).
 
+   You need to execute the installer:
+   #+begin_src
+  .i/qt-file-downloaded.run
+   #+end_src
+
    During installation, at "installation Folder" step, check the option =Qt 6.3 for desktop development= instead of =custom installation=. 
 
+   To open QtCreator, either search it in the menu or execute it:
+   #+begin_src
+~/Qt/Tools/QtCreator/bin/qtcreator
+   #+end_src
 ** Creating the project
 
    Open QtCreator, click at "Open Project" at the left side options (bellow Create Project), open the file =Documents/QtCreator/move_files/move_file.pro= and click at Configure Project.
