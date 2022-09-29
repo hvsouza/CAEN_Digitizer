@@ -20,7 +20,7 @@
 
   If you want to save several .dat data files you need to move these =waveX.dat= files to another folder before saving new ones. As this task can be very tedious,  I’ve created a GUI with QtCreator to transfer the files and menage data taking more efficiently. The GUI is not mandatory, it should just make your life easier! 
 
-  Please, make sure you have “make” and “cmake” installed. The software “gnuplot” is also necessary but it will be installed in the installation scripts.
+  The installation script will install “cmake” and "build-essentials" and the software “gnuplot".
 
   Please, if you find any bug, miss information or some nasty mistake, feel free to talk to me by email.
 
