@@ -178,8 +178,9 @@
 ** Installation
    Requirements to install QtCreator:
 
-   =sudo apt-get update && sudo apt-get upgrade= \\
-   =sudo apt-get -y install build-essential opens libels-dev libssl1.0 libgl1-mesa-dev libqt5x11extras5=
+   =sudo apt update && sudo apt-get upgrade= \\
+   =sudo apt -y install build-essential libssl1.1 libgl1-mesa-dev libqt5x11extras5=
+   # =sudo apt-get -y install build-essential opens libels-dev libssl1.0 libgl1-mesa-dev libqt5x11extras5=
 
    Install QtCreator following the instructions (https://www.qt.io/download-qt-installer).
 
