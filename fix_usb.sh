@@ -36,7 +36,7 @@ tar -C $ROOTPATH/$INSTALLPATH/$PreInstall -xvf $( /bin/ls CAENUSB* | grep -e ".t
 echo ""
 echo "Installing CAENVMELib"
 cd $ROOTPATH/$INSTALLPATH/$PreInstall
-cd $( ls | grep CAENVMELib* )/lib
+cd $( /bin/ls | grep CAENVMELib* )/lib
 sudo bash install_x64
 
 echo "CAENVMELib hopefully installed, check for errors"
@@ -44,7 +44,7 @@ echo ""
 sleep $sleeptime
 echo "Installing CAENComm"
 cd ../../
-cd $( ls | grep CAENComm* )/lib
+cd $( /bin/ls | grep CAENComm* )/lib
 sudo bash install_x64
 
 
@@ -53,7 +53,7 @@ echo ""
 sleep $sleeptime
 echo "Installing CAENUSB"
 cd ../../
-cd $( ls | grep CAENUSB* )
+cd $( /bin/ls | grep CAENUSB* )
 make
 sudo make install
 

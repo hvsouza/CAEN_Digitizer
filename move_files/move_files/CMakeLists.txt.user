@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 7.0.0, 2022-09-29T20:48:20. -->
+<!-- Written by QtCreator 7.0.0, 2022-09-30T18:24:50. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -529,7 +529,6 @@
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/home/henrique/Documents/CAEN_Digitizer/move_files/build-move_files-Desktop_Qt_6_2_4_GCC_64bit-Release</value>
    </valuemap>
    <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>

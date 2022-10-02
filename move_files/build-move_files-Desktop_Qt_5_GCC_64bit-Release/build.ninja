@@ -140,7 +140,7 @@ build move_files_autogen/timestamp move_files_autogen/mocs_compilation.cpp | ${c
 #############################################
 # Phony custom command for CMakeFiles/move_files_autogen_timestamp_deps
 
-build CMakeFiles/move_files_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/move_files_autogen_timestamp_deps: phony /usr/lib/qt5/bin/uic /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.3 /usr/lib/qt5/bin/moc
+build CMakeFiles/move_files_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/move_files_autogen_timestamp_deps: phony /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.3 /usr/lib/qt5/bin/moc /usr/lib/qt5/bin/uic
 
 
 #############################################
