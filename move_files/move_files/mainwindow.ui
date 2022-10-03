@@ -33,7 +33,7 @@
     <property name="geometry">
      <rect>
       <x>161</x>
-      <y>10</y>
+      <y>0</y>
       <width>331</width>
       <height>25</height>
      </rect>
@@ -123,9 +123,9 @@
        <widget class="QLabel" name="label_22">
         <property name="geometry">
          <rect>
-          <x>24</x>
+          <x>30</x>
           <y>20</y>
-          <width>67</width>
+          <width>80</width>
           <height>17</height>
          </rect>
         </property>
@@ -139,7 +139,7 @@
        <widget class="QLabel" name="label_23">
         <property name="geometry">
          <rect>
-          <x>10</x>
+          <x>30</x>
           <y>110</y>
           <width>81</width>
           <height>20</height>
@@ -155,10 +155,10 @@
        <widget class="QLabel" name="label_24">
         <property name="geometry">
          <rect>
-          <x>24</x>
+          <x>30</x>
           <y>50</y>
-          <width>67</width>
-          <height>17</height>
+          <width>80</width>
+          <height>20</height>
          </rect>
         </property>
         <property name="text">
@@ -171,9 +171,9 @@
        <widget class="QLineEdit" name="block1">
         <property name="geometry">
          <rect>
-          <x>94</x>
+          <x>120</x>
           <y>80</y>
-          <width>371</width>
+          <width>360</width>
           <height>21</height>
          </rect>
         </property>
@@ -187,9 +187,9 @@
        <widget class="QLineEdit" name="run_3">
         <property name="geometry">
          <rect>
-          <x>94</x>
+          <x>120</x>
           <y>20</y>
-          <width>91</width>
+          <width>80</width>
           <height>21</height>
          </rect>
         </property>
@@ -206,9 +206,9 @@
        <widget class="QPushButton" name="button_movefile_5">
         <property name="geometry">
          <rect>
-          <x>380</x>
+          <x>378</x>
           <y>40</y>
-          <width>89</width>
+          <width>91</width>
           <height>25</height>
          </rect>
         </property>
@@ -219,9 +219,9 @@
        <widget class="QLineEdit" name="subrun3">
         <property name="geometry">
          <rect>
-          <x>94</x>
+          <x>120</x>
           <y>50</y>
-          <width>91</width>
+          <width>80</width>
           <height>21</height>
          </rect>
         </property>
@@ -235,9 +235,9 @@
        <widget class="QPushButton" name="pushButton_4">
         <property name="geometry">
          <rect>
-          <x>380</x>
+          <x>378</x>
           <y>160</y>
-          <width>89</width>
+          <width>91</width>
           <height>25</height>
          </rect>
         </property>
@@ -517,9 +517,9 @@
        <widget class="QLineEdit" name="block2">
         <property name="geometry">
          <rect>
-          <x>94</x>
+          <x>120</x>
           <y>110</y>
-          <width>371</width>
+          <width>360</width>
           <height>21</height>
          </rect>
         </property>
@@ -533,10 +533,10 @@
        <widget class="QLabel" name="label_27">
         <property name="geometry">
          <rect>
-          <x>24</x>
+          <x>30</x>
           <y>80</y>
-          <width>67</width>
-          <height>17</height>
+          <width>80</width>
+          <height>20</height>
          </rect>
         </property>
         <property name="text">
@@ -549,9 +549,9 @@
        <widget class="QLineEdit" name="extra_3">
         <property name="geometry">
          <rect>
-          <x>90</x>
+          <x>120</x>
           <y>140</y>
-          <width>201</width>
+          <width>80</width>
           <height>21</height>
          </rect>
         </property>
@@ -568,9 +568,9 @@
        <widget class="QLabel" name="label_28">
         <property name="geometry">
          <rect>
-          <x>10</x>
+          <x>9</x>
           <y>140</y>
-          <width>81</width>
+          <width>101</width>
           <height>20</height>
          </rect>
         </property>
@@ -602,9 +602,9 @@
        <widget class="QLabel" name="label_7">
         <property name="geometry">
          <rect>
-          <x>16</x>
+          <x>10</x>
           <y>180</y>
-          <width>81</width>
+          <width>101</width>
           <height>20</height>
          </rect>
         </property>
@@ -621,9 +621,9 @@
         </property>
         <property name="geometry">
          <rect>
-          <x>320</x>
+          <x>300</x>
           <y>190</y>
-          <width>161</width>
+          <width>181</width>
           <height>23</height>
          </rect>
         </property>
@@ -649,9 +649,9 @@
        <widget class="QLabel" name="triggerCh">
         <property name="geometry">
          <rect>
-          <x>16</x>
+          <x>10</x>
           <y>150</y>
-          <width>81</width>
+          <width>101</width>
           <height>20</height>
          </rect>
         </property>
@@ -665,7 +665,7 @@
        <widget class="QLabel" name="label">
         <property name="geometry">
          <rect>
-          <x>30</x>
+          <x>40</x>
           <y>30</y>
           <width>67</width>
           <height>17</height>
@@ -681,9 +681,9 @@
        <widget class="QLabel" name="label_4">
         <property name="geometry">
          <rect>
-          <x>16</x>
+          <x>10</x>
           <y>120</y>
-          <width>81</width>
+          <width>101</width>
           <height>20</height>
          </rect>
         </property>
@@ -697,7 +697,7 @@
        <widget class="QLabel" name="label_2">
         <property name="geometry">
          <rect>
-          <x>30</x>
+          <x>40</x>
           <y>60</y>
           <width>67</width>
           <height>17</height>
@@ -713,7 +713,7 @@
        <widget class="QLineEdit" name="voltage">
         <property name="geometry">
          <rect>
-          <x>100</x>
+          <x>120</x>
           <y>90</y>
           <width>111</width>
           <height>21</height>
@@ -729,7 +729,7 @@
        <widget class="QLineEdit" name="trigger_channel">
         <property name="geometry">
          <rect>
-          <x>100</x>
+          <x>120</x>
           <y>150</y>
           <width>111</width>
           <height>21</height>
@@ -748,7 +748,7 @@
        <widget class="QLineEdit" name="run">
         <property name="geometry">
          <rect>
-          <x>100</x>
+          <x>120</x>
           <y>30</y>
           <width>111</width>
           <height>21</height>
@@ -780,7 +780,7 @@
        <widget class="QLabel" name="label_6">
         <property name="geometry">
          <rect>
-          <x>220</x>
+          <x>240</x>
           <y>120</y>
           <width>41</width>
           <height>16</height>
@@ -793,7 +793,7 @@
        <widget class="QLineEdit" name="subrun">
         <property name="geometry">
          <rect>
-          <x>100</x>
+          <x>120</x>
           <y>60</y>
           <width>111</width>
           <height>21</height>
@@ -1091,7 +1091,7 @@
        <widget class="QLineEdit" name="threshold">
         <property name="geometry">
          <rect>
-          <x>100</x>
+          <x>120</x>
           <y>120</y>
           <width>111</width>
           <height>21</height>
@@ -1107,7 +1107,7 @@
        <widget class="QLabel" name="label_5">
         <property name="geometry">
          <rect>
-          <x>220</x>
+          <x>240</x>
           <y>90</y>
           <width>16</width>
           <height>16</height>
@@ -1120,7 +1120,7 @@
        <widget class="QLabel" name="label_3">
         <property name="geometry">
          <rect>
-          <x>30</x>
+          <x>40</x>
           <y>90</y>
           <width>67</width>
           <height>17</height>
@@ -1136,7 +1136,7 @@
        <widget class="QLineEdit" name="extra">
         <property name="geometry">
          <rect>
-          <x>100</x>
+          <x>120</x>
           <y>180</y>
           <width>111</width>
           <height>21</height>
@@ -1168,183 +1168,6 @@
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="tab_2">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="acceptDrops">
-      <bool>false</bool>
-     </property>
-     <attribute name="title">
-      <string>Calibration</string>
-     </attribute>
-     <widget class="QLineEdit" name="led_width">
-      <property name="geometry">
-       <rect>
-        <x>360</x>
-        <y>60</y>
-        <width>91</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>100</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="LED_voltage">
-      <property name="geometry">
-       <rect>
-        <x>256</x>
-        <y>30</y>
-        <width>101</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>LED Voltage:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="led_voltage">
-      <property name="geometry">
-       <rect>
-        <x>360</x>
-        <y>30</y>
-        <width>91</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>3</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-      <property name="readOnly">
-       <bool>false</bool>
-      </property>
-     </widget>
-     <widget class="QLabel" name="width">
-      <property name="geometry">
-       <rect>
-        <x>266</x>
-        <y>60</y>
-        <width>91</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Width:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_8">
-      <property name="geometry">
-       <rect>
-        <x>460</x>
-        <y>30</y>
-        <width>16</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>V</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_9">
-      <property name="geometry">
-       <rect>
-        <x>460</x>
-        <y>60</y>
-        <width>16</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>ns</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="button_movefile_2">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>130</y>
-        <width>161</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Move Calibration files</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="Information">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>201</width>
-        <height>201</height>
-       </rect>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="text">
-       <string>If you are running Calibration before data acquisition, make sure that the Acquisition tab have the correct informations</string>
-      </property>
-      <property name="textFormat">
-       <enum>Qt::AutoText</enum>
-      </property>
-      <property name="scaledContents">
-       <bool>false</bool>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="subrun_2">
-      <property name="geometry">
-       <rect>
-        <x>360</x>
-        <y>90</y>
-        <width>91</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_11">
-      <property name="geometry">
-       <rect>
-        <x>290</x>
-        <y>90</y>
-        <width>67</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>subrun:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-    </widget>
     <widget class="QWidget" name="tab_5">
      <attribute name="title">
       <string>Config.</string>
@@ -1360,6 +1183,12 @@
         <width>61</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>.dat</string>
@@ -1379,6 +1208,12 @@
         <width>91</width>
         <height>20</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>File type:</string>
@@ -1521,11 +1356,17 @@
      <widget class="QLabel" name="label_14">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>10</x>
         <y>20</y>
         <width>85</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>9</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Enable</string>
@@ -1534,11 +1375,17 @@
      <widget class="QLabel" name="label_15">
       <property name="geometry">
        <rect>
-        <x>60</x>
+        <x>75</x>
         <y>20</y>
         <width>85</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>9</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Trigger</string>
@@ -1550,11 +1397,14 @@
       </property>
       <property name="geometry">
        <rect>
-        <x>80</x>
+        <x>90</x>
         <y>50</y>
         <width>61</width>
         <height>27</height>
        </rect>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Channel auto trigger settings.&lt;br/&gt;Multiple channels will work as OR&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="layoutDirection">
        <enum>Qt::LeftToRight</enum>
@@ -1575,7 +1425,7 @@
      <widget class="QCheckBox" name="trigger2">
       <property name="geometry">
        <rect>
-        <x>80</x>
+        <x>90</x>
         <y>80</y>
         <width>61</width>
         <height>27</height>
@@ -1597,7 +1447,7 @@
      <widget class="QCheckBox" name="trigger3">
       <property name="geometry">
        <rect>
-        <x>80</x>
+        <x>90</x>
         <y>110</y>
         <width>61</width>
         <height>27</height>
@@ -1613,7 +1463,7 @@
      <widget class="QCheckBox" name="trigger4">
       <property name="geometry">
        <rect>
-        <x>80</x>
+        <x>90</x>
         <y>140</y>
         <width>61</width>
         <height>27</height>
@@ -1629,7 +1479,7 @@
      <widget class="QCheckBox" name="trigger5">
       <property name="geometry">
        <rect>
-        <x>80</x>
+        <x>90</x>
         <y>170</y>
         <width>61</width>
         <height>27</height>
@@ -1645,7 +1495,7 @@
      <widget class="QCheckBox" name="trigger6">
       <property name="geometry">
        <rect>
-        <x>80</x>
+        <x>90</x>
         <y>200</y>
         <width>61</width>
         <height>27</height>
@@ -1661,7 +1511,7 @@
      <widget class="QCheckBox" name="trigger7">
       <property name="geometry">
        <rect>
-        <x>80</x>
+        <x>90</x>
         <y>230</y>
         <width>61</width>
         <height>27</height>
@@ -1677,7 +1527,7 @@
      <widget class="QCheckBox" name="trigger8">
       <property name="geometry">
        <rect>
-        <x>80</x>
+        <x>90</x>
         <y>260</y>
         <width>61</width>
         <height>27</height>
@@ -1693,11 +1543,17 @@
      <widget class="QLabel" name="label_16">
       <property name="geometry">
        <rect>
-        <x>120</x>
+        <x>140</x>
         <y>20</y>
         <width>85</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>9</pointsize>
+       </font>
       </property>
       <property name="whatsThis">
        <string/>
@@ -1710,10 +1566,16 @@
       <property name="geometry">
        <rect>
         <x>-10</x>
-        <y>340</y>
+        <y>330</y>
         <width>161</width>
-        <height>27</height>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="layoutDirection">
        <enum>Qt::RightToLeft</enum>
@@ -1725,7 +1587,7 @@
      <widget class="QLineEdit" name="base1">
       <property name="geometry">
        <rect>
-        <x>120</x>
+        <x>150</x>
         <y>51</y>
         <width>41</width>
         <height>20</height>
@@ -1736,6 +1598,9 @@
         <family>DejaVu Sans</family>
         <pointsize>10</pointsize>
        </font>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;BASELINE_LEVEL: baseline position in percent of the Full Scale. &lt;/p&gt;&lt;p&gt;POSITIVE PULSE POLARITY (Full Scale = from 0 to + Vpp)&lt;/p&gt;&lt;p&gt;0: analog input dynamic range = from 0 to +Vpp &lt;/p&gt;&lt;p&gt;50: analog input dynamic range = from +Vpp/2 to +Vpp &lt;/p&gt;&lt;p&gt;100: analog input dynamic range = null (usually not used)*&lt;/p&gt;&lt;p&gt;NEGATIVE PULSE POLARITY (Full Scale = from -Vpp to 0) &lt;/p&gt;&lt;p&gt;0: analog input dynamic range = from -Vpp to 0 &lt;/p&gt;&lt;p&gt;50: analog input dynamic range = from -Vpp/2 to 0 &lt;/p&gt;&lt;p&gt;100: analog input dynamic range = null (usually not used)*&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt; options: 0 to 100&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="layoutDirection">
        <enum>Qt::RightToLeft</enum>
@@ -1759,7 +1624,7 @@
      <widget class="QLineEdit" name="base2">
       <property name="geometry">
        <rect>
-        <x>120</x>
+        <x>150</x>
         <y>80</y>
         <width>41</width>
         <height>20</height>
@@ -1790,7 +1655,7 @@
      <widget class="QLineEdit" name="base3">
       <property name="geometry">
        <rect>
-        <x>120</x>
+        <x>150</x>
         <y>110</y>
         <width>41</width>
         <height>20</height>
@@ -1818,7 +1683,7 @@
      <widget class="QLineEdit" name="base4">
       <property name="geometry">
        <rect>
-        <x>120</x>
+        <x>150</x>
         <y>140</y>
         <width>41</width>
         <height>20</height>
@@ -1846,7 +1711,7 @@
      <widget class="QLineEdit" name="base5">
       <property name="geometry">
        <rect>
-        <x>120</x>
+        <x>150</x>
         <y>170</y>
         <width>41</width>
         <height>20</height>
@@ -1874,7 +1739,7 @@
      <widget class="QLineEdit" name="base6">
       <property name="geometry">
        <rect>
-        <x>120</x>
+        <x>150</x>
         <y>200</y>
         <width>41</width>
         <height>20</height>
@@ -1902,7 +1767,7 @@
      <widget class="QLineEdit" name="base7">
       <property name="geometry">
        <rect>
-        <x>120</x>
+        <x>150</x>
         <y>230</y>
         <width>41</width>
         <height>20</height>
@@ -1930,7 +1795,7 @@
      <widget class="QLineEdit" name="base8">
       <property name="geometry">
        <rect>
-        <x>120</x>
+        <x>150</x>
         <y>260</y>
         <width>41</width>
         <height>20</height>
@@ -1958,7 +1823,7 @@
      <widget class="QLineEdit" name="triggerL2">
       <property name="geometry">
        <rect>
-        <x>200</x>
+        <x>230</x>
         <y>80</y>
         <width>61</width>
         <height>20</height>
@@ -1986,7 +1851,7 @@
      <widget class="QLineEdit" name="triggerL4">
       <property name="geometry">
        <rect>
-        <x>200</x>
+        <x>230</x>
         <y>140</y>
         <width>61</width>
         <height>20</height>
@@ -2011,11 +1876,17 @@
      <widget class="QLabel" name="label_17">
       <property name="geometry">
        <rect>
-        <x>190</x>
+        <x>220</x>
         <y>20</y>
         <width>111</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>9</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Trigger level</string>
@@ -2024,7 +1895,7 @@
      <widget class="QLineEdit" name="triggerL5">
       <property name="geometry">
        <rect>
-        <x>200</x>
+        <x>230</x>
         <y>170</y>
         <width>61</width>
         <height>20</height>
@@ -2049,7 +1920,7 @@
      <widget class="QLineEdit" name="triggerL8">
       <property name="geometry">
        <rect>
-        <x>200</x>
+        <x>230</x>
         <y>260</y>
         <width>61</width>
         <height>20</height>
@@ -2074,7 +1945,7 @@
      <widget class="QLineEdit" name="triggerL6">
       <property name="geometry">
        <rect>
-        <x>200</x>
+        <x>230</x>
         <y>200</y>
         <width>61</width>
         <height>20</height>
@@ -2099,7 +1970,7 @@
      <widget class="QLineEdit" name="triggerL7">
       <property name="geometry">
        <rect>
-        <x>200</x>
+        <x>230</x>
         <y>230</y>
         <width>61</width>
         <height>20</height>
@@ -2124,7 +1995,7 @@
      <widget class="QLineEdit" name="triggerL3">
       <property name="geometry">
        <rect>
-        <x>200</x>
+        <x>230</x>
         <y>110</y>
         <width>61</width>
         <height>20</height>
@@ -2149,7 +2020,7 @@
      <widget class="QLineEdit" name="triggerL1">
       <property name="geometry">
        <rect>
-        <x>200</x>
+        <x>230</x>
         <y>51</y>
         <width>61</width>
         <height>20</height>
@@ -2160,6 +2031,9 @@
         <family>DejaVu Sans</family>
         <pointsize>10</pointsize>
        </font>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Threshold (in ADCs) relative to the baseline&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="layoutDirection">
        <enum>Qt::RightToLeft</enum>
@@ -2180,10 +2054,10 @@
      <widget class="Line" name="line">
       <property name="geometry">
        <rect>
-        <x>100</x>
-        <y>50</y>
+        <x>120</x>
+        <y>20</y>
         <width>20</width>
-        <height>231</height>
+        <height>261</height>
        </rect>
       </property>
       <property name="orientation">
@@ -2194,9 +2068,9 @@
       <property name="geometry">
        <rect>
         <x>60</x>
-        <y>60</y>
+        <y>20</y>
         <width>20</width>
-        <height>231</height>
+        <height>271</height>
        </rect>
       </property>
       <property name="orientation">
@@ -2206,10 +2080,10 @@
      <widget class="Line" name="line_3">
       <property name="geometry">
        <rect>
-        <x>170</x>
-        <y>50</y>
+        <x>200</x>
+        <y>20</y>
         <width>20</width>
-        <height>231</height>
+        <height>261</height>
        </rect>
       </property>
       <property name="orientation">
@@ -2477,6 +2351,12 @@
         </disabled>
        </palette>
       </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>SET</string>
       </property>
@@ -2484,11 +2364,17 @@
      <widget class="QLabel" name="label_18">
       <property name="geometry">
        <rect>
-        <x>339</x>
+        <x>329</x>
         <y>20</y>
-        <width>161</width>
+        <width>171</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Time of acquisition</string>
@@ -2508,6 +2394,9 @@
         <family>DejaVu Sans</family>
         <pointsize>10</pointsize>
        </font>
+      </property>
+      <property name="toolTip">
+       <string>Acquisition window in microseconds</string>
       </property>
       <property name="layoutDirection">
        <enum>Qt::RightToLeft</enum>
@@ -2534,6 +2423,12 @@
         <height>21</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>us</string>
       </property>
@@ -2549,6 +2444,16 @@
         <width>81</width>
         <height>29</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>Sampling rate. 
+To set a new one, go to &quot;Recompile&quot;</string>
       </property>
       <property name="currentText">
        <string>500 MSamples/s</string>
@@ -2582,6 +2487,12 @@
         <width>161</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Sampling rate</string>
@@ -2617,13 +2528,20 @@
       <property name="geometry">
        <rect>
         <x>270</x>
-        <y>170</y>
+        <y>160</y>
         <width>121</width>
-        <height>20</height>
+        <height>41</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>Pulse polarity:</string>
+       <string>Pulse
+polarity:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -2632,21 +2550,33 @@
      <widget class="QSpinBox" name="usbPort">
       <property name="geometry">
        <rect>
-        <x>290</x>
-        <y>310</y>
+        <x>300</x>
+        <y>300</y>
         <width>41</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>10</pointsize>
+       </font>
       </property>
      </widget>
      <widget class="QLabel" name="label_26">
       <property name="geometry">
        <rect>
-        <x>210</x>
-        <y>310</y>
+        <x>220</x>
+        <y>300</y>
         <width>91</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>USB port</string>
@@ -2656,10 +2586,16 @@
       <property name="geometry">
        <rect>
         <x>16</x>
-        <y>310</y>
+        <y>300</y>
         <width>161</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Post trigger:</string>
@@ -2668,11 +2604,20 @@
      <widget class="QLineEdit" name="postTrigger">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>310</y>
+        <x>120</x>
+        <y>300</y>
         <width>31</width>
         <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;POST_TRIGGER: post trigger size in percent of the whole acquisition window&lt;/p&gt;&lt;p&gt;options: 0 to 100&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="text">
        <string>50</string>
@@ -2684,11 +2629,17 @@
      <widget class="QComboBox" name="externalType">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>340</y>
+        <x>280</x>
+        <y>330</y>
         <width>61</width>
-        <height>20</height>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="editable">
        <bool>true</bool>
@@ -2708,13 +2659,199 @@
       <property name="geometry">
        <rect>
         <x>160</x>
-        <y>340</y>
+        <y>330</y>
         <width>131</width>
         <height>21</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>External type:</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="acceptDrops">
+      <bool>false</bool>
+     </property>
+     <attribute name="title">
+      <string>Calibration</string>
+     </attribute>
+     <widget class="QLineEdit" name="led_width">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>60</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>100</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="LED_voltage">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>30</y>
+        <width>121</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>LED Voltage:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="led_voltage">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>30</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>3</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+      <property name="readOnly">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="width">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>60</y>
+        <width>91</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Width:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>30</y>
+        <width>16</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>V</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>60</y>
+        <width>21</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>ns</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button_movefile_2">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>130</y>
+        <width>211</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Move Calibration files</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Information">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>201</width>
+        <height>201</height>
+       </rect>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>If you are running Calibration before data acquisition, make sure that the Acquisition tab have the correct informations</string>
+      </property>
+      <property name="textFormat">
+       <enum>Qt::AutoText</enum>
+      </property>
+      <property name="scaledContents">
+       <bool>false</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="subrun_2">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>90</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_11">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>90</y>
+        <width>67</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>subrun:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
      </widget>
     </widget>
@@ -2749,7 +2886,7 @@
        <rect>
         <x>340</x>
         <y>240</y>
-        <width>113</width>
+        <width>121</width>
         <height>29</height>
        </rect>
       </property>
@@ -2781,7 +2918,7 @@
        <rect>
         <x>340</x>
         <y>90</y>
-        <width>113</width>
+        <width>121</width>
         <height>29</height>
        </rect>
       </property>
@@ -2791,8 +2928,8 @@
        <rect>
         <x>340</x>
         <y>280</y>
-        <width>112</width>
-        <height>30</height>
+        <width>131</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="layoutDirection">
@@ -2842,7 +2979,7 @@ The password is the same you use to login the computer.</string>
        <rect>
         <x>340</x>
         <y>160</y>
-        <width>81</width>
+        <width>131</width>
         <height>29</height>
        </rect>
       </property>
@@ -2886,9 +3023,9 @@ The password is the same you use to login the computer.</string>
      <widget class="QComboBox" name="adcMaximumRate">
       <property name="geometry">
        <rect>
-        <x>200</x>
+        <x>230</x>
         <y>280</y>
-        <width>81</width>
+        <width>91</width>
         <height>29</height>
        </rect>
       </property>
@@ -2911,7 +3048,7 @@ The password is the same you use to login the computer.</string>
        <rect>
         <x>10</x>
         <y>280</y>
-        <width>191</width>
+        <width>221</width>
         <height>21</height>
        </rect>
       </property>
@@ -2925,7 +3062,7 @@ The password is the same you use to login the computer.</string>
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>10</y>
+      <y>0</y>
       <width>131</width>
       <height>20</height>
      </rect>
@@ -2943,11 +3080,17 @@ The password is the same you use to login the computer.</string>
     </property>
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>40</y>
-      <width>61</width>
+      <x>420</x>
+      <y>30</y>
+      <width>71</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>DejaVu Sans</family>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Lock</string>

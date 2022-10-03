@@ -6,72 +6,17 @@ move_files_autogen/timestamp: \
 	/home/henrique/Documents/CAEN_Digitizer/move_files/move_files/main.cpp \
 	/home/henrique/Documents/CAEN_Digitizer/move_files/move_files/mainwindow.cpp \
 	/home/henrique/Documents/CAEN_Digitizer/move_files/move_files/mainwindow.h \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeCXXCompiler.cmake.in \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeCXXCompilerABI.cpp \
 	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeCXXInformation.cmake \
 	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeCommonLanguageInclude.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeCompilerIdDetection.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeDetermineCXXCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeDetermineCompileFeatures.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeDetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeDetermineCompilerABI.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeDetermineCompilerId.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeDetermineSystem.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeFindBinUtils.cmake \
 	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeGenericSystem.cmake \
 	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeInitializeConfigs.cmake \
 	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeLanguageInformation.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeNinjaFindMake.cmake \
 	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeParseArguments.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeParseImplicitIncludeInfo.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeParseImplicitLinkInfo.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeParseLibraryArchitecture.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeSystem.cmake.in \
 	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeSystemSpecificInformation.cmake \
 	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeSystemSpecificInitialize.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeTestCXXCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/CMakeTestCompilerCommon.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/ADSP-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/ARMCC-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/ARMClang-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/AppleClang-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/Borland-DetermineCompiler.cmake \
 	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/CMakeCommonCompilerMacros.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/Clang-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/Clang-DetermineCompilerInternal.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/Cray-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/Embarcadero-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/Fujitsu-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/GHS-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake \
 	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/GNU-CXX.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/GNU-FindBinUtils.cmake \
 	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/GNU.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/HP-CXX-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/IAR-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/Intel-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/MSVC-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/NVHPC-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/NVIDIA-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/PGI-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/PathScale-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/ROCMClang-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/SCO-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/TI-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/Watcom-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/XL-CXX-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Internal/FeatureTesting.cmake \
-	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Platform/Linux-Determine-CXX.cmake \
 	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Platform/Linux-GNU-CXX.cmake \
 	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Platform/Linux-GNU.cmake \
 	/home/henrique/Qt/Tools/CMake/share/cmake-3.21/Modules/Platform/Linux.cmake \
