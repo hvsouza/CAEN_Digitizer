@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>509</width>
-    <height>518</height>
+    <height>530</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -33,7 +33,7 @@
     <property name="geometry">
      <rect>
       <x>161</x>
-      <y>0</y>
+      <y>10</y>
       <width>331</width>
       <height>25</height>
      </rect>
@@ -61,7 +61,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>50</y>
+      <y>60</y>
       <width>491</width>
       <height>411</height>
      </rect>
@@ -3062,7 +3062,7 @@ The password is the same you use to login the computer.</string>
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>0</y>
+      <y>10</y>
       <width>131</width>
       <height>20</height>
      </rect>
@@ -3081,7 +3081,7 @@ The password is the same you use to login the computer.</string>
     <property name="geometry">
      <rect>
       <x>420</x>
-      <y>30</y>
+      <y>40</y>
       <width>71</width>
       <height>23</height>
      </rect>

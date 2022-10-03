@@ -163,7 +163,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(509, 518);
+        MainWindow->resize(509, 530);
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -175,7 +175,7 @@ public:
         primary_name = new QLineEdit(centralWidget);
         primary_name->setObjectName(QString::fromUtf8("primary_name"));
         primary_name->setEnabled(false);
-        primary_name->setGeometry(QRect(161, 0, 331, 25));
+        primary_name->setGeometry(QRect(161, 10, 331, 25));
         QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
@@ -186,7 +186,7 @@ public:
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
         tabWidget->setEnabled(true);
-        tabWidget->setGeometry(QRect(10, 50, 491, 411));
+        tabWidget->setGeometry(QRect(10, 60, 491, 411));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
         tabWidget_3 = new QTabWidget(tab);
@@ -886,12 +886,12 @@ public:
         tabWidget->addTab(tab_3, QString());
         label_10 = new QLabel(centralWidget);
         label_10->setObjectName(QString::fromUtf8("label_10"));
-        label_10->setGeometry(QRect(20, 0, 131, 20));
+        label_10->setGeometry(QRect(20, 10, 131, 20));
         label_10->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         lock_folder = new QRadioButton(centralWidget);
         lock_folder->setObjectName(QString::fromUtf8("lock_folder"));
         lock_folder->setEnabled(true);
-        lock_folder->setGeometry(QRect(420, 30, 71, 23));
+        lock_folder->setGeometry(QRect(420, 40, 71, 23));
         lock_folder->setFont(font);
         lock_folder->setCheckable(true);
         lock_folder->setChecked(true);
