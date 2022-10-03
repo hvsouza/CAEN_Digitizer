@@ -353,7 +353,7 @@ class Ui_MainWindow(object):
         self.label_5.setGeometry(QtCore.QRect(240, 90, 16, 16))
         self.label_5.setObjectName("label_5")
         self.label_3 = QtWidgets.QLabel(self.tab_15)
-        self.label_3.setGeometry(QtCore.QRect(40, 90, 67, 17))
+        self.label_3.setGeometry(QtCore.QRect(26, 90, 81, 20))
         self.label_3.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.label_3.setObjectName("label_3")
         self.extra = QtWidgets.QLineEdit(self.tab_15)
@@ -1010,7 +1010,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
-        self.tabWidget_3.setCurrentIndex(0)
+        self.tabWidget_3.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
