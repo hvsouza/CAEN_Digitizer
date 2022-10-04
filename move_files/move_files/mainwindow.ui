@@ -2868,7 +2868,7 @@ polarity:</string>
      <widget class="QLabel" name="label_12">
       <property name="geometry">
        <rect>
-        <x>340</x>
+        <x>330</x>
         <y>60</y>
         <width>151</width>
         <height>21</height>
@@ -2986,9 +2986,9 @@ The password is the same you use to login the computer.</string>
      <widget class="QComboBox" name="samplingRate_2">
       <property name="geometry">
        <rect>
-        <x>340</x>
+        <x>370</x>
         <y>160</y>
-        <width>131</width>
+        <width>91</width>
         <height>29</height>
        </rect>
       </property>
@@ -3019,7 +3019,7 @@ The password is the same you use to login the computer.</string>
      <widget class="QLabel" name="label_21">
       <property name="geometry">
        <rect>
-        <x>340</x>
+        <x>330</x>
         <y>130</y>
         <width>161</width>
         <height>21</height>
@@ -3032,8 +3032,8 @@ The password is the same you use to login the computer.</string>
      <widget class="QComboBox" name="adcMaximumRate">
       <property name="geometry">
        <rect>
-        <x>230</x>
-        <y>280</y>
+        <x>10</x>
+        <y>310</y>
         <width>91</width>
         <height>29</height>
        </rect>

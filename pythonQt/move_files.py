@@ -10,8 +10,9 @@ from ui_mainwindow import Ui_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
+from config_and_recompile import ConfigRecomp
 
-class MainWindow(QtWidgets.QMainWindow):
+class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
     def __init__(self,parent=None):
         super(MainWindow, self).__init__()
 
@@ -43,14 +44,57 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.enable8,
         ]
 
-        from config_and_recompile import twinSample
-        from config_and_recompile import recompile
-        self.ui.pushButton_SetConfig.clicked.connect(self.pressSet)
-        self.ui.samplingRate_2.currentTextChanged.connect(lambda:twinSample(self))
-        self.ui.pushButtonRecompile.clicked.connect(lambda: recompile(self))
+        self.trigger_ch = [
+            self.ui.trigger1,
+            self.ui.trigger2,
+            self.ui.trigger3,
+            self.ui.trigger4,
+            self.ui.trigger5,
+            self.ui.trigger6,
+            self.ui.trigger7,
+            self.ui.trigger8,
+        ]
+
+        self.base_ch = [
+            self.ui.base1,
+            self.ui.base2,
+            self.ui.base3,
+            self.ui.base4,
+            self.ui.base5,
+            self.ui.base6,
+            self.ui.base7,
+            self.ui.base8,
+        ]
+
+        self.triggerL_ch = [
+            self.ui.triggerL1,
+            self.ui.triggerL2,
+            self.ui.triggerL3,
+            self.ui.triggerL4,
+            self.ui.triggerL5,
+            self.ui.triggerL6,
+            self.ui.triggerL7,
+            self.ui.triggerL8,
+        ]
+
+
+
+        self.ui.pushButton_SetConfig.clicked.connect(lambda: self.pressSet())
+        self.ui.samplingRate_2.currentTextChanged.connect(lambda:self.twinSample())
+        self.ui.pushButtonRecompile.clicked.connect(lambda: self.recompile())
 
         self.primary = self.ui.primary_name.text()
+        self.enable_ch[0].clicked.connect(lambda: self.freeTrigger(self.trigger_ch[0],self.enable_ch[0].isChecked()))
+        self.enable_ch[1].clicked.connect(lambda: self.freeTrigger(self.trigger_ch[1],self.enable_ch[1].isChecked()))
+        self.enable_ch[2].clicked.connect(lambda: self.freeTrigger(self.trigger_ch[2],self.enable_ch[2].isChecked()))
+        self.enable_ch[3].clicked.connect(lambda: self.freeTrigger(self.trigger_ch[3],self.enable_ch[3].isChecked()))
+        self.enable_ch[4].clicked.connect(lambda: self.freeTrigger(self.trigger_ch[4],self.enable_ch[4].isChecked()))
+        self.enable_ch[5].clicked.connect(lambda: self.freeTrigger(self.trigger_ch[5],self.enable_ch[5].isChecked()))
+        self.enable_ch[6].clicked.connect(lambda: self.freeTrigger(self.trigger_ch[6],self.enable_ch[6].isChecked()))
+        self.enable_ch[7].clicked.connect(lambda: self.freeTrigger(self.trigger_ch[7],self.enable_ch[7].isChecked()))
 
+        self.ui.FileTypeSet.currentTextChanged.connect(self.changeFormat)
+        self.ui.externaltrigger.clicked.connect(self.checkExternalTrigger)
         self.run = 0
         self.subrun = 0
         self.block = ""
@@ -58,23 +102,17 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.getEnableAndTriggerState()
 
-
-    def getEnableAndTriggerState(self):
-        pass
-
-    def writeConfigFile(self,fromConfig):
-        pass
     def saveConfigDefault(self):
         self.getInfoDefault()
-        _,mpath,folder,_,_,_ = self.genPatternInfo()
+        _, mpath, folder, _, _, _ = self.genPatternInfo()
         self.saveConfig(mpath+folder)
     def saveConfigStyle2(self):
         self.getInfoStyle2()
-        _,mpath,folder,_,_,_ = self.genPatternInfo()
+        _, mpath, folder, _, _, _ = self.genPatternInfo()
         self.saveConfig(mpath+folder)
 
     def saveConfig(self, pathconfig):
-        cmdcpy  = "cp /etc/wavedump/WaveDumpConfig.txt " + pathconfig + "/config_used.log"
+        cmdcpy = "cp /etc/wavedump/WaveDumpConfig.txt " + pathconfig + "/config_used.log"
         os.system(cmdcpy)
 
     def getInfoDefault(self):
@@ -83,9 +121,9 @@ class MainWindow(QtWidgets.QMainWindow):
         block1 = self.ui.block1.text()
         block2 = self.ui.block2.text()
 
-        if block1!="" and block2!="":
+        if block1 != "" and block2 != "":
             self.block = block1+"_"+block2
-        elif block1!="":
+        elif block1 != "":
             self.block = block1
         else:
             self.block = block2
@@ -112,20 +150,17 @@ class MainWindow(QtWidgets.QMainWindow):
         self.getInfoDefault()
         status = self.moveFiles()
         if status:
-            self.subrun+=1
+            self.subrun += 1
             self.ui.subrun3.setText(str(self.subrun))
 
     def style2_move(self):
         self.getInfoStyle2()
         status = self.moveFiles()
         if status:
-            self.subrun+=1
+            self.subrun += 1
             self.ui.subrun.setText(str(self.subrun))
 
 
-    def pressSet(self):
-        print("hello!")
-        self.ui.trigger2.setChecked(True)
 
 
     def genPatternInfo(self):
@@ -139,11 +174,11 @@ class MainWindow(QtWidgets.QMainWindow):
         oldname = "wave0"
         format = ".txt"
         newname = str(self.subrun)+"_"+oldname
-        if self.block!="":
+        if self.block != "":
             folder = folder + "_" + self.block
             newname = newname + "_" + self.block
 
-        if self.extra!="":
+        if self.extra != "":
             newname = newname + "_" + self.extra
 
         newname = newname + format
@@ -153,26 +188,26 @@ class MainWindow(QtWidgets.QMainWindow):
         os.system(mkdir)
         return mkdir,mpath, folder, oldname, newname, format
     def moveFiles(self):
-        mkdir,mpath,folder,oldname,newname,format = self.genPatternInfo()
+        mkdir, mpath, folder, oldname, newname, format = self.genPatternInfo()
 
         cmdmv = "mv -n ~/Desktop/" + oldname + format + " " + mpath + folder + "/" + newname
         status = 1
         status = os.system(cmdmv)
 
-        if status==0:
-            QMessageBox.about(self,"","File was moved, new subrun")
+        if status == 0:
+            QMessageBox.about(self, "", "File was moved, new subrun")
             return True
         else:
-            QMessageBox.about(self,"","ERROR")
+            QMessageBox.about(self, "", "ERROR")
             return False
 
-    def finishRun(self,runLine):
-        ret = QMessageBox.question(self,"","Finish this run?", QMessageBox.Yes, QMessageBox.No)
+    def finishRun(self, runLine):
+        ret = QMessageBox.question(self, "", "Finish this run?", QMessageBox.Yes, QMessageBox.No)
 
         if ret == QMessageBox.Yes:
-            QMessageBox.about(self,"","New run!")
+            QMessageBox.about(self, "", "New run!")
             self.run = int(runLine.text())
-            self.run+=1
+            self.run += 1
             runLine.setText(str(self.run))
 
 
