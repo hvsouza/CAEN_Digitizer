@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'mainwindow.ui'
+# Form implementation generated from reading ui file '../move_files/move_files/mainwindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.7
 #
@@ -14,13 +14,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(509, 530)
+        MainWindow.resize(509, 543)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
-        MainWindow.setMinimumSize(QtCore.QSize(385, 372))
+        MainWindow.setMinimumSize(QtCore.QSize(509, 530))
         self.centralWidget = QtWidgets.QWidget(MainWindow)
         self.centralWidget.setObjectName("centralWidget")
         self.primary_name = QtWidgets.QLineEdit(self.centralWidget)
@@ -36,7 +36,7 @@ class Ui_MainWindow(object):
         self.primary_name.setObjectName("primary_name")
         self.tabWidget = QtWidgets.QTabWidget(self.centralWidget)
         self.tabWidget.setEnabled(True)
-        self.tabWidget.setGeometry(QtCore.QRect(10, 60, 491, 411))
+        self.tabWidget.setGeometry(QtCore.QRect(10, 60, 491, 401))
         self.tabWidget.setObjectName("tabWidget")
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
@@ -682,6 +682,7 @@ class Ui_MainWindow(object):
         font.setFamily("DejaVu Sans")
         font.setPointSize(10)
         self.FileTypeSet.setFont(font)
+        self.FileTypeSet.setToolTip("")
         self.FileTypeSet.setObjectName("FileTypeSet")
         self.FileTypeSet.addItem("")
         self.FileTypeSet.addItem("")
@@ -1010,7 +1011,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
-        self.tabWidget_3.setCurrentIndex(1)
+        self.tabWidget_3.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -1022,12 +1023,12 @@ class Ui_MainWindow(object):
         self.label_23.setText(_translate("MainWindow", "Block2:"))
         self.label_24.setText(_translate("MainWindow", "subrun:"))
         self.run_3.setText(_translate("MainWindow", "0"))
-        self.button_movefile_5.setText(_translate("MainWindow", "Move files"))
+        self.button_movefile_5.setText(_translate("MainWindow", "&Move files"))
         self.subrun3.setText(_translate("MainWindow", "0"))
-        self.pushButton_4.setText(_translate("MainWindow", "Finish run"))
+        self.pushButton_4.setText(_translate("MainWindow", "&Finish run"))
         self.label_27.setText(_translate("MainWindow", "Block1:"))
         self.label_28.setText(_translate("MainWindow", "Extra info:"))
-        self.button_save_config_2.setText(_translate("MainWindow", "Save config. file"))
+        self.button_save_config_2.setText(_translate("MainWindow", "&Save config. file"))
         self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_16), _translate("MainWindow", "Default"))
         self.label_7.setText(_translate("MainWindow", "Extra info:"))
         self.calibration_check.setText(_translate("MainWindow", "Calibration done"))
@@ -1038,16 +1039,16 @@ class Ui_MainWindow(object):
         self.voltage.setText(_translate("MainWindow", "42.3"))
         self.trigger_channel.setText(_translate("MainWindow", "Ch0"))
         self.run.setText(_translate("MainWindow", "0"))
-        self.button_movefile.setText(_translate("MainWindow", "Move files"))
+        self.button_movefile.setText(_translate("MainWindow", "&Move files"))
         self.label_6.setText(_translate("MainWindow", "ADC"))
         self.subrun.setText(_translate("MainWindow", "0"))
-        self.pushButton_2.setText(_translate("MainWindow", "Finish run"))
+        self.pushButton_2.setText(_translate("MainWindow", "&Finish run"))
         self.threshold.setText(_translate("MainWindow", "20"))
         self.label_5.setText(_translate("MainWindow", "V"))
         self.label_3.setText(_translate("MainWindow", "Voltage:"))
-        self.button_save_config.setText(_translate("MainWindow", "Save config. file"))
+        self.button_save_config.setText(_translate("MainWindow", "&Save config. file"))
         self.tabWidget_3.setTabText(self.tabWidget_3.indexOf(self.tab_15), _translate("MainWindow", "Style2"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Acquisition"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "&Acquisition"))
         self.file_type.setText(_translate("MainWindow", ".dat"))
         self.file_type_2.setText(_translate("MainWindow", "File type:"))
         self.enable1.setText(_translate("MainWindow", "Ch0"))
@@ -1084,7 +1085,7 @@ class Ui_MainWindow(object):
         self.triggerL1.setText(_translate("MainWindow", "10"))
         self.FileTypeSet.setItemText(0, _translate("MainWindow", "Binary"))
         self.FileTypeSet.setItemText(1, _translate("MainWindow", "ASCII"))
-        self.pushButton_SetConfig.setText(_translate("MainWindow", "SET"))
+        self.pushButton_SetConfig.setText(_translate("MainWindow", "&SET"))
         self.label_18.setText(_translate("MainWindow", "Time of acquisition"))
         self.time_in_us.setToolTip(_translate("MainWindow", "Acquisition window in microseconds"))
         self.time_in_us.setText(_translate("MainWindow", "20"))
@@ -1101,6 +1102,7 @@ class Ui_MainWindow(object):
         self.setPolarity.setItemText(1, _translate("MainWindow", "Negative"))
         self.file_type_3.setText(_translate("MainWindow", "Pulse\n"
 "polarity:"))
+        self.usbPort.setToolTip(_translate("MainWindow", "<html><head/><body><p>To know the exact USB port you can use:<br/><span style=\" font-family:\'monospace\'; font-style:italic;\">ls /dev/usb/<br/><br/></span><span style=\" font-family:\'monospace\';\">The output should be &quot;</span><span style=\" font-family:\'monospace\';\">V1718_X&quot; <br/><br/>Use X as USB port</span></p></body></html>"))
         self.label_26.setText(_translate("MainWindow", "USB port"))
         self.label_29.setText(_translate("MainWindow", "Post trigger:"))
         self.postTrigger.setToolTip(_translate("MainWindow", "<html><head/><body><p>POST_TRIGGER: post trigger size in percent of the whole acquisition window</p><p>options: 0 to 100</p><p><br/></p></body></html>"))
@@ -1108,7 +1110,7 @@ class Ui_MainWindow(object):
         self.externalType.setItemText(0, _translate("MainWindow", "TTL"))
         self.externalType.setItemText(1, _translate("MainWindow", "NIM"))
         self.label_30.setText(_translate("MainWindow", "External type:"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), _translate("MainWindow", "Config."))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), _translate("MainWindow", "&Config."))
         self.led_width.setText(_translate("MainWindow", "100"))
         self.LED_voltage.setText(_translate("MainWindow", "LED Voltage:"))
         self.led_voltage.setText(_translate("MainWindow", "3"))
@@ -1122,6 +1124,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Calibration"))
         self.label_12.setText(_translate("MainWindow", "# of waveforms"))
         self.label_13.setText(_translate("MainWindow", "PC password"))
+        self.nwvfs.setToolTip(_translate("MainWindow", "<html><head/><body><p>Set the maximum amount of waveforms to be saved each time &quot;W&quot; (continous writting) is used in wavedump<br/><br/>-1 sets no limit </p></body></html>"))
         self.pushButtonRecompile.setText(_translate("MainWindow", "Recompile"))
         self.Information_2.setText(_translate("MainWindow", "This will recompile wavedump setting the number of waveforms you want to save each time you press W (shift+w). \n"
 "\n"
@@ -1138,7 +1141,7 @@ class Ui_MainWindow(object):
         self.adcMaximumRate.setItemText(0, _translate("MainWindow", "500 MSamples/s"))
         self.adcMaximumRate.setItemText(1, _translate("MainWindow", "250 MSamples/s"))
         self.label_25.setText(_translate("MainWindow", "ADC norminal sampling:"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Recompile"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "&Recompile"))
         self.label_10.setText(_translate("MainWindow", "Folder name:"))
         self.lock_folder.setText(_translate("MainWindow", "Lock"))
         self.menuLAr_Test.setTitle(_translate("MainWindow", "LAr Test"))
