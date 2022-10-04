@@ -1,4 +1,5 @@
 Installation/
 wavedump*/
-move_files/build-move_files*/
+move_files/build-move_files-Desktop_Qt_5_GCC_64bit-Debug/
+move_files/build-move_files-Desktop_Qt_5_GCC_64bit-Release/
 !move_files/build-move_files-Desktop_Qt_5_GCC_64bit-Release/move_files
