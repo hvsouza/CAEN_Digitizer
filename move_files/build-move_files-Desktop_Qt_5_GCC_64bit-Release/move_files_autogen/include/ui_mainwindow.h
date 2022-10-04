@@ -163,13 +163,13 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(509, 530);
+        MainWindow->resize(509, 543);
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
         MainWindow->setSizePolicy(sizePolicy);
-        MainWindow->setMinimumSize(QSize(385, 372));
+        MainWindow->setMinimumSize(QSize(509, 530));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         primary_name = new QLineEdit(centralWidget);
@@ -186,7 +186,7 @@ public:
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
         tabWidget->setEnabled(true);
-        tabWidget->setGeometry(QRect(10, 60, 491, 411));
+        tabWidget->setGeometry(QRect(10, 60, 491, 401));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
         tabWidget_3 = new QTabWidget(tab);
@@ -406,7 +406,7 @@ public:
         label_5->setGeometry(QRect(240, 90, 16, 16));
         label_3 = new QLabel(tab_15);
         label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(40, 90, 67, 17));
+        label_3->setGeometry(QRect(26, 90, 81, 20));
         label_3->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         extra = new QLineEdit(tab_15);
         extra->setObjectName(QString::fromUtf8("extra"));
@@ -933,14 +933,14 @@ public:
         label_24->setText(QCoreApplication::translate("MainWindow", "subrun:", nullptr));
         block1->setText(QString());
         run_3->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
-        button_movefile_5->setText(QCoreApplication::translate("MainWindow", "Move files", nullptr));
+        button_movefile_5->setText(QCoreApplication::translate("MainWindow", "&Move files", nullptr));
         subrun3->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
-        pushButton_4->setText(QCoreApplication::translate("MainWindow", "Finish run", nullptr));
+        pushButton_4->setText(QCoreApplication::translate("MainWindow", "&Finish run", nullptr));
         block2->setText(QString());
         label_27->setText(QCoreApplication::translate("MainWindow", "Block1:", nullptr));
         extra_3->setText(QString());
         label_28->setText(QCoreApplication::translate("MainWindow", "Extra info:", nullptr));
-        button_save_config_2->setText(QCoreApplication::translate("MainWindow", "Save config. file", nullptr));
+        button_save_config_2->setText(QCoreApplication::translate("MainWindow", "&Save config. file", nullptr));
         tabWidget_3->setTabText(tabWidget_3->indexOf(tab_16), QCoreApplication::translate("MainWindow", "Default", nullptr));
         label_7->setText(QCoreApplication::translate("MainWindow", "Extra info:", nullptr));
         calibration_check->setText(QCoreApplication::translate("MainWindow", "Calibration done", nullptr));
@@ -951,17 +951,17 @@ public:
         voltage->setText(QCoreApplication::translate("MainWindow", "42.3", nullptr));
         trigger_channel->setText(QCoreApplication::translate("MainWindow", "Ch0", nullptr));
         run->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
-        button_movefile->setText(QCoreApplication::translate("MainWindow", "Move files", nullptr));
+        button_movefile->setText(QCoreApplication::translate("MainWindow", "&Move files", nullptr));
         label_6->setText(QCoreApplication::translate("MainWindow", "ADC", nullptr));
         subrun->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("MainWindow", "Finish run", nullptr));
+        pushButton_2->setText(QCoreApplication::translate("MainWindow", "&Finish run", nullptr));
         threshold->setText(QCoreApplication::translate("MainWindow", "20", nullptr));
         label_5->setText(QCoreApplication::translate("MainWindow", "V", nullptr));
         label_3->setText(QCoreApplication::translate("MainWindow", "Voltage:", nullptr));
         extra->setText(QString());
-        button_save_config->setText(QCoreApplication::translate("MainWindow", "Save config. file", nullptr));
+        button_save_config->setText(QCoreApplication::translate("MainWindow", "&Save config. file", nullptr));
         tabWidget_3->setTabText(tabWidget_3->indexOf(tab_15), QCoreApplication::translate("MainWindow", "Style2", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "Acquisition", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("MainWindow", "&Acquisition", nullptr));
         file_type->setText(QCoreApplication::translate("MainWindow", ".dat", nullptr));
         file_type_2->setText(QCoreApplication::translate("MainWindow", "File type:", nullptr));
         enable1->setText(QCoreApplication::translate("MainWindow", "Ch0", nullptr));
@@ -1018,7 +1018,10 @@ public:
         FileTypeSet->setItemText(0, QCoreApplication::translate("MainWindow", "Binary", nullptr));
         FileTypeSet->setItemText(1, QCoreApplication::translate("MainWindow", "ASCII", nullptr));
 
-        pushButton_SetConfig->setText(QCoreApplication::translate("MainWindow", "SET", nullptr));
+#if QT_CONFIG(tooltip)
+        FileTypeSet->setToolTip(QString());
+#endif // QT_CONFIG(tooltip)
+        pushButton_SetConfig->setText(QCoreApplication::translate("MainWindow", "&SET", nullptr));
         label_18->setText(QCoreApplication::translate("MainWindow", "Time of acquisition", nullptr));
 #if QT_CONFIG(tooltip)
         time_in_us->setToolTip(QCoreApplication::translate("MainWindow", "Acquisition window in microseconds", nullptr));
@@ -1041,6 +1044,9 @@ public:
 
         file_type_3->setText(QCoreApplication::translate("MainWindow", "Pulse\n"
 "polarity:", nullptr));
+#if QT_CONFIG(tooltip)
+        usbPort->setToolTip(QCoreApplication::translate("MainWindow", "<html><head/><body><p>To know the exact USB port you can use:<br/><span style=\" font-family:'monospace'; font-style:italic;\">ls /dev/usb/<br/><br/></span><span style=\" font-family:'monospace';\">The output should be &quot;</span><span style=\" font-family:'monospace';\">V1718_X&quot; <br/><br/>Use X as USB port</span></p></body></html>", nullptr));
+#endif // QT_CONFIG(tooltip)
         label_26->setText(QCoreApplication::translate("MainWindow", "USB port", nullptr));
         label_29->setText(QCoreApplication::translate("MainWindow", "Post trigger:", nullptr));
 #if QT_CONFIG(tooltip)
@@ -1051,7 +1057,7 @@ public:
         externalType->setItemText(1, QCoreApplication::translate("MainWindow", "NIM", nullptr));
 
         label_30->setText(QCoreApplication::translate("MainWindow", "External type:", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_5), QCoreApplication::translate("MainWindow", "Config.", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_5), QCoreApplication::translate("MainWindow", "&Config.", nullptr));
         led_width->setText(QCoreApplication::translate("MainWindow", "100", nullptr));
         LED_voltage->setText(QCoreApplication::translate("MainWindow", "LED Voltage:", nullptr));
         led_voltage->setText(QCoreApplication::translate("MainWindow", "3", nullptr));
@@ -1065,6 +1071,9 @@ public:
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("MainWindow", "Calibration", nullptr));
         label_12->setText(QCoreApplication::translate("MainWindow", "# of waveforms", nullptr));
         label_13->setText(QCoreApplication::translate("MainWindow", "PC password", nullptr));
+#if QT_CONFIG(tooltip)
+        nwvfs->setToolTip(QCoreApplication::translate("MainWindow", "<html><head/><body><p>Set the maximum amount of waveforms to be saved each time &quot;W&quot; (continous writting) is used in wavedump<br/><br/>-1 sets no limit </p></body></html>", nullptr));
+#endif // QT_CONFIG(tooltip)
         pushButtonRecompile->setText(QCoreApplication::translate("MainWindow", "Recompile", nullptr));
         Information_2->setText(QCoreApplication::translate("MainWindow", "This will recompile wavedump setting the number of waveforms you want to save each time you press W (shift+w). \n"
 "\n"
@@ -1083,7 +1092,7 @@ public:
 
         adcMaximumRate->setCurrentText(QCoreApplication::translate("MainWindow", "500 MSamples/s", nullptr));
         label_25->setText(QCoreApplication::translate("MainWindow", "ADC norminal sampling:", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("MainWindow", "Recompile", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("MainWindow", "&Recompile", nullptr));
         label_10->setText(QCoreApplication::translate("MainWindow", "Folder name:", nullptr));
         lock_folder->setText(QCoreApplication::translate("MainWindow", "Lock", nullptr));
         menuLAr_Test->setTitle(QCoreApplication::translate("MainWindow", "LAr Test", nullptr));

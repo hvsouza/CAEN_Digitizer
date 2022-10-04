@@ -469,14 +469,20 @@ void MainWindow::on_pushButtonRecompile_clicked()
     if(factor==0){
         std::string errormessage = "ADC Nominal sampling should be higher or equal to Sampling rate!";
         QMessageBox::about(this,"ERROR!",errormessage.c_str());
+        system("echo Press enter to free the terminal");
         return;
     }
 
-    std::string message = "Recompiling wavedump\nSetting " + nwaveforms + " as maximum for continous writting.\nSampling Rate set to " + samplingRate;
+    std::string message = "Recompiling wavedump\n\nSetting " + nwaveforms + " as maximum for continous writting.\n\nSampling Rate set to " + samplingRate;
     QMessageBox::about(this,"",message.c_str());
 
     std::string validate_sudo = "printf '" + passwrd + "' | sudo -S -v";
-    system(validate_sudo.c_str());
+    int result = system(validate_sudo.c_str());
+
+    if(result!=0){
+        QMessageBox::about(this,"ERROR!","Error with sudo permissions, make sure you enter the correct password.\n\nType 'sudo -v' on the terminal.");
+        return;
+    }
 
     std::string recompile_command = "bash ~/Documents/CAEN_Digitizer/recompile_wavedump.sh " + nwaveforms + " " + std::to_string(factor);
     system(recompile_command.c_str());

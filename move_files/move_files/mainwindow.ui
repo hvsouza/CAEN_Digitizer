@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>509</width>
-    <height>530</height>
+    <height>543</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>385</width>
-    <height>372</height>
+    <width>509</width>
+    <height>530</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -63,7 +63,7 @@
       <x>10</x>
       <y>60</y>
       <width>491</width>
-      <height>411</height>
+      <height>401</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -71,7 +71,7 @@
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
-      <string>Acquisition</string>
+      <string>&amp;Acquisition</string>
      </attribute>
      <widget class="QTabWidget" name="tabWidget_3">
       <property name="geometry">
@@ -213,7 +213,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>Move files</string>
+         <string>&amp;Move files</string>
         </property>
        </widget>
        <widget class="QLineEdit" name="subrun3">
@@ -502,7 +502,7 @@
 </string>
         </property>
         <property name="text">
-         <string>Finish run</string>
+         <string>&amp;Finish run</string>
         </property>
         <property name="autoDefault">
          <bool>false</bool>
@@ -591,7 +591,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>Save config. file</string>
+         <string>&amp;Save config. file</string>
         </property>
        </widget>
       </widget>
@@ -774,7 +774,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>Move files</string>
+         <string>&amp;Move files</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_6">
@@ -1076,7 +1076,7 @@
 </string>
         </property>
         <property name="text">
-         <string>Finish run</string>
+         <string>&amp;Finish run</string>
         </property>
         <property name="autoDefault">
          <bool>false</bool>
@@ -1120,10 +1120,10 @@
        <widget class="QLabel" name="label_3">
         <property name="geometry">
          <rect>
-          <x>40</x>
+          <x>26</x>
           <y>90</y>
-          <width>67</width>
-          <height>17</height>
+          <width>81</width>
+          <height>20</height>
          </rect>
         </property>
         <property name="text">
@@ -1162,7 +1162,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>Save config. file</string>
+         <string>&amp;Save config. file</string>
         </property>
        </widget>
       </widget>
@@ -1170,7 +1170,7 @@
     </widget>
     <widget class="QWidget" name="tab_5">
      <attribute name="title">
-      <string>Config.</string>
+      <string>&amp;Config.</string>
      </attribute>
      <widget class="QLineEdit" name="file_type">
       <property name="enabled">
@@ -2105,6 +2105,9 @@
         <pointsize>10</pointsize>
        </font>
       </property>
+      <property name="toolTip">
+       <string/>
+      </property>
       <item>
        <property name="text">
         <string>Binary</string>
@@ -2358,7 +2361,7 @@
        </font>
       </property>
       <property name="text">
-       <string>SET</string>
+       <string>&amp;SET</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_18">
@@ -2561,6 +2564,9 @@ polarity:</string>
         <family>DejaVu Sans</family>
         <pointsize>10</pointsize>
        </font>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;To know the exact USB port you can use:&lt;br/&gt;&lt;span style=&quot; font-family:'monospace'; font-style:italic;&quot;&gt;ls /dev/usb/&lt;br/&gt;&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-family:'monospace';&quot;&gt;The output should be &amp;quot;&lt;/span&gt;&lt;span style=&quot; font-family:'monospace';&quot;&gt;V1718_X&amp;quot; &lt;br/&gt;&lt;br/&gt;Use X as USB port&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_26">
@@ -2857,7 +2863,7 @@ polarity:</string>
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
-      <string>Recompile</string>
+      <string>&amp;Recompile</string>
      </attribute>
      <widget class="QLabel" name="label_12">
       <property name="geometry">
@@ -2921,6 +2927,9 @@ polarity:</string>
         <width>121</width>
         <height>29</height>
        </rect>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Set the maximum amount of waveforms to be saved each time &amp;quot;W&amp;quot; (continous writting) is used in wavedump&lt;br/&gt;&lt;br/&gt;-1 sets no limit &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
      <widget class="QPushButton" name="pushButtonRecompile">
