@@ -43,7 +43,7 @@ DECIMATION_FACTOR 1
 # options: 0 to 100
 # On models 742 there is a delay of about 35nsec on signal Fast Trigger TR; the post trigger is added to
 # this delay
-POST_TRIGGER  59
+POST_TRIGGER  50
 
 #PULSE_POLARITY: input signal polarity.
 #options: POSITIVE, NEGATIVE
