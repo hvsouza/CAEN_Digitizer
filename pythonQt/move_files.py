@@ -11,6 +11,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
 from config_and_recompile import ConfigRecomp
+from itertools import groupby
+
+import subprocess as sp
 
 class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
     def __init__(self,parent=None):
@@ -19,6 +22,8 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        self.nchannels = 8
+        self.userpath = os.path.expanduser('~') # sames has 'cd ~/ && pwd' but safer
         #configuring some extras
         self.ui.samplingRate.setCurrentText("250 MSamples/s")
         self.ui.samplingRate_2.setCurrentText("250 MSamples/s")
@@ -78,7 +83,6 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         ]
 
 
-
         self.ui.pushButton_SetConfig.clicked.connect(lambda: self.pressSet())
         self.ui.samplingRate_2.currentTextChanged.connect(lambda:self.twinSample())
         self.ui.pushButtonRecompile.clicked.connect(lambda: self.recompile())
@@ -100,7 +104,10 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         self.block = ""
         self.extra = ""
 
-        self.getEnableAndTriggerState()
+        self.getEnabledAndTrigger()
+
+        self.recordlength = 0
+        self.getRecordLength()
 
     def saveConfigDefault(self):
         self.getInfoDefault()
@@ -166,40 +173,141 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
     def genPatternInfo(self):
         self.primary = self.ui.primary_name.text()
         # mpath = "~/Documents/ADC_data/coldbox_data/" + self.primary + "/";
-        mpath = "~/Desktop/"+self.primary+"/"
-        mkdir = "mkdir -p " + mpath
+        mpath = f"{self.userpath}/Documents/ADC_data/coldbox_data/{self.primary}/"
+        mkdir = f"mkdir -p {mpath}"
 
         folder = "run"+str(self.run)
-
-        oldname = "wave0"
-        format = ".txt"
-        newname = str(self.subrun)+"_"+oldname
         if self.block != "":
             folder = folder + "_" + self.block
-            newname = newname + "_" + self.block
 
-        if self.extra != "":
-            newname = newname + "_" + self.extra
+        oldname = [f"wave{i}" for i in range(self.nchannels)]
+        format = self.ui.file_type.text()
 
-        newname = newname + format
+        newname = [""]*self.nchannels
+        for i, namej in enumerate(oldname):
+
+            newname[i] = f'{self.subrun}_{namej}'
+
+            if self.block != "":
+                newname[i] = newname[i] + "_" + self.block
+
+            if self.extra != "":
+                newname[i] = newname[i] + "_" + self.extra
+
+            newname[i] = newname[i] + format
 
         os.system(mkdir)
         mkdir = mkdir + folder
         os.system(mkdir)
+
         return mkdir,mpath, folder, oldname, newname, format
+
+
+    def getInfoBinary(self, dataname):
+        with open(dataname,"rb") as f:
+            npts_bytes = f.read(4) #read the 4 first bytes
+            bytewvf = int.from_bytes(npts_bytes,sys.byteorder)
+
+        npts = bytewvf - 24
+        npts = int(npts/2)
+
+        filesize = os.stat(dataname).st_size
+        totalwvfs = int(filesize/bytewvf)
+        return npts, totalwvfs
+
+    def getInfoASCII(self, dataname):
+        with open(dataname,"r") as f:
+            npts = f.readline() #read the 4 first bytes
+
+        nlines = sp.getout(f'wc -l {dataname}')
+        npts = int(npts)
+        nlines = int(nlines.split(' '))
+
+        totalwvfs = int(nlines/npts)
+        return (npts-7), totalwvfs
+
+    def all_equal(self,iterator):
+        g = groupby(iterator)
+        return next(g, True) and not next(g, False)
+
     def moveFiles(self):
         mkdir, mpath, folder, oldname, newname, format = self.genPatternInfo()
 
-        cmdmv = "mv -n ~/Desktop/" + oldname + format + " " + mpath + folder + "/" + newname
-        status = 1
-        status = os.system(cmdmv)
+        datapath = f'{self.userpath}/Desktop/WaveDumpData/'
 
-        if status == 0:
-            QMessageBox.about(self, "", "File was moved, new subrun")
-            return True
-        else:
-            QMessageBox.about(self, "", "ERROR")
+        fileIsThere = [False]*self.nchannels
+        FileNotThereYet = [True]*self.nchannels
+        cmdmv = [""]*self.nchannels
+        errorMessage = ""
+        errorMessage2 = ""
+        messageNpts = ""
+
+        actual_pts_salved = []
+        total_events = []
+        idx_total_events = []
+        for i, _oldname in enumerate(oldname):
+            datacheck = datapath+f'{_oldname}{format}'
+            transfercheck = f'{mpath}{folder}/{newname[i]}'
+            fileIsThere[i] = os.path.exists(datacheck)
+            FileNotThereYet[i] = not os.path.exists(transfercheck)
+            cmdmv[i] = f'mv -n ~/Desktop/WaveDumpData/{_oldname}{format} {mpath}{folder}/{newname[i]}'
+
+
+            if self.enable_ch[i].isChecked() and fileIsThere[i] is False:
+                errorMessage = f'{errorMessage}Ch{i} is enabled, but has no file !\n'
+            elif self.enable_ch[i].isChecked() is False and fileIsThere[i] is False:
+                fileIsThere[i] = None
+            elif self.enable_ch[i].isChecked() and FileNotThereYet[i] is False:
+                errorMessage2 = f'{errorMessage2}The file \'{mpath}{folder}/{newname[i]} \'already exist, please check the run and subrun number!\n'
+            elif self.enable_ch[i].isChecked():
+                if format == ".dat":
+                    _actual_pts_saved, _total_events = self.getInfoBinary(datacheck)
+                else:
+                    _actual_pts_saved, _total_events = self.getInfoASCII(datacheck)
+                actual_pts_salved.append(_actual_pts_saved)
+                total_events.append(_total_events)
+                idx_total_events.append(i)
+                if actual_pts_salved[i] != self.recordsaved:
+                    messageNpts = f'{messageNpts}Ch{i} has {actual_pts_saved} per waveforms, it should be {self.recordsaved}! \n'
+
+        if messageNpts != "":
+            QMessageBox.critical(self, "ERROR!", f'{messageNpts}\n\n Check the sampling rate configuration')
             return False
+
+        messageWvfs = "Channels have different number of wavefors!!!\n\n"
+        if self.all_equal(total_events) is False:
+            for ch, vals in zip(idx_total_events,total_events):
+                messageWvfs = f'{messageWvfs}Ch{ch} had {val} recorded\n'
+            QMessageBox.critical(self, "ERROR", messageWvfs)
+            return False
+
+        errorMessage = errorMessage + "Please, check what was the problem with the above files!"
+        if False in fileIsThere:
+            QMessageBox.critical(self, "ERROR!", errorMessage)
+            return False
+
+        if False in FileNotThereYet:
+            # for state in FileNotThereYet:
+                # print(state)
+            QMessageBox.critical(self, "ERROR!", errorMessage2)
+            return False
+
+        noerror = []
+        for c, e in zip(cmdmv,self.enable_ch):
+            if e.isChecked():
+                # status = 0
+                status = os.system(c)
+                if status != 0:
+                    QMessageBox.about(self, "", f"ERROR {status}")
+                    noerror.append(False)
+                else:
+                    noerror.append(True)
+
+        if False in noerror:
+            QMessageBox.warning(self, "Warning!", "There one or more errors transfering the files. Subrun number will change, but check what happend")
+        else:
+            QMessageBox.about(self, "", f'{"{:,}".format(total_events[0])} waveforms saved per file.\n Files were moved, new subrun')
+        return True
 
     def finishRun(self, runLine):
         ret = QMessageBox.question(self, "", "Finish this run?", QMessageBox.Yes, QMessageBox.No)
