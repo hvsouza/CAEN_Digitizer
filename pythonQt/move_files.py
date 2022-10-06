@@ -219,12 +219,13 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         with open(dataname,"r") as f:
             npts = f.readline() #read the 4 first bytes
 
+
         nlines = sp.getout(f'wc -l {dataname}')
         npts = int(npts)
         nlines = int(nlines.split(' '))
 
-        totalwvfs = int(nlines/npts)
-        return (npts-7), totalwvfs
+        totalwvfs = int(nlines/(npts+7))
+        return npts, totalwvfs
 
     def all_equal(self,iterator):
         g = groupby(iterator)
