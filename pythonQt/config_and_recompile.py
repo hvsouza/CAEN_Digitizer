@@ -15,9 +15,10 @@ class ConfigRecomp():
         for var in self.trigger_ch:
             var.setChecked(False)
             var.setDisabled(True)
-
     def checkExternalTrigger(self):
         if self.ui.externaltrigger.isChecked():
+            for i, tr in enumerate(self.trigger_ch):
+                self.previousStateTrigger[i] = tr.isChecked()
             self.setExternalTrigger()
         else:
             self.getEnabledAndTrigger()
@@ -44,9 +45,12 @@ class ConfigRecomp():
             if _ch.isChecked():
                 self.trigger_ch[i].setDisabled(False)
                 self.trigger_ch[i].setCheckable(True)
+                if self.previousStateTrigger[i] == True:
+                    self.trigger_ch[i].setChecked(True)
             else:
                 self.trigger_ch[i].setChecked(False)
                 self.trigger_ch[i].setDisabled(True)
+
 
     def getRecordLength(self):
         max_samplingRate = self.ui.adcMaximumRate.currentText()
@@ -81,9 +85,57 @@ class ConfigRecomp():
         val = self.ui.samplingRate_2.currentText()
         self.ui.samplingRate.setCurrentText(val)
 
+
+    def loadConfig(self):
+        try:
+
+            with open("/etc/wavedump/WaveDumpConfig.txt","r") as f:
+                # this get content lines and their position
+                alllines = [line.rstrip() for line in f]
+                lines = [line for line in alllines if line and not line.startswith('#')]
+                # self.ui = Ui_MainWindow()
+                # self.ui.setupUi(self)
+                self.ui.usbPort.setValue(int((lines[1].split())[2]))
+                self.recordlength = int(lines[2].split()[1])
+
+                max_samplingRate = self.ui.adcMaximumRate.currentText()
+                max_samplingRate = float(max_samplingRate.split(" ")[0]) # in MSamples/s
+
+                dtime = 1/max_samplingRate #already in us
+                self.ui.time_in_us.setText(str(dtime*self.recordlength))
+
+                self.ui.postTrigger.setText(lines[4].split()[1])
+                self.ui.setPolarity.setCurrentText(lines[5].split()[1].capitalize())
+
+                if lines[6].split()[1] == "ACQUISITION_ONLY":
+                    self.ui.externaltrigger.setChecked(True)
+                    # self.setExternalTrigger()
+                else:
+                    self.ui.externaltrigger.setChecked(False)
+
+                self.ui.externalType.setCurrentText(lines[7].split()[1])
+                self.ui.FileTypeSet.setCurrentText(lines[8].split()[1])
+                channel = 0
+                for i in range(9,len(lines)):
+                    if lines[i].startswith(f'[{channel}]'):
+                        if lines[i+1].split()[1] == "YES":
+                            self.enable_ch[channel].setChecked(True)
+                            # self.freeTrigger(self.trigger_ch[channel], True)
+                            self.base_ch[channel].setText(lines[i+2].split()[1])
+                            self.triggerL_ch[channel].setText(lines[i+3].split()[1])
+                            if lines[i+4].split()[1] == "ACQUISITION_ONLY" and self.trigger_ch[channel].isEnabled():
+                                self.trigger_ch[channel].setChecked(True)
+                            else:
+                                self.trigger_ch[channel].setChecked(False)
+
+                        channel += 1
+
+
+        except IOError:
+            QMessageBox.critical(self, "ERROR!", "Config. file not opened!")
+
     def writeConfigFile(self, fromConfig):
 
-        self.getEnabledAndTrigger()
         enabled_ch = [ False for i in range(self.nchannels) ]
         selfTrigger_ch = [ False for i in range(self.nchannels) ]
         selftype = "None (Use \"T\" for continous software trigger)"
@@ -104,33 +156,68 @@ class ConfigRecomp():
 
         self.getRecordLength()
 
+        replace = [""]*15
+        replace[0] = f"[COMMON]"
+        replace[1] = f'OPEN USB {usbport} 0'
+        replace[2] = f'RECORD_LENGTH  {self.recordlength}'
+        replace[3] = f'DECIMATION_FACTOR 1'
+        replace[4] = f'POST_TRIGGER  {self.ui.postTrigger.text()}'
+        replace[5] = f'PULSE_POLARITY  {pulse_polarity}'
+        replace[6] = f'EXTERNAL_TRIGGER  {externalTrigger}'
+        replace[7] = f'FPIO_LEVEL  {pulsetype}'
+        replace[8] = f'OUTPUT_FILE_FORMAT  {datatype}'
+        replace[9] = f'OUTPUT_FILE_HEADER  YES'
+        replace[10] = f'TEST_PATTERN  NO'
+        replace[11] = f'ENABLE_INPUT  NO'
+        replace[12] = f'BASELINE_LEVEL  10'
+        replace[13] = f'TRIGGER_THRESHOLD  100'
+        replace[14] = f'CHANNEL_TRIGGER  DISABLED'
+
+        replace_ch = []*self.nchannels
+
+        for i in range(self.nchannels):
+            chconf = []
+            chconf.append(f'[{i}]')
+            chconf.append(f'\n')
+            chconf.append(f'ENABLE_INPUT          {enabled_ch[i]}\n')
+            if enabled_ch[i] == "YES":
+                chconf.append(f'BASELINE_LEVEL        {self.base_ch[i].text()}\n')
+                chconf.append(f'TRIGGER_THRESHOLD     {self.triggerL_ch[i].text()}\n')
+                chconf.append(f'CHANNEL_TRIGGER       {selfTrigger_ch[i]}\n')
+            chconf.append("\n")
+            replace_ch.append(chconf)
+
         try:
 
-            with open(f"{self.userpath}/Desktop/WaveDumpConfig.txt","w") as f:
-                f.write("[COMMON]\n\n")
-                f.write(f'OPEN USB {usbport} 0\n\n')
-                f.write(f'RECORD_LENGTH  {self.recordlength}\n\n')
-                f.write(f'DECIMATION_FACTOR 1\n\n')
-                f.write(f'POST_TRIGGER  {self.ui.postTrigger.text()}\n\n')
-                f.write(f'PULSE_POLARITY  {pulse_polarity}\n\n')
-                f.write(f'EXTERNAL_TRIGGER  {externalTrigger}\n\n')
-                f.write(f'FPIO_LEVEL  {pulsetype}\n\n')
-                f.write(f'OUTPUT_FILE_FORMAT  {datatype}\n\n')
-                f.write(f'OUTPUT_FILE_HEADER  YES\n\n')
-                f.write(f'TEST_PATTERN  NO\n\n')
-                f.write(f'ENABLE_INPUT  NO\n\n')
-                f.write(f'BASELINE_LEVEL  10\n\n')
-                f.write(f'TRIGGER_THRESHOLD  100\n\n')
-                f.write(f'CHANNEL_TRIGGER  DISABLED\n\n')
+            with open("/etc/wavedump/WaveDumpConfig.txt","r+") as f:
+                # this get content lines and their position
+                alllines = [[pos,line.rstrip()] for pos, line in enumerate(f)]
+                lines = [[line[0], line[1]] for line in alllines if line[1] and not line[1].startswith('#')]
 
+                # replace the common structure of the file
+                for i, (rep,[pos,line]) in enumerate(zip(replace,lines)):
+                    alllines[pos][1] = rep
+
+                # search for the calling of the channel '[x]', keep whatwever is written there
+                # this is good to keep something such as '[0] # detector 2'
+                firstpos = 0
                 for i in range(self.nchannels):
-                    f.write(f'[{i}]\n')
-                    f.write(f'ENABLE_INPUT          {enabled_ch[i]}\n')
-                    if enabled_ch[i] == "YES":
-                        f.write(f'BASELINE_LEVEL        {self.base_ch[i].text()}\n')
-                        f.write(f'TRIGGER_THRESHOLD     {self.triggerL_ch[i].text()}\n')
-                        f.write(f'CHANNEL_TRIGGER       {selfTrigger_ch[i]}\n')
-                    f.write("\n")
+                    for [pos,line] in alllines:
+                        if line.startswith(replace_ch[i][0]):
+                            if i == 0:
+                                firstpos = pos
+                            replace_ch[i][0] = line
+
+                f.seek(0)
+                f.truncate(0)
+                for [pos,line] in alllines:
+                    if pos < firstpos:
+                        f.write(f'{line}\n')
+
+                for rep in replace_ch:
+                    for line in rep:
+                        f.write(line)
+
 
         except IOError:
             QMessageBox.critical(self, "ERROR!", "Config. file not opened!")

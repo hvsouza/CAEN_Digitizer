@@ -82,23 +82,24 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
             self.ui.triggerL8,
         ]
 
+        self.previousStateTrigger = [False for i in range(self.nchannels)]
 
         self.ui.pushButton_SetConfig.clicked.connect(lambda: self.pressSet())
         self.ui.samplingRate_2.currentTextChanged.connect(lambda:self.twinSample())
         self.ui.pushButtonRecompile.clicked.connect(lambda: self.recompile())
 
         self.primary = self.ui.primary_name.text()
-        self.enable_ch[0].clicked.connect(lambda: self.freeTrigger(self.trigger_ch[0],self.enable_ch[0].isChecked()))
-        self.enable_ch[1].clicked.connect(lambda: self.freeTrigger(self.trigger_ch[1],self.enable_ch[1].isChecked()))
-        self.enable_ch[2].clicked.connect(lambda: self.freeTrigger(self.trigger_ch[2],self.enable_ch[2].isChecked()))
-        self.enable_ch[3].clicked.connect(lambda: self.freeTrigger(self.trigger_ch[3],self.enable_ch[3].isChecked()))
-        self.enable_ch[4].clicked.connect(lambda: self.freeTrigger(self.trigger_ch[4],self.enable_ch[4].isChecked()))
-        self.enable_ch[5].clicked.connect(lambda: self.freeTrigger(self.trigger_ch[5],self.enable_ch[5].isChecked()))
-        self.enable_ch[6].clicked.connect(lambda: self.freeTrigger(self.trigger_ch[6],self.enable_ch[6].isChecked()))
-        self.enable_ch[7].clicked.connect(lambda: self.freeTrigger(self.trigger_ch[7],self.enable_ch[7].isChecked()))
+        self.enable_ch[0].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[0],self.enable_ch[0].isChecked()))
+        self.enable_ch[1].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[1],self.enable_ch[1].isChecked()))
+        self.enable_ch[2].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[2],self.enable_ch[2].isChecked()))
+        self.enable_ch[3].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[3],self.enable_ch[3].isChecked()))
+        self.enable_ch[4].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[4],self.enable_ch[4].isChecked()))
+        self.enable_ch[5].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[5],self.enable_ch[5].isChecked()))
+        self.enable_ch[6].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[6],self.enable_ch[6].isChecked()))
+        self.enable_ch[7].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[7],self.enable_ch[7].isChecked()))
 
         self.ui.FileTypeSet.currentTextChanged.connect(self.changeFormat)
-        self.ui.externaltrigger.clicked.connect(self.checkExternalTrigger)
+        self.ui.externaltrigger.stateChanged.connect(self.checkExternalTrigger)
         self.run = 0
         self.subrun = 0
         self.block = ""
@@ -108,6 +109,7 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
 
         self.recordlength = 0
         self.getRecordLength()
+        self.loadConfig()
 
     def saveConfigDefault(self):
         self.getInfoDefault()
