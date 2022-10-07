@@ -76,6 +76,7 @@ class ConfigRecomp():
 
         if res != 0:
             QMessageBox.warning(self, "WARNING!!!",f"Time duration and sampling rate are not compatible!\nRecord length set to {self.recordsaved}\nCorresponding to {ret} ns")
+
     def pressSet(self):
         self.writeConfigFile(True)
 

@@ -245,7 +245,7 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         errorMessage2 = ""
         messageNpts = ""
 
-        actual_pts_salved = []
+        actual_pts_saved = []
         total_events = []
         idx_total_events = []
         for i, _oldname in enumerate(oldname):
@@ -267,15 +267,16 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
                     _actual_pts_saved, _total_events = self.getInfoBinary(datacheck)
                 else:
                     _actual_pts_saved, _total_events = self.getInfoASCII(datacheck)
-                actual_pts_salved.append(_actual_pts_saved)
+                actual_pts_saved.append(_actual_pts_saved)
                 total_events.append(_total_events)
                 idx_total_events.append(i)
-                if actual_pts_salved[i] != self.recordsaved:
-                    messageNpts = f'{messageNpts}Ch{i} has {actual_pts_saved} per waveforms, it should be {self.recordsaved}! \n'
+                if actual_pts_saved[i] != self.recordsaved:
+                    messageNpts = f'{messageNpts}Ch{i} has {actual_pts_saved[i]} pts per waveforms.\n'
 
         if messageNpts != "":
-            QMessageBox.critical(self, "ERROR!", f'{messageNpts}\n\n Check the sampling rate configuration')
-            return False
+            messageNpts = messageNpts + f"According to the last config. set, it should be {self.recordsaved} pts! Please, right this down in a log."
+            # QMessageBox.critical(self, "ERROR!", f'{messageNpts}\n\n Check the sampling rate configuration')
+            # return False
 
         messageWvfs = "Channels have different number of wavefors!!!\n\n"
         if self.all_equal(total_events) is False:
@@ -284,7 +285,7 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
             QMessageBox.critical(self, "ERROR", messageWvfs)
             return False
 
-        errorMessage = errorMessage + "Please, check what was the problem with the above files!"
+        errorMessage = errorMessage + "Please, check what was the protblem with the above files!"
         if False in fileIsThere:
             QMessageBox.critical(self, "ERROR!", errorMessage)
             return False
@@ -309,7 +310,12 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         if False in noerror:
             QMessageBox.warning(self, "Warning!", "There one or more errors transfering the files. Subrun number will change, but check what happend")
         else:
-            QMessageBox.about(self, "", f'{"{:,}".format(total_events[0])} waveforms saved per file.\n Files were moved, new subrun')
+            messageOk = f'{"{:,}".format(total_events[0])} waveforms saved per file.\n\n'
+            if messageNpts != "":
+                messageOk = f'{messageOk}{messageNpts}\n'
+
+            messageOk = messageOk +'Files were moved, new subrun'
+            QMessageBox.about(self, "", messageOk)
         return True
 
     def finishRun(self, runLine):
