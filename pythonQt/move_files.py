@@ -126,7 +126,12 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
                 directory = self.fixString(directory)
                 self.ui.primary_name.setText(directory)
             else:
-                QMessageBox.critical(self, "ERROR!", f"The data should be kept inside \n{self.default_path}")
+                answer = QMessageBox.critical(self, "ERROR!", f"The data should be kept inside \n{self.default_path}\n Do you want to change it?\n(Please be careful)", QMessageBox.Yes | QMessageBox.No)
+                if answer == QMessageBox.Yes:
+                    directory = directory+"/"
+                    answer2 = QMessageBox.question(self, "", f"Changing the default folder to:\n{directory}\nIs that ok?", QMessageBox.Yes | QMessageBox.No)
+                    if answer2 == QMessageBox.Yes:
+                        self.default_path = directory
         else:
             directory = "new_data"
             self.ui.primary_name.setText(directory)
