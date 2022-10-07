@@ -1522,7 +1522,7 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
             BinHeader[5] = EventInfo->TriggerTimeTag;
             /* Added by Henrique Souza */
             /* This allows to keep implementing the file, but not after moving it */
-            if (!WDrun->fout[ch]) {
+            if (!WDrun->fout[ch] || (WDrun->SingleWrite && *after_max == 0)) { // Added by Henrique Souza
                 char fname[100];
                 sprintf(fname, "%swave%d.dat", path,ch);
                 if(WDrun->ContinuousWrite && *after_max == 1){
@@ -2255,6 +2255,9 @@ InterruptTimeout:
                 }
                 if (WDrun.ContinuousWrite || WDrun.SingleWrite) {
                     // Note: use a thread here to allow parallel readout and file writing
+                    if(WDrun.SingleWrite){ // Added by Henrique Souza
+                      after_max = 0;
+                    }
                     if (BoardInfo.FamilyCode == CAEN_DGTZ_XX742_FAMILY_CODE) {
                         ret = WriteOutputFilesx742(&WDcfg, &WDrun, &EventInfo, Event742);
                     }
@@ -2271,7 +2274,6 @@ InterruptTimeout:
                     if (WDrun.SingleWrite) {
                         printf("Single Event saved to output files\n");
                         max_events = -1; // Added by Henrique Souza
-                        after_max = 0;
                         WDrun.SingleWrite = 0;
                     }
 
