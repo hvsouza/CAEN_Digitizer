@@ -192,39 +192,51 @@ sudo apt install linux-headers-$(uname -r)
 * QtCreator GUI
 ** QtCreator installation
 
-There is an already compile version of the GUI, to test if it is working, execute:
+Since October 2022, the GUI is now made in python3, to use it you need to install Qt5 libraries:
 #+begin_src
-~/Documents/CAEN_Digitizer/move_files/build-move_files-Desktop_Qt_5_GCC_64bit-Release/move_files
+python3 -m pip install pyqt5
 #+end_src
 
-If the GUI does not comes out, check the error message. You may need to install some libraries.
+To check if the GUI is working, you can type:
 
-If the error you get looks like:
-
-#+begin_example
-./move_files/build-move_files-Desktop_Qt_5_GCC_64bit-Release/move_files: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.34' not found (required by ./move_files/build-move_files-Desktop_Qt_5_GCC_64bit-Release/move_files)
-#+end_example
-
-That means that the binary release will not work and you need to install the GUI by your own. The installation is fairly simple.
-
-Requirements to install QtCreator:
-
-=sudo apt update && sudo apt-get upgrade= \\
-=sudo apt -y install build-essential libssl1.1 libgl1-mesa-dev libqt5x11extras5=
-
-(if libssl1.1 is giving error, try libssl3)
-# =sudo apt-get -y install build-essential opens libels-dev libssl1.0 libgl1-mesa-dev libqt5x11extras5=
-
-Download QtCreator installer (https://www.qt.io/download-qt-installer).
-
-You need to execute the installer.
-
-During installation, at "installation Folder" step, check the option =Qt 6.3 for desktop development= instead of =custom installation=.
-
-To open QtCreator, either search it in the menu or execute it:
 #+begin_src
-~/Qt/Tools/QtCreator/bin/qtcreator
+python3 ~/Documents/CAEN_Digitizer/pythonQt/move_files.py &
 #+end_src
+The =&= lets your terminal free in case you want to use it.
+
+# There is an already compile version of the GUI, to test if it is working, execute:
+# #+begin_src
+# ~/Documents/CAEN_Digitizer/move_files/build-move_files-Desktop_Qt_5_GCC_64bit-Release/move_files
+# #+end_src
+
+# If the GUI does not comes out, check the error message. You may need to install some libraries.
+
+# If the error you get looks like:
+
+# #+begin_example
+# ./move_files/build-move_files-Desktop_Qt_5_GCC_64bit-Release/move_files: /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.34' not found (required by ./move_files/build-move_files-Desktop_Qt_5_GCC_64bit-Release/move_files)
+# #+end_example
+
+# That means that the binary release will not work and you need to install the GUI by your own. The installation is fairly simple.
+
+# Requirements to install QtCreator:
+
+# =sudo apt update && sudo apt-get upgrade= \\
+# =sudo apt -y install build-essential libssl1.1 libgl1-mesa-dev libqt5x11extras5=
+
+# (if libssl1.1 is giving error, try libssl3)
+# # =sudo apt-get -y install build-essential opens libels-dev libssl1.0 libgl1-mesa-dev libqt5x11extras5=
+
+# Download QtCreator installer (https://www.qt.io/download-qt-installer).
+
+# You need to execute the installer.
+
+# During installation, at "installation Folder" step, check the option =Qt 6.3 for desktop development= instead of =custom installation=.
+
+# To open QtCreator, either search it in the menu or execute it:
+# #+begin_src
+# ~/Qt/Tools/QtCreator/bin/qtcreator
+# #+end_src
 ** Creating the project
 
 Open QtCreator, click at "Open Project" at the left side options (bellow Create Project), open the file =Documents/QtCreator/move_files/CMakeList.txt= (click "Ok" in the error message) and click at Configure Project.
