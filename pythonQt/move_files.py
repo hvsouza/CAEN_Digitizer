@@ -124,6 +124,11 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         cmdcpy = "cp /etc/wavedump/WaveDumpConfig.txt " + pathconfig + "/config_used.log"
         os.system(cmdcpy)
 
+    def fixString(self, string):
+        string = string.replace(" ", "_")
+        string = string.replace(".", "_")
+        return string
+
     def getInfoDefault(self):
         self.run = int(self.ui.run_3.text())
         self.subrun = int(self.ui.subrun3.text())
@@ -234,6 +239,10 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         return next(g, True) and not next(g, False)
 
     def moveFiles(self):
+
+        self.block = self.fixString(self.block)
+        self.extra =self.fixString(self.extra)
+
         mkdir, mpath, folder, oldname, newname, format = self.genPatternInfo()
 
         datapath = f'{self.userpath}/Desktop/WaveDumpData/'
