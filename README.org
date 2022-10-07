@@ -38,8 +38,6 @@ Please, if you find any bug, miss information or some nasty mistake, feel free t
   - [[#troubleshooting][Troubleshooting]]
 - [[#qtcreator-gui][QtCreator GUI]]
   - [[#qtcreator-installation][QtCreator installation]]
-  - [[#creating-the-project][Creating the project]]
-  - [[#debugging-installation][Debugging installation]]
   - [[#using-the-gui][Using the GUI]]
 - [[#extra-creating-a-shortcut-for-wavedump][Extra: Creating a shortcut for Wavedump]]
 - [[#extra-recompiling-wavedump][Extra: recompiling wavedump]]
@@ -261,9 +259,9 @@ During data taking, with the terminal open at =~/Desktop/WaveDumpData/= you can 
 
 # and run the GUI by executing =./move_files.sh= the GUI window should pop-out, by executing this way the terminal is free to use, but don't close it.
    
-** Debugging installation
-If the GUI did not pop-out after executing move_files.sh, check that the folder =~/Documents/QtCreator/build-move_files-Desktop_Qt_6_2_4_GCC_64bit-Release= exists. \\
-If the name of the file is different, you need to update it at =~/Desktop/WaveDumpData/move_files.sh=
+# ** Debugging installation
+# If the GUI did not pop-out after executing move_files.sh, check that the folder =~/Documents/QtCreator/build-move_files-Desktop_Qt_6_2_4_GCC_64bit-Release= exists. \\
+# If the name of the file is different, you need to update it at =~/Desktop/WaveDumpData/move_files.sh=
 ** Using the GUI
 
 The GUI is just an interface to automatically move files from the WaveDumpData folder to another folder. It will keep a track of run and subrun number for you, renaming it with a standard.
