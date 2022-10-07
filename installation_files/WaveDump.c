@@ -1578,7 +1578,7 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
             // Ascii file format
             /* Added by Henrique Souza */
             /* This allows to keep implementing the file, but not after moving it */
-            if (!WDrun->fout[ch]) {
+            if (!WDrun->fout[ch] || (WDrun->SingleWrite && *after_max == 0)) { // Added by Henrique Souza
                 char fname[100];
                 sprintf(fname, "%swave%d.txt", path,ch);
                 if(WDrun->ContinuousWrite && *after_max == 1){
