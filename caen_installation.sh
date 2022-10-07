@@ -111,9 +111,9 @@ cp -r $ROOTPATH/$SOURCEFILES/install_by_hand/WaveDumpConfig.txt /etc/wavedump/
 mkdir -p ~/Desktop/WaveDumpData
 cp $ROOTPATH/$SOURCEFILES/{WaveDumpExe.sh,move_files.sh} ~/Desktop/WaveDumpData/
 
-# copying files necessary for QtCreator
-mkdir -p ~/Documents/QtCreator
-cp -r $ROOTPATH/move_files/move_files ~/Documents/QtCreator/
+# # copying files necessary for QtCreator
+# mkdir -p ~/Documents/QtCreator
+# cp -r $ROOTPATH/move_files/move_files ~/Documents/QtCreator/
 
 # copying file to create short cut
 cp -r $ROOTPATH/$SOURCEFILES/install_by_hand/WAVEDump.png ~/Pictures
