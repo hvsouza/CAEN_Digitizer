@@ -221,10 +221,10 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         with open(dataname,"r") as f:
             npts = f.readline() #read the 4 first bytes
 
-
-        nlines = sp.getout(f'wc -l {dataname}')
+        npts = int(npts.rsplit()[2])
+        nlines = sp.getoutput(f'wc -l {dataname}')
         npts = int(npts)
-        nlines = int(nlines.split(' '))
+        nlines = int(nlines.split(' ')[0])
 
         totalwvfs = int(nlines/(npts+7))
         return npts, totalwvfs
@@ -281,7 +281,7 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         messageWvfs = "Channels have different number of wavefors!!!\n\n"
         if self.all_equal(total_events) is False:
             for ch, vals in zip(idx_total_events,total_events):
-                messageWvfs = f'{messageWvfs}Ch{ch} had {val} recorded\n'
+                messageWvfs = f'{messageWvfs}Ch{ch} had {vals} recorded\n'
             QMessageBox.critical(self, "ERROR", messageWvfs)
             return False
 
