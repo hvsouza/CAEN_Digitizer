@@ -204,6 +204,11 @@ python3 ~/Documents/CAEN_Digitizer/pythonQt/move_files.py &
 #+end_src
 The =&= lets your terminal free in case you want to use it.
 
+During data taking, with the terminal open at =~/Desktop/WaveDumpData/= you can execute the GUI by calling:
+#+begin_src
+./move_files.sh
+#+end_src
+
 # There is an already compile version of the GUI, to test if it is working, execute:
 # #+begin_src
 # ~/Documents/CAEN_Digitizer/move_files/build-move_files-Desktop_Qt_5_GCC_64bit-Release/move_files
@@ -237,24 +242,24 @@ The =&= lets your terminal free in case you want to use it.
 # #+begin_src
 # ~/Qt/Tools/QtCreator/bin/qtcreator
 # #+end_src
-** Creating the project
+# ** Creating the project
 
-Open QtCreator, click at "Open Project" at the left side options (bellow Create Project), open the file =Documents/QtCreator/move_files/CMakeList.txt= (click "Ok" in the error message) and click at Configure Project.
+# Open QtCreator, click at "Open Project" at the left side options (bellow Create Project), open the file =Documents/QtCreator/move_files/CMakeList.txt= (click "Ok" in the error message) and click at Configure Project.
 
-#+HTML: <img src=".repo_img/qtcreator_proj.png" align="center" width="600" />
+# #+HTML: <img src=".repo_img/qtcreator_proj.png" align="center" width="600" />
 
-Now, on the bottom left, change the building from *Debug* to *Release*. Run the project (Green arrow or Ctrl+R).
+# Now, on the bottom left, change the building from *Debug* to *Release*. Run the project (Green arrow or Ctrl+R).
 
-#+HTML: <img src=".repo_img/qtcreator_release.png" align="center" width="600" />
+# #+HTML: <img src=".repo_img/qtcreator_release.png" align="center" width="600" />
 
-This should pop the GUI in the screen, close it and close the project.  \\
-Now, navigate to WaveDumpData =cd ~/Desktop/WaveDumpData= and update the script =move_files.sh=, insert the path to Release you generated, this will depend on which version of Qt you installed, but it should look to something like this:
+# This should pop the GUI in the screen, close it and close the project.  \\
+# Now, navigate to WaveDumpData =cd ~/Desktop/WaveDumpData= and update the script =move_files.sh=, insert the path to Release you generated, this will depend on which version of Qt you installed, but it should look to something like this:
 
-#+begin_src
-~/Documents/QtCreator/build-move_files-Desktop_Qt_x_x_x_GCC_64bit-Release/move_files &
-#+end_src
+# #+begin_src
+# ~/Documents/QtCreator/build-move_files-Desktop_Qt_x_x_x_GCC_64bit-Release/move_files &
+# #+end_src
 
-and run the GUI by executing =./move_files.sh= the GUI window should pop-out, by executing this way the terminal is free to use, but don't close it.
+# and run the GUI by executing =./move_files.sh= the GUI window should pop-out, by executing this way the terminal is free to use, but don't close it.
    
 ** Debugging installation
 If the GUI did not pop-out after executing move_files.sh, check that the folder =~/Documents/QtCreator/build-move_files-Desktop_Qt_6_2_4_GCC_64bit-Release= exists. \\
