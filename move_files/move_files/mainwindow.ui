@@ -32,9 +32,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>161</x>
+      <x>71</x>
       <y>10</y>
-      <width>331</width>
+      <width>361</width>
       <height>25</height>
      </rect>
     </property>
@@ -43,6 +43,12 @@
       <horstretch>0</horstretch>
       <verstretch>0</verstretch>
      </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <family>DejaVu Sans</family>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>new_data</string>
@@ -3070,14 +3076,20 @@ The password is the same you use to login the computer.</string>
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>131</width>
-      <height>20</height>
+      <x>0</x>
+      <y>0</y>
+      <width>61</width>
+      <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>DejaVu Sans</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
     <property name="text">
-     <string>Folder name:</string>
+     <string>Folder:</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -3089,7 +3101,7 @@ The password is the same you use to login the computer.</string>
     </property>
     <property name="geometry">
      <rect>
-      <x>420</x>
+      <x>430</x>
       <y>40</y>
       <width>71</width>
       <height>23</height>
@@ -3112,6 +3124,25 @@ The password is the same you use to login the computer.</string>
     </property>
     <property name="autoExclusive">
      <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="browse_dir">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>10</y>
+      <width>61</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>DejaVu Sans</family>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>&amp;Browse</string>
     </property>
    </widget>
   </widget>

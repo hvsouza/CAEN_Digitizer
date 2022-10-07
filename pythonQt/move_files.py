@@ -8,7 +8,8 @@ import sys
 from ui_mainwindow import Ui_MainWindow
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QFileDialog
+
 
 from config_and_recompile import ConfigRecomp
 from itertools import groupby
@@ -87,7 +88,8 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         self.ui.pushButton_SetConfig.clicked.connect(lambda: self.pressSet())
         self.ui.samplingRate_2.currentTextChanged.connect(lambda:self.twinSample())
         self.ui.pushButtonRecompile.clicked.connect(lambda: self.recompile())
-
+        self.default_path = f'{self.userpath}/Documents/ADC_data/coldbox_data/'
+        self.ui.browse_dir.clicked.connect(self.getDir)
         self.primary = self.ui.primary_name.text()
         self.enable_ch[0].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[0],self.enable_ch[0].isChecked()))
         self.enable_ch[1].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[1],self.enable_ch[1].isChecked()))
@@ -111,6 +113,23 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         self.getRecordLength()
         self.loadConfig()
 
+    def getDir(self):
+        dirnow = self.ui.primary_name.text()
+        directory = QtWidgets.QFileDialog.getExistingDirectory(self, "Find Files",
+                                                               f'{self.default_path}/{dirnow}')
+        tocheck = self.default_path[:-1]
+        if directory and directory != tocheck:
+            if directory.startswith(tocheck):
+                directory = directory.replace(self.default_path, '')
+                if " " in directory:
+                    QMessageBox.warning(self, "WARNING!", "No spaces in the name, they were changed to undercore")
+                directory = self.fixString(directory)
+                self.ui.primary_name.setText(directory)
+            else:
+                QMessageBox.critical(self, "ERROR!", f"The data should be kept inside \n{self.default_path}")
+        else:
+            directory = "new_data"
+            self.ui.primary_name.setText(directory)
     def saveConfigDefault(self):
         self.getInfoDefault()
         _, mpath, folder, _, _, _ = self.genPatternInfo()
@@ -179,8 +198,8 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
 
     def genPatternInfo(self):
         self.primary = self.ui.primary_name.text()
-        # mpath = "~/Documents/ADC_data/coldbox_data/" + self.primary + "/";
-        mpath = f"{self.userpath}/Documents/ADC_data/coldbox_data/{self.primary}/"
+        # mpath = f"{self.userpath}/Documents/ADC_data/coldbox_data/{self.primary}/"
+        mpath = f"{self.default_path}{self.primary}/"
         mkdir = f"mkdir -p {mpath}"
 
         folder = "run"+str(self.run)
