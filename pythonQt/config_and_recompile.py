@@ -8,6 +8,7 @@ from ui_mainwindow import Ui_MainWindow
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
+import subprocess as sp
 
 class ConfigRecomp():
 
@@ -87,6 +88,20 @@ class ConfigRecomp():
         self.ui.samplingRate.setCurrentText(val)
 
 
+    def checkUSB(self, usbport):
+        ret = sp.getoutput("/bin/ls /dev/usb")
+        standardret = "V1718_"
+        pos = ret.find(standardret)
+        if pos == -1:
+            QMessageBox.warning(self, "Warning!", "The digitizer was probably not recognized by the system")
+            return
+        pos += len(standardret)
+        realUSB = ret[pos]
+
+        if str(usbport) != realUSB:
+            QMessageBox.warning(self, "WARNING", f"The USB port was set to {usbport}.\nThis seems to not be correct.\nIf you have problems running wavedump, try port {realUSB}.")
+            return
+
     def loadConfig(self, mfile):
         if mfile == "":
             dirnow = self.ui.primary_name.text()
@@ -157,6 +172,10 @@ class ConfigRecomp():
                 selftype = "Self trigger"
 
         usbport = int(self.ui.usbPort.text())
+
+        self.checkUSB(usbport)
+
+
         pulse_polarity = self.ui.setPolarity.currentText().upper()
         datatype = self.ui.FileTypeSet.currentText().upper()
         externalTrigger = "ACQUISITION_ONLY" if self.ui.externaltrigger.isChecked() else "DISABLED"
@@ -182,7 +201,22 @@ class ConfigRecomp():
         replace[13] = f'TRIGGER_THRESHOLD  100'
         replace[14] = f'CHANNEL_TRIGGER  DISABLED'
 
-        replace_ch = []*self.nchannels
+        replace_ch = []
+
+        basenow = [0]*self.nchannels
+        triggerLnow  = [0]*self.nchannels
+
+        for i, (base, trigger) in enumerate(zip(self.base_ch, self.triggerL_ch)):
+
+            basenow[i] = int(round(float(base.text())))
+            if basenow[i]>100 or basenow[i]<0:
+                QMessageBox.critical(self, "ERROR!", "Baseline level range from 0 to 100 (integer)")
+                return
+            triggerLnow[i] = int(round(float(trigger.text())))
+
+            base.setText(str(basenow[i]))
+            trigger.setText(str(triggerLnow[i]))
+
 
         for i in range(self.nchannels):
             chconf = []
@@ -190,15 +224,15 @@ class ConfigRecomp():
             chconf.append(f'\n')
             chconf.append(f'ENABLE_INPUT          {enabled_ch[i]}\n')
             if enabled_ch[i] == "YES":
-                chconf.append(f'BASELINE_LEVEL        {self.base_ch[i].text()}\n')
-                chconf.append(f'TRIGGER_THRESHOLD     {self.triggerL_ch[i].text()}\n')
+                chconf.append(f'BASELINE_LEVEL        {basenow[i]}\n')
+                chconf.append(f'TRIGGER_THRESHOLD     {triggerLnow[i]}\n')
                 chconf.append(f'CHANNEL_TRIGGER       {selfTrigger_ch[i]}\n')
             chconf.append("\n")
             replace_ch.append(chconf)
 
         try:
 
-            with open("/etc/wavedump/WaveDumpConfig.txt","r+") as f:
+            with open("/etc/wavedump/WaveDumpConfig.txt", "r+") as f:
                 # this get content lines and their position
                 alllines = [[pos,line.rstrip()] for pos, line in enumerate(f)]
                 lines = [[line[0], line[1]] for line in alllines if line[1] and not line[1].startswith('#')]
