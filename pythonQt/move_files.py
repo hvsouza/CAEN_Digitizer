@@ -48,7 +48,7 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         self.ui.primary_name.textChanged.connect(lambda: self.updateToolTip("DS"))
 
         self.ui.run_3.textChanged.connect(lambda: self.updateToolTip("D"))
-        self.ui.subrun_2.textChanged.connect(lambda: self.updateToolTip("D"))
+        self.ui.subrun3.textChanged.connect(lambda: self.updateToolTip("D"))
         self.ui.block1.textChanged.connect(lambda: self.updateToolTip("D"))
         self.ui.block2.textChanged.connect(lambda: self.updateToolTip("D"))
 
@@ -196,9 +196,33 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         string = string.replace(".", "_")
         return string
 
+    def getRunSubrun(self, run, subrun):
+        getout = False
+        try:
+            self.run = int(run.text())
+        except ValueError:
+            QMessageBox.critical(self, "ERROR!","Run and Subruns should be unsigned integers")
+            run.undo()
+            self.run = int(run.text())
+            getout = True
+
+        try:
+            self.subrun = int(subrun.text())
+        except ValueError:
+            QMessageBox.critical(self, "ERROR!","Run and Subruns should be unsigned integers")
+            subrun.undo()
+            self.subrun = int(subrun.text())
+            getout = True
+
+        return getout
+
     def getInfoDefault(self):
-        self.run = int(self.ui.run_3.text())
-        self.subrun = int(self.ui.subrun3.text())
+        getout = self.getRunSubrun(self.ui.run_3, self.ui.subrun3)
+        if getout:
+            self.block = ""
+            self.extra = ""
+            return
+
         block1 = self.ui.block1.text()
         block2 = self.ui.block2.text()
 
@@ -211,8 +235,11 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         self.extra = self.ui.extra_3.text()
 
     def getInfoStyle2(self):
-        self.run = int(self.ui.run.text())
-        self.subrun = int(self.ui.subrun.text())
+        getout = self.getRunSubrun(self.ui.run, self.ui.subrun)
+        if getout:
+            self.block = ""
+            self.extra = ""
+            return
         voltage = self.ui.voltage.text()
         threshold = self.ui.threshold.text() + "ADC"
         trigger_channel = self.ui.trigger_channel.text()
