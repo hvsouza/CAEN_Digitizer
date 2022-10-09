@@ -287,6 +287,7 @@ After taking data with two channels, for example, you should have “wave0.dat�
 
 When pressing “Move files”, a folder named “run0_two_different_blocks_of_text” will be created (note: “extra info” will not be placed in the name of the folder), inside the folder “new_data” and the two files will be moved there as:
 
+(Placing the mouse over "Move_files" will show a tooltip with the name of the folder in which the files are going to be transfer)
 
 #+begin_example
 0_wave0_two_different_blocks_of_text.dat
@@ -362,6 +363,8 @@ Pulse polarity is set to positive and file type as binary.
 If External trigger is selected, the individual trigger is disabled and one should set the type of sync (TTL or NIM).
 
 Please, refer to [[#extra-common-variables]] and the wavedump manual for a better understanding of the configuration.
+
+You can load previous config. files used by clicking at "LAr Test" on the top left corner.
 
 *** Recompile
 
