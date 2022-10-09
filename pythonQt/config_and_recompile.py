@@ -87,10 +87,18 @@ class ConfigRecomp():
         self.ui.samplingRate.setCurrentText(val)
 
 
-    def loadConfig(self):
+    def loadConfig(self, mfile):
+        if mfile == "":
+            dirnow = self.ui.primary_name.text()
+            mfile, mfilter = QtWidgets.QFileDialog.getOpenFileName(self, "Find Files", f'{self.default_path}/{dirnow}', "*.txt, *.log")
+
+        if not mfile:
+            return
+
+
         try:
 
-            with open("/etc/wavedump/WaveDumpConfig.txt","r") as f:
+            with open(mfile,"r") as f:
                 # this get content lines and their position
                 alllines = [line.rstrip() for line in f]
                 lines = [line for line in alllines if line and not line.startswith('#')]

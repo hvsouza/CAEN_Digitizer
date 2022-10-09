@@ -25,9 +25,13 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
 
         self.nchannels = 8
         self.userpath = os.path.expanduser('~') # sames has 'cd ~/ && pwd' but safer
+        self.untouch = True
         #configuring some extras
         self.ui.samplingRate.setCurrentText("250 MSamples/s")
         self.ui.samplingRate_2.setCurrentText("250 MSamples/s")
+        self.default_path = f'{self.userpath}/Documents/ADC_data/coldbox_data/'
+        self.ui.browse_dir.clicked.connect(self.getDir)
+        self.primary = self.ui.primary_name.text()
 
         # Control the moving functions
         self.ui.button_movefile.clicked.connect(self.style2_move)
@@ -37,6 +41,22 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         self.ui.lock_folder.toggled.connect(self.lock_unlock)
         self.ui.button_save_config_2.clicked.connect(self.saveConfigDefault)
         self.ui.button_save_config.clicked.connect(self.saveConfigStyle2)
+
+        self.ui.button_movefile_5.setToolTip(self.writeToolTip("D"))
+        self.ui.button_movefile.setToolTip(self.writeToolTip("S"))
+
+        self.ui.primary_name.textChanged.connect(lambda: self.updateToolTip("DS"))
+
+        self.ui.run_3.textChanged.connect(lambda: self.updateToolTip("D"))
+        self.ui.subrun_2.textChanged.connect(lambda: self.updateToolTip("D"))
+        self.ui.block1.textChanged.connect(lambda: self.updateToolTip("D"))
+        self.ui.block2.textChanged.connect(lambda: self.updateToolTip("D"))
+
+        self.ui.run.textChanged.connect(lambda: self.updateToolTip("S"))
+        self.ui.subrun.textChanged.connect(lambda: self.updateToolTip("S"))
+        self.ui.voltage.textChanged.connect(lambda: self.updateToolTip("S"))
+        self.ui.threshold.textChanged.connect(lambda: self.updateToolTip("S"))
+        self.ui.trigger_channel.textChanged.connect(lambda: self.updateToolTip("S"))
 
         #control config and compile
         self.enable_ch = [
@@ -88,9 +108,6 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         self.ui.pushButton_SetConfig.clicked.connect(lambda: self.pressSet())
         self.ui.samplingRate_2.currentTextChanged.connect(lambda:self.twinSample())
         self.ui.pushButtonRecompile.clicked.connect(lambda: self.recompile())
-        self.default_path = f'{self.userpath}/Documents/ADC_data/coldbox_data/'
-        self.ui.browse_dir.clicked.connect(self.getDir)
-        self.primary = self.ui.primary_name.text()
         self.enable_ch[0].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[0],self.enable_ch[0].isChecked()))
         self.enable_ch[1].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[1],self.enable_ch[1].isChecked()))
         self.enable_ch[2].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[2],self.enable_ch[2].isChecked()))
@@ -99,6 +116,8 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         self.enable_ch[5].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[5],self.enable_ch[5].isChecked()))
         self.enable_ch[6].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[6],self.enable_ch[6].isChecked()))
         self.enable_ch[7].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[7],self.enable_ch[7].isChecked()))
+
+        self.ui.actionLoad_cofig_file.triggered.connect(lambda: self.loadConfig(""))
 
         self.ui.FileTypeSet.currentTextChanged.connect(self.changeFormat)
         self.ui.externaltrigger.stateChanged.connect(self.checkExternalTrigger)
@@ -111,12 +130,32 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
 
         self.recordlength = 0
         self.getRecordLength()
-        self.loadConfig()
+        self.loadConfig("/etc/wavedump/WaveDumpConfig.txt")
+
+
+    def updateToolTip(self, standard):
+        if standard != "DS": text = self.writeToolTip(standard)
+        if standard == "D": self.ui.button_movefile_5.setToolTip(text)
+        elif standard == "S": self.ui.button_movefile.setToolTip(text)
+        else:
+            text = self.writeToolTip("D")
+            self.ui.button_movefile_5.setToolTip(text)
+            text = self.writeToolTip("S")
+            self.ui.button_movefile.setToolTip(text)
+
+    def writeToolTip(self, standard):
+        if standard == "D":
+            self.getInfoDefault()
+        else:
+            self.getInfoStyle2()
+        _, mpath, folder, _, _, _ = self.genPatternInfo(False)
+
+        folder = self.fixString(folder)
+        return f'Currently folders are going to be transfered to:\n{mpath}{folder}'
 
     def getDir(self):
         dirnow = self.ui.primary_name.text()
-        directory = QtWidgets.QFileDialog.getExistingDirectory(self, "Find Files",
-                                                               f'{self.default_path}/{dirnow}')
+        directory = QtWidgets.QFileDialog.getExistingDirectory(self, "Find Files", f'{self.default_path}/{dirnow}')
         tocheck = self.default_path[:-1]
         if directory and directory != tocheck:
             if directory.startswith(tocheck):

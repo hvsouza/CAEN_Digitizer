@@ -3168,9 +3168,15 @@ The password is the same you use to login the computer.</string>
     <property name="title">
      <string>LAr Test</string>
     </property>
+    <addaction name="actionLoad_cofig_file"/>
    </widget>
    <addaction name="menuLAr_Test"/>
   </widget>
+  <action name="actionLoad_cofig_file">
+   <property name="text">
+    <string>Load cofig. file</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

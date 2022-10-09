@@ -1022,6 +1022,9 @@ class Ui_MainWindow(object):
         self.menuLAr_Test = QtWidgets.QMenu(self.menuBar)
         self.menuLAr_Test.setObjectName("menuLAr_Test")
         MainWindow.setMenuBar(self.menuBar)
+        self.actionLoad_cofig_file = QtWidgets.QAction(MainWindow)
+        self.actionLoad_cofig_file.setObjectName("actionLoad_cofig_file")
+        self.menuLAr_Test.addAction(self.actionLoad_cofig_file)
         self.menuBar.addAction(self.menuLAr_Test.menuAction())
 
         self.retranslateUi(MainWindow)
@@ -1161,6 +1164,7 @@ class Ui_MainWindow(object):
         self.lock_folder.setText(_translate("MainWindow", "Lock"))
         self.browse_dir.setText(_translate("MainWindow", "&Browse"))
         self.menuLAr_Test.setTitle(_translate("MainWindow", "LAr Test"))
+        self.actionLoad_cofig_file.setText(_translate("MainWindow", "Load cofig. file"))
 
 
 if __name__ == "__main__":
