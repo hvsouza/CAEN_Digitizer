@@ -165,12 +165,16 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
                 directory = self.fixString(directory)
                 self.ui.primary_name.setText(directory)
             else:
-                answer = QMessageBox.critical(self, "ERROR!", f"The data should be kept inside \n{self.default_path}\n Do you want to change it?\n(Please be careful)", QMessageBox.Yes | QMessageBox.No)
+                answer = QMessageBox.Yes
+                if self.untouch == True:
+                    answer = QMessageBox.critical(self, "ERROR!", f"The data should be kept inside \n{self.default_path}\n Do you want to change it?\n(Please be careful)", QMessageBox.Yes | QMessageBox.No)
                 if answer == QMessageBox.Yes:
                     directory = directory+"/"
                     answer2 = QMessageBox.question(self, "", f"Changing the default folder to:\n{directory}\nIs that ok?", QMessageBox.Yes | QMessageBox.No)
                     if answer2 == QMessageBox.Yes:
+                        directory = directory.replace(" ","\ ")
                         self.default_path = directory
+                        self.untouch = False
         else:
             directory = "new_data"
             self.ui.primary_name.setText(directory)
@@ -240,7 +244,7 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
 
 
 
-    def genPatternInfo(self):
+    def genPatternInfo(self, gen = True):
         self.primary = self.ui.primary_name.text()
         # mpath = f"{self.userpath}/Documents/ADC_data/coldbox_data/{self.primary}/"
         mpath = f"{self.default_path}{self.primary}/"
@@ -266,9 +270,9 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
 
             newname[i] = newname[i] + format
 
-        os.system(mkdir)
+        if gen: os.system(mkdir)
         mkdir = mkdir + folder
-        os.system(mkdir)
+        if gen: os.system(mkdir)
 
         return mkdir,mpath, folder, oldname, newname, format
 
@@ -282,6 +286,8 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         npts = int(npts/2)
 
         filesize = os.stat(dataname).st_size
+        if bytewvf == 0:
+            return 0, 0
         totalwvfs = int(filesize/bytewvf)
         return npts, totalwvfs
 
@@ -289,6 +295,8 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         with open(dataname,"r") as f:
             npts = f.readline() #read the 4 first bytes
 
+        if npts == "":
+            return 0, 0
         npts = int(npts.rsplit()[2])
         nlines = sp.getoutput(f'wc -l {dataname}')
         npts = int(npts)
@@ -320,6 +328,8 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         actual_pts_saved = []
         total_events = []
         idx_total_events = []
+        aux = 0
+        isCritical = False
         for i, _oldname in enumerate(oldname):
             datacheck = datapath+f'{_oldname}{format}'
             transfercheck = f'{mpath}{folder}/{newname[i]}'
@@ -342,25 +352,32 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
                 actual_pts_saved.append(_actual_pts_saved)
                 total_events.append(_total_events)
                 idx_total_events.append(i)
-                if actual_pts_saved[i] != self.recordsaved:
-                    messageNpts = f'{messageNpts}Ch{i} has {actual_pts_saved[i]} pts per waveforms.\n'
+                if actual_pts_saved[aux] != self.recordsaved:
+                    messageNpts = f'{messageNpts}Ch{i} has {actual_pts_saved[aux]} pts per waveforms.\n'
+                if len(set(actual_pts_saved))!=1:
+                    messageNpts = f'{messageNpts}Number of pts per waveform are not equal in all files!!!\n\nFiles were not transfered.'
+                    isCritical = True
+                aux += 1
+
+        errorMessage = errorMessage + "Please, check what was the problem with the above files!"
+        if False in fileIsThere:
+            QMessageBox.critical(self, "ERROR!", errorMessage)
+            return False
 
         if messageNpts != "":
-            messageNpts = messageNpts + f"According to the last config. set, it should be {self.recordsaved} pts! Please, right this down in a log."
-            # QMessageBox.critical(self, "ERROR!", f'{messageNpts}\n\n Check the sampling rate configuration')
-            # return False
+            if(isCritical):
+                QMessageBox.critical(self, "ERROR!", messageNpts)
+                return False
+            else:
+                messageNpts = messageNpts + f"According to the last config. set, it should be {self.recordsaved} pts! Please, right this down in a log."
 
         messageWvfs = "Channels have different number of wavefors!!!\n\n"
         if self.all_equal(total_events) is False:
             for ch, vals in zip(idx_total_events,total_events):
-                messageWvfs = f'{messageWvfs}Ch{ch} had {vals} recorded\n'
+                messageWvfs = f'{messageWvfs}Ch{ch} had {"{:,}".format(vals)} waveforms recorded\n'
             QMessageBox.critical(self, "ERROR", messageWvfs)
             return False
 
-        errorMessage = errorMessage + "Please, check what was the protblem with the above files!"
-        if False in fileIsThere:
-            QMessageBox.critical(self, "ERROR!", errorMessage)
-            return False
 
         if False in FileNotThereYet:
             # for state in FileNotThereYet:
