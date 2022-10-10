@@ -1800,8 +1800,8 @@ int main(int argc, char *argv[])
     uint64_t max_events = 0; // Added by Henrique Souza
     uint64_t mymaximum = 10000;
     int after_max = 0; // Added by Henrique Souza
-    Bool setDefault = false;
-    Bool askAgain = true;
+    int setDefault = 0;
+    int askAgain = 1;
 
     int nCycles= 0;
     CAEN_DGTZ_BoardInfo_t       BoardInfo;
@@ -2262,15 +2262,15 @@ InterruptTimeout:
                         after_max = 0;
                     }
                     else{
-                        if(after_max == 0 && askAgain){
+                        if(after_max == 0 && askAgain == 1){
                             printf("Enter the number of waveforms desired (Default: %d):",mymaximum)
                             scanf("%d", &mymaximum)
-                            if (askAgain) {
+                            if (askAgain == 1) {
                                 char yorn;
                                 printf("Make this value default for this session and don't ask again? (y/n):");
                                 scanf("%c",&yorn);
                                 if(yorn == "y" || yorn == "Y"){
-                                    askAgain = false;
+                                    askAgain = 0;
                                 }
 
                             }
