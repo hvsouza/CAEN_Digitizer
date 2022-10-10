@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 
 from ui_mainwindow import Ui_MainWindow
+from ui_about import Ui_About
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox, QFileDialog
@@ -16,7 +17,7 @@ from itertools import groupby
 
 import subprocess as sp
 
-class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
+class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
     def __init__(self,parent=None):
         super(MainWindow, self).__init__()
 
@@ -118,6 +119,7 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         self.enable_ch[7].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[7],self.enable_ch[7].isChecked()))
 
         self.ui.actionLoad_cofig_file.triggered.connect(lambda: self.loadConfig(""))
+        self.ui.actionAbout.triggered.connect(self.showAbout)
 
         self.ui.FileTypeSet.currentTextChanged.connect(self.changeFormat)
         self.ui.externaltrigger.stateChanged.connect(self.checkExternalTrigger)
@@ -132,6 +134,14 @@ class MainWindow(QtWidgets.QMainWindow,ConfigRecomp):
         self.getRecordLength()
         self.loadConfig("/etc/wavedump/WaveDumpConfig.txt")
 
+
+    def showAbout(self):
+        self.About = QtWidgets.QMainWindow()
+        self.aui = Ui_About()
+        self.aui.setupUi(self.About)
+
+        self.aui.label_2.setOpenExternalLinks(True)
+        self.About.show()
 
     def updateToolTip(self, standard):
         if standard != "DS": text = self.writeToolTip(standard)
