@@ -1485,12 +1485,11 @@ void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *W
 *   \param   EventInfo Pointer to the EventInfo data structure
 *   \param   Event Pointer to the Event to write
 */
-int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_EventInfo_t *EventInfo, void *Event, int *after_max, int *max_events)
+int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_EventInfo_t *EventInfo, void *Event, int *after_max, int *max_eventsi, uint32_t mymaximum)
 {
     int ch, j, ns;
     CAEN_DGTZ_UINT16_EVENT_t  *Event16 = NULL;
     CAEN_DGTZ_UINT8_EVENT_t   *Event8 = NULL;
-    /* uint64_t mymaximum = 10000; // Added by Henrique Souza */
     int nchannels = WDcfg->Nch; // Added by Henrique Souza
 
     /* Write Event data to file */
@@ -2283,10 +2282,10 @@ InterruptTimeout:
                         ret = WriteOutputFilesx742(&WDcfg, &WDrun, &EventInfo, Event742);
                     }
                     else if (WDcfg.Nbit == 8) {
-                        ret = WriteOutputFiles(&WDcfg, &WDrun, &EventInfo, Event8, &after_max, &max_events);
+                        ret = WriteOutputFiles(&WDcfg, &WDrun, &EventInfo, Event8, &after_max, &max_events, mymaximum);
                     }
                     else {
-                        ret = WriteOutputFiles(&WDcfg, &WDrun, &EventInfo, Event16, &after_max, &max_events);
+                        ret = WriteOutputFiles(&WDcfg, &WDrun, &EventInfo, Event16, &after_max, &max_events, mymaximum);
                     }
                     if (ret) {
                         ErrCode = ERR_OUTFILE_WRITE;
