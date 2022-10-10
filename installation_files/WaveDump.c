@@ -1799,7 +1799,7 @@ int main(int argc, char *argv[])
     int isVMEDevice= 0, MajorNumber;
     uint64_t CurrentTime, PrevRateTime, ElapsedTime;
     uint64_t max_events = 0; // Added by Henrique Souza
-    uint64_t mymaximum = 10000
+    uint64_t mymaximum = 10000;
     int after_max = 0; // Added by Henrique Souza
     bool setDefault = false;
     bool askAgain = true;
