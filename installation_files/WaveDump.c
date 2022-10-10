@@ -1800,8 +1800,8 @@ int main(int argc, char *argv[])
     uint64_t max_events = 0; // Added by Henrique Souza
     uint64_t mymaximum = 10000;
     int after_max = 0; // Added by Henrique Souza
-    bool setDefault = false;
-    bool askAgain = true;
+    Bool setDefault = false;
+    Bool askAgain = true;
 
     int nCycles= 0;
     CAEN_DGTZ_BoardInfo_t       BoardInfo;
