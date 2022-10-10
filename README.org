@@ -62,6 +62,7 @@ If you are using the digitizer in the VD-PDS DAQ computer, please checkout in th
 #+begin_src
 git checout coldbox
 #+end_src
+(In this version, the user enters the amount of waveform to be saved)
 
 To install the digitizer drivers and wavedump there are a few requirements and steps. I invite the user to read the manual of the digitizer and wavedump and also to search about the installation.
    
