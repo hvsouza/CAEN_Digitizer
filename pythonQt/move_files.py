@@ -139,7 +139,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         self.About = QtWidgets.QMainWindow()
         self.aui = Ui_About()
         self.aui.setupUi(self.About)
-
+        self.aui.label.setPixmap(QtGui.QPixmap(f"{self.userpath}/Documents/CAEN_Digitizer/.repo_img/computer-nerd.jpg"))
         self.aui.label_2.setOpenExternalLinks(True)
         self.About.show()
 
