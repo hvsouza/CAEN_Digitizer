@@ -1485,7 +1485,7 @@ void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *W
 *   \param   EventInfo Pointer to the EventInfo data structure
 *   \param   Event Pointer to the Event to write
 */
-int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_EventInfo_t *EventInfo, void *Event, int *after_max, int *max_eventsi, uint32_t mymaximum)
+int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_EventInfo_t *EventInfo, void *Event, int *after_max, int *max_events, uint32_t mymaximum)
 {
     int ch, j, ns;
     CAEN_DGTZ_UINT16_EVENT_t  *Event16 = NULL;
