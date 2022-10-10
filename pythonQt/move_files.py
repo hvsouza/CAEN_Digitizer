@@ -31,6 +31,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         self.ui.samplingRate.setCurrentText("250 MSamples/s")
         self.ui.samplingRate_2.setCurrentText("250 MSamples/s")
         self.default_path = f'{self.userpath}/Documents/ADC_data/coldbox_data/'
+        self.create_path()
         self.ui.browse_dir.clicked.connect(self.getDir)
         self.primary = self.ui.primary_name.text()
 
@@ -163,6 +164,8 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         folder = self.fixString(folder)
         return f'Currently folders are going to be transfered to:\n{mpath}{folder}'
 
+    def create_path(self):
+        os.system(f'mkdir -p {self.default_path}')
     def getDir(self):
         dirnow = self.ui.primary_name.text()
         directory = QtWidgets.QFileDialog.getExistingDirectory(self, "Find Files", f'{self.default_path}/{dirnow}')
