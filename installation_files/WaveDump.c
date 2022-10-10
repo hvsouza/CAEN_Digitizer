@@ -1490,7 +1490,7 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
     int ch, j, ns;
     CAEN_DGTZ_UINT16_EVENT_t  *Event16 = NULL;
     CAEN_DGTZ_UINT8_EVENT_t   *Event8 = NULL;
-    uint64_t mymaximum = 10000; // Added by Henrique Souza
+    /* uint64_t mymaximum = 10000; // Added by Henrique Souza */
     int nchannels = WDcfg->Nch; // Added by Henrique Souza
 
     /* Write Event data to file */
@@ -1799,7 +1799,11 @@ int main(int argc, char *argv[])
     int isVMEDevice= 0, MajorNumber;
     uint64_t CurrentTime, PrevRateTime, ElapsedTime;
     uint64_t max_events = 0; // Added by Henrique Souza
-    int after_max = 0;
+    uint64_t mymaximum = 10000
+    int after_max = 0; // Added by Henrique Souza
+    bool setDefault = false;
+    bool askAgain = true;
+
     int nCycles= 0;
     CAEN_DGTZ_BoardInfo_t       BoardInfo;
     CAEN_DGTZ_EventInfo_t       EventInfo;
@@ -2256,7 +2260,24 @@ InterruptTimeout:
                 if (WDrun.ContinuousWrite || WDrun.SingleWrite) {
                     // Note: use a thread here to allow parallel readout and file writing
                     if(WDrun.SingleWrite){ // Added by Henrique Souza
-                      after_max = 0;
+                        after_max = 0;
+                    }
+                    else{
+                        if(after_max == 0 && askAgain){
+                            printf("Enter the number of waveforms desired (Default: %d):",mymaximum)
+                            scanf("%d", &mymaximum)
+                            if (askAgain) {
+                                char yorn;
+                                printf("Make this value default for this session and don't ask again? (y/n):");
+                                scanf("%c",&yorn);
+                                if(yorn == "y" || yorn == "Y"){
+                                    askAgain = false;
+                                }
+
+                            }
+
+                        }
+
                     }
                     if (BoardInfo.FamilyCode == CAEN_DGTZ_XX742_FAMILY_CODE) {
                         ret = WriteOutputFilesx742(&WDcfg, &WDrun, &EventInfo, Event742);
