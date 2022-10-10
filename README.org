@@ -58,6 +58,10 @@ cd ~/Documents
 git clone https://github.com/hvsouza/CAEN_Digitizer.git
 cd CAEN_Digitizer
 #+end_src
+If you are using the digitizer in the VD-PDS DAQ computer, please checkout in the coldbox branch:
+#+begin_src
+git checout coldbox
+#+end_src
 
 To install the digitizer drivers and wavedump there are a few requirements and steps. I invite the user to read the manual of the digitizer and wavedump and also to search about the installation.
    
