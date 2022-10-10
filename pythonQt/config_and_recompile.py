@@ -140,17 +140,23 @@ class ConfigRecomp():
                 self.ui.externalType.setCurrentText(lines[7].split()[1])
                 self.ui.FileTypeSet.setCurrentText(lines[8].split()[1])
                 channel = 0
-                for i in range(9,len(lines)):
+                for i in range(9, len(lines)):
                     if lines[i].startswith(f'[{channel}]'):
-                        if lines[i+1].split()[1] == "YES":
-                            self.enable_ch[channel].setChecked(True)
+                        current_channel = channel
+                    elif lines[i].split()[0].startswith("ENABLE_INPUT"):
+                        if lines[i].split()[1] == "YES":
+                                self.enable_ch[channel].setChecked(True)
                             # self.freeTrigger(self.trigger_ch[channel], True)
-                            self.base_ch[channel].setText(lines[i+2].split()[1])
-                            self.triggerL_ch[channel].setText(lines[i+3].split()[1])
-                            if lines[i+4].split()[1] == "ACQUISITION_ONLY" and self.trigger_ch[channel].isEnabled():
-                                self.trigger_ch[channel].setChecked(True)
-                            else:
-                                self.trigger_ch[channel].setChecked(False)
+                    elif lines[i].split()[0].startswith("BASELINE"):
+                        self.base_ch[channel].setText(lines[i].split()[1])
+                    elif lines[i].split()[0].startswith("TRIGGER_THRESHOLD"):
+                        self.triggerL_ch[channel].setText(lines[i].split()[1])
+                    elif lines[i].split()[0].startswith("CHANNEL_TRIGGER"):
+                        if lines[i].split()[1] == "ACQUISITION_ONLY" and self.trigger_ch[channel].isEnabled():
+                            self.trigger_ch[channel].setChecked(True)
+                        else:
+                            self.trigger_ch[channel].setChecked(False)
+
 
                         channel += 1
 
