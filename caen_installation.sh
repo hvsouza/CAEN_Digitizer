@@ -94,6 +94,7 @@ cd $( /bin/ls | grep wavedump* )
 cd src
 #replacing the .c file with my custom one
 cp $ROOTPATH/$SOURCEFILES/WaveDump.c .
+cp $ROOTPATH/$SOURCEFILES/WDconfig.h .
 cd ..
 
 echo "Installing gnuplot"

@@ -1257,14 +1257,20 @@ int Set_calibrated_DCO(int handle, int ch, WaveDumpConfig_t *WDcfg, CAEN_DGTZ_Bo
 *   \param   WDcfg:   Pointer to the WaveDumpConfig_t data structure
 *   \param   BoardInfo: structure with the board info
 */
-void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *WDcfg, CAEN_DGTZ_BoardInfo_t BoardInfo)
+void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *WDcfg, CAEN_DGTZ_BoardInfo_t BoardInfo, int askAgain)
 {
+
     int c = 0;
-	uint8_t percent;
+    uint8_t percent;
     if(!kbhit())
         return;
 
     c = getch();
+
+    if (c == 'k'){
+        askAgain = 1;
+    }
+
     if ((c < '9') && (c >= '0')) {
         int ch = c-'0';
         if ((BoardInfo.FamilyCode == CAEN_DGTZ_XX740_FAMILY_CODE) || (BoardInfo.FamilyCode == CAEN_DGTZ_XX742_FAMILY_CODE)){
@@ -1485,12 +1491,11 @@ void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *W
 *   \param   EventInfo Pointer to the EventInfo data structure
 *   \param   Event Pointer to the Event to write
 */
-int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_EventInfo_t *EventInfo, void *Event, int *after_max, int *max_events)
+int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_EventInfo_t *EventInfo, void *Event, int *after_max, int *max_events, uint32_t mymaximum)
 {
     int ch, j, ns;
     CAEN_DGTZ_UINT16_EVENT_t  *Event16 = NULL;
     CAEN_DGTZ_UINT8_EVENT_t   *Event8 = NULL;
-    uint64_t mymaximum = 10000; // Added by Henrique Souza
     int nchannels = WDcfg->Nch; // Added by Henrique Souza
 
     /* Write Event data to file */
@@ -1799,7 +1804,11 @@ int main(int argc, char *argv[])
     int isVMEDevice= 0, MajorNumber;
     uint64_t CurrentTime, PrevRateTime, ElapsedTime;
     uint64_t max_events = 0; // Added by Henrique Souza
-    int after_max = 0;
+    uint64_t mymaximum = 10000;
+    int after_max = 0; // Added by Henrique Souza
+    int setDefault = 0;
+    int askAgain = 1;
+
     int nCycles= 0;
     CAEN_DGTZ_BoardInfo_t       BoardInfo;
     CAEN_DGTZ_EventInfo_t       EventInfo;
@@ -2084,7 +2093,7 @@ Restart:
     /* *************************************************************************************** */
     while(!WDrun.Quit) {
         // Check for keyboard commands (key pressed)
-        CheckKeyboardCommands(handle, &WDrun, &WDcfg, BoardInfo);
+        CheckKeyboardCommands(handle, &WDrun, &WDcfg, BoardInfo, askAgain);
         if (WDrun.Restart) {
             CAEN_DGTZ_SWStopAcquisition(handle);
             CAEN_DGTZ_FreeReadoutBuffer(&buffer);
@@ -2256,16 +2265,36 @@ InterruptTimeout:
                 if (WDrun.ContinuousWrite || WDrun.SingleWrite) {
                     // Note: use a thread here to allow parallel readout and file writing
                     if(WDrun.SingleWrite){ // Added by Henrique Souza
-                      after_max = 0;
+                        after_max = 0;
+                    }
+                    else{
+                        if(max_events == 0 && askAgain == 1){
+                            char nwaves[12];
+                            printf("Enter the number of waveforms desired (Default: %d):\n",mymaximum);
+                            scanf("%s", nwaves);
+                            sscanf(nwaves, "%d", &mymaximum);
+                            /* mymaximum = atoi(mymaximum); */
+                            if (askAgain == 1) {
+                                char yorn[2];
+                                printf("Make this value default for this session and don't ask again? (y/n):\n");
+                                scanf("%s",&yorn);
+                                if(yorn[0] == 'y' || yorn[0] == 'Y'){
+                                    askAgain = 0;
+                                }
+
+                            }
+
+                        }
+
                     }
                     if (BoardInfo.FamilyCode == CAEN_DGTZ_XX742_FAMILY_CODE) {
                         ret = WriteOutputFilesx742(&WDcfg, &WDrun, &EventInfo, Event742);
                     }
                     else if (WDcfg.Nbit == 8) {
-                        ret = WriteOutputFiles(&WDcfg, &WDrun, &EventInfo, Event8, &after_max, &max_events);
+                        ret = WriteOutputFiles(&WDcfg, &WDrun, &EventInfo, Event8, &after_max, &max_events, mymaximum);
                     }
                     else {
-                        ret = WriteOutputFiles(&WDcfg, &WDrun, &EventInfo, Event16, &after_max, &max_events);
+                        ret = WriteOutputFiles(&WDcfg, &WDrun, &EventInfo, Event16, &after_max, &max_events, mymaximum);
                     }
                     if (ret) {
                         ErrCode = ERR_OUTFILE_WRITE;
