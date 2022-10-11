@@ -90,7 +90,8 @@ class ConfigRecomp():
 
     def checkUSB(self, usbport):
         ret = sp.getoutput("/bin/ls /dev/usb")
-        standardret = "V1718_"
+        standardret = "v1718_"
+        print(ret)
         pos = ret.find(standardret)
         if pos == -1:
             QMessageBox.warning(self, "Warning!", "The digitizer was probably not recognized by the system")

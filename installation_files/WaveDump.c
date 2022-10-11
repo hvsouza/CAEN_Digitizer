@@ -1257,7 +1257,7 @@ int Set_calibrated_DCO(int handle, int ch, WaveDumpConfig_t *WDcfg, CAEN_DGTZ_Bo
 *   \param   WDcfg:   Pointer to the WaveDumpConfig_t data structure
 *   \param   BoardInfo: structure with the board info
 */
-void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *WDcfg, CAEN_DGTZ_BoardInfo_t BoardInfo, int askAgain)
+void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *WDcfg, CAEN_DGTZ_BoardInfo_t BoardInfo, int *askAgain)
 {
 
     int c = 0;
@@ -1267,9 +1267,6 @@ void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *W
 
     c = getch();
 
-    if (c == 'k'){
-        askAgain = 1;
-    }
 
     if ((c < '9') && (c >= '0')) {
         int ch = c-'0';
@@ -1304,6 +1301,8 @@ void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *W
         }
     } else {
         switch(c) {
+        case 'k' :
+          *askAgain = 1;
         case 'g' :
 			//for boards with >8 channels
 			if ((BoardInfo.FamilyCode == CAEN_DGTZ_XX730_FAMILY_CODE) || (BoardInfo.FamilyCode == CAEN_DGTZ_XX725_FAMILY_CODE) && (WDcfg->Nch > 8))
@@ -1474,6 +1473,7 @@ void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *W
             printf("  [D]   DAC offset calibration\n");
             printf(" [0-7]  Enable/Disable one channel on the plot\n");
             printf("        For x740 family this is the plotted group's relative channel index\n");
+            printf("  [k]   Ask for number of waveforms next time [W] is pressed\n");
             printf("[SPACE] This help\n");
             printf("--------------------------------------------------------------------------\n");
             printf("Press a key to continue\n");
@@ -2093,7 +2093,7 @@ Restart:
     /* *************************************************************************************** */
     while(!WDrun.Quit) {
         // Check for keyboard commands (key pressed)
-        CheckKeyboardCommands(handle, &WDrun, &WDcfg, BoardInfo, askAgain);
+        CheckKeyboardCommands(handle, &WDrun, &WDcfg, BoardInfo, &askAgain);
         if (WDrun.Restart) {
             CAEN_DGTZ_SWStopAcquisition(handle);
             CAEN_DGTZ_FreeReadoutBuffer(&buffer);
@@ -2270,13 +2270,13 @@ InterruptTimeout:
                     else{
                         if(max_events == 0 && askAgain == 1){
                             char nwaves[12];
-                            printf("Enter the number of waveforms desired (Default: %d):\n",mymaximum);
+                            printf("\nEnter the number of waveforms desired (Current: %d):\n",mymaximum);
                             scanf("%s", nwaves);
                             sscanf(nwaves, "%d", &mymaximum);
                             /* mymaximum = atoi(mymaximum); */
                             if (askAgain == 1) {
                                 char yorn[2];
-                                printf("Make this value default for this session and don't ask again? (y/n):\n");
+                                printf("\nMake this value default for this session and ask again only if [k] is pressed? (y/n):\n");
                                 scanf("%s",&yorn);
                                 if(yorn[0] == 'y' || yorn[0] == 'Y'){
                                     askAgain = 0;
