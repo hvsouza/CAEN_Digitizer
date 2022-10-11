@@ -38,8 +38,8 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         # Control the moving functions
         self.ui.button_movefile.clicked.connect(self.style2_move)
         self.ui.button_movefile_5.clicked.connect(self.default_move)
-        self.ui.pushButton_2.clicked.connect(lambda: self.finishRun(self.m_ui.run))
-        self.ui.pushButton_4.clicked.connect(lambda: self.finishRun(self.m_ui.run_3))
+        self.ui.pushButton_2.clicked.connect(lambda: self.finishRun(self.ui.run))
+        self.ui.pushButton_4.clicked.connect(lambda: self.finishRun(self.ui.run_3))
         self.ui.lock_folder.toggled.connect(self.lock_unlock)
         self.ui.button_save_config_2.clicked.connect(self.saveConfigDefault)
         self.ui.button_save_config.clicked.connect(self.saveConfigStyle2)
@@ -201,8 +201,13 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         self.saveConfig(mpath+folder)
 
     def saveConfig(self, pathconfig):
+        if os.path.exists(f'{pathconfig}/config_used.log'):
+            answer = QMessageBox.question(self, "", "Config. file already exist in this directory.\nOverwrite it anyway?", QMessageBox.Yes, QMessageBox.No)
+            if answer == QMessageBox.No:
+                return
         cmdcpy = "cp /etc/wavedump/WaveDumpConfig.txt " + pathconfig + "/config_used.log"
         os.system(cmdcpy)
+        QMessageBox.about(self, "", "Config. file saved.")
 
     def fixString(self, string):
         string = string.replace(" ", "_")
@@ -409,7 +414,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
                 QMessageBox.critical(self, "ERROR!", messageNpts)
                 return False
             else:
-                messageNpts = messageNpts + f"According to the last config. set, it should be {self.recordsaved} pts! Please, right this down in a log."
+                messageNpts = messageNpts + f"According to the last config. set, it should be {self.recordsaved} pts!\nPlease, right this down in a log or correct the mistake."
 
         messageWvfs = "Channels have different number of wavefors!!!\n\n"
         if self.all_equal(total_events) is False:
