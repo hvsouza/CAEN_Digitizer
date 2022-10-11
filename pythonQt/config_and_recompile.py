@@ -140,26 +140,29 @@ class ConfigRecomp():
                 self.ui.externalType.setCurrentText(lines[7].split()[1])
                 self.ui.FileTypeSet.setCurrentText(lines[8].split()[1])
                 channel = 0
+                current_channel = 0
                 for i in range(9, len(lines)):
-                    if lines[i].startswith(f'[{channel}]'):
-                        current_channel = channel
-                    elif lines[i].split()[0].startswith("ENABLE_INPUT"):
+                    if lines[i].startswith(f'[{current_channel}]'):
+                        channel = current_channel
+                        current_channel+=1
+                    elif lines[i].startswith("ENABLE_INPUT"):
                         if lines[i].split()[1] == "YES":
                                 self.enable_ch[channel].setChecked(True)
                             # self.freeTrigger(self.trigger_ch[channel], True)
-                    elif lines[i].split()[0].startswith("BASELINE"):
+                    elif lines[i].startswith("BASELINE"):
                         self.base_ch[channel].setText(lines[i].split()[1])
-                    elif lines[i].split()[0].startswith("TRIGGER_THRESHOLD"):
+                    elif lines[i].startswith("TRIGGER_THRESHOLD"):
                         self.triggerL_ch[channel].setText(lines[i].split()[1])
-                    elif lines[i].split()[0].startswith("CHANNEL_TRIGGER"):
+                    elif lines[i].startswith("CHANNEL_TRIGGER"):
                         if lines[i].split()[1] == "ACQUISITION_ONLY" and self.trigger_ch[channel].isEnabled():
                             self.trigger_ch[channel].setChecked(True)
                         else:
                             self.trigger_ch[channel].setChecked(False)
 
 
-                        channel += 1
-
+                for ch in range(current_channel, self.nchannels):
+                    self.enable_ch[ch].setChecked(False)
+                    self.trigger_ch[ch].setChecked(False)
 
         except IOError:
             QMessageBox.critical(self, "ERROR!", "Config. file not opened!")
@@ -257,6 +260,7 @@ class ConfigRecomp():
                                 firstpos = pos
                             replace_ch[i][0] = line
 
+                if firstpos == 0: firstpos = pos
                 f.seek(0)
                 f.truncate(0)
                 for [pos,line] in alllines:
