@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+## ________________________________________ ##
+## Author: Henrique Souza
+## Filename: config_and_recompile.py
+## Created: 2022
+## ________________________________________ ##
+
 
 import os
 from pathlib import Path
