@@ -23,6 +23,8 @@ from itertools import groupby
 
 import subprocess as sp
 
+from difflib import Differ
+
 class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
     def __init__(self,parent=None):
         super(MainWindow, self).__init__()
@@ -44,11 +46,9 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         # Control the moving functions
         self.ui.button_movefile.clicked.connect(self.style2_move)
         self.ui.button_movefile_5.clicked.connect(self.default_move)
-        self.ui.pushButton_2.clicked.connect(lambda: self.finishRun(self.ui.run))
-        self.ui.pushButton_4.clicked.connect(lambda: self.finishRun(self.ui.run_3))
+        self.ui.pushButton_2.clicked.connect(lambda: self.finishRun(self.ui.run, self.ui.subrun))
+        self.ui.pushButton_4.clicked.connect(lambda: self.finishRun(self.ui.run_3, self.ui.subrun3))
         self.ui.lock_folder.toggled.connect(self.lock_unlock)
-        self.ui.button_save_config_2.clicked.connect(self.saveConfigDefault)
-        self.ui.button_save_config.clicked.connect(self.saveConfigStyle2)
 
         self.ui.button_movefile_5.setToolTip(self.writeToolTip("D"))
         self.ui.button_movefile.setToolTip(self.writeToolTip("S"))
@@ -133,7 +133,6 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         self.run = 0
         self.subrun = 0
         self.block = ""
-        self.extra = ""
 
         self.getEnabledAndTrigger()
 
@@ -207,13 +206,22 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         self.saveConfig(mpath+folder)
 
     def saveConfig(self, pathconfig):
+
+        makequestion = False
         if os.path.exists(f'{pathconfig}/config_used.log'):
-            answer = QMessageBox.question(self, "", "Config. file already exist in this directory.\nOverwrite it anyway?", QMessageBox.Yes, QMessageBox.No)
-            if answer == QMessageBox.No:
-                return
+            with open(f'{pathconfig}/config_used.log') as file_1, open('/etc/wavedump/WaveDumpConfig.txt') as file_2:
+                differ = Differ()
+                for line in differ.compare(file_1.readlines(), file_2.readlines()):
+                    if line.startswith(("+", "-", "?")):
+                        makequestion = True
+                        break
+                if makequestion:
+                    answer = QMessageBox.question(self, "", "Config. file already exist in this directory with a different setting.\nOverwrite it anyway?", QMessageBox.Yes, QMessageBox.No)
+                    if answer == QMessageBox.No:
+                        return
         cmdcpy = "cp /etc/wavedump/WaveDumpConfig.txt " + pathconfig + "/config_used.log"
         os.system(cmdcpy)
-        QMessageBox.about(self, "", "Config. file saved.")
+        # QMessageBox.about(self, "", "Config. file saved.")
 
     def fixString(self, string):
         string = string.replace(" ", "_")
@@ -244,7 +252,6 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         getout = self.getRunSubrun(self.ui.run_3, self.ui.subrun3)
         if getout:
             self.block = ""
-            self.extra = ""
             return
 
         block1 = self.ui.block1.text()
@@ -256,18 +263,15 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
             self.block = block1
         else:
             self.block = block2
-        self.extra = self.ui.extra_3.text()
 
     def getInfoStyle2(self):
         getout = self.getRunSubrun(self.ui.run, self.ui.subrun)
         if getout:
             self.block = ""
-            self.extra = ""
             return
         voltage = self.ui.voltage.text()
         threshold = self.ui.threshold.text() + "ADC"
         trigger_channel = self.ui.trigger_channel.text()
-        self.extra = self.ui.extra_3.text()
 
         voltage_a = voltage.split(".")
         if len(voltage_a) > 1:
@@ -282,6 +286,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         self.getInfoDefault()
         status = self.moveFiles()
         if status:
+            self.saveConfigDefault()
             self.subrun += 1
             self.ui.subrun3.setText(str(self.subrun))
 
@@ -289,6 +294,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         self.getInfoStyle2()
         status = self.moveFiles()
         if status:
+            self.saveConfigStyle2
             self.subrun += 1
             self.ui.subrun.setText(str(self.subrun))
 
@@ -316,8 +322,6 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
             if self.block != "":
                 newname[i] = newname[i] + "_" + self.block
 
-            if self.extra != "":
-                newname[i] = newname[i] + "_" + self.extra
 
             newname[i] = newname[i] + format
 
@@ -363,7 +367,6 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
     def moveFiles(self):
 
         self.block = self.fixString(self.block)
-        self.extra =self.fixString(self.extra)
 
         mkdir, mpath, folder, oldname, newname, format = self.genPatternInfo()
 
@@ -458,14 +461,16 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
             QMessageBox.about(self, "", messageOk)
         return True
 
-    def finishRun(self, runLine):
+    def finishRun(self, runLine, subrunLine):
         ret = QMessageBox.question(self, "", "Finish this run?", QMessageBox.Yes, QMessageBox.No)
 
         if ret == QMessageBox.Yes:
             QMessageBox.about(self, "", "New run!")
             self.run = int(runLine.text())
             self.run += 1
+            self.subrun = 0
             runLine.setText(str(self.run))
+            subrunLine.setText(str(self.subrun))
 
 
     def lock_unlock(self):
