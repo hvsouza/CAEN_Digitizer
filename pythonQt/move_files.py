@@ -468,8 +468,8 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
             QMessageBox.about(self, "", "New run!")
             self.run = int(runLine.text())
             self.run += 1
-            self.subrun = 0
             runLine.setText(str(self.run))
+            self.subrun = 0
             subrunLine.setText(str(self.subrun))
 
 
