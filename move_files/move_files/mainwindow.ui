@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>509</width>
-    <height>543</height>
+    <height>530</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -95,37 +95,6 @@
        <attribute name="title">
         <string>Default</string>
        </attribute>
-       <widget class="QRadioButton" name="calibration_check_3">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>310</x>
-          <y>190</y>
-          <width>171</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::RightToLeft</enum>
-        </property>
-        <property name="text">
-         <string>Calibration done</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-        <property name="autoRepeat">
-         <bool>false</bool>
-        </property>
-        <property name="autoExclusive">
-         <bool>false</bool>
-        </property>
-       </widget>
        <widget class="QLabel" name="label_22">
         <property name="geometry">
          <rect>
@@ -552,106 +521,11 @@
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
-       <widget class="QLineEdit" name="extra_3">
-        <property name="geometry">
-         <rect>
-          <x>120</x>
-          <y>140</y>
-          <width>80</width>
-          <height>24</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_28">
-        <property name="geometry">
-         <rect>
-          <x>9</x>
-          <y>140</y>
-          <width>101</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Extra info:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="button_save_config_2">
-        <property name="geometry">
-         <rect>
-          <x>310</x>
-          <y>290</y>
-          <width>161</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&amp;Save config. file</string>
-        </property>
-       </widget>
       </widget>
       <widget class="QWidget" name="tab_15">
        <attribute name="title">
         <string>Style2</string>
        </attribute>
-       <widget class="QLabel" name="label_7">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>180</y>
-          <width>101</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Extra info:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QRadioButton" name="calibration_check">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>300</x>
-          <y>190</y>
-          <width>181</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::RightToLeft</enum>
-        </property>
-        <property name="text">
-         <string>Calibration done</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-        <property name="autoRepeat">
-         <bool>false</bool>
-        </property>
-        <property name="autoExclusive">
-         <bool>false</bool>
-        </property>
-       </widget>
        <widget class="QLabel" name="triggerCh">
         <property name="geometry">
          <rect>
@@ -1137,38 +1011,6 @@
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="extra">
-        <property name="geometry">
-         <rect>
-          <x>120</x>
-          <y>180</y>
-          <width>111</width>
-          <height>24</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="button_save_config">
-        <property name="geometry">
-         <rect>
-          <x>310</x>
-          <y>290</y>
-          <width>161</width>
-          <height>25</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&amp;Save config. file</string>
         </property>
        </widget>
       </widget>
