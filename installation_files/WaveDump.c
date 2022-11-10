@@ -2273,6 +2273,7 @@ InterruptTimeout:
                             printf("\nEnter the number of waveforms desired (Current: %d):\n",mymaximum);
                             scanf("%s", nwaves);
                             sscanf(nwaves, "%d", &mymaximum);
+                            printf("\nSaving %d waveforms\n",mymaximum);
                             /* mymaximum = atoi(mymaximum); */
                             if (askAgain == 1) {
                                 char yorn[2];
