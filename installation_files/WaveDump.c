@@ -1303,6 +1303,7 @@ void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *W
         switch(c) {
         case 'k' :
           *askAgain = 1;
+          break;
         case 'g' :
 			//for boards with >8 channels
 			if ((BoardInfo.FamilyCode == CAEN_DGTZ_XX730_FAMILY_CODE) || (BoardInfo.FamilyCode == CAEN_DGTZ_XX725_FAMILY_CODE) && (WDcfg->Nch > 8))
