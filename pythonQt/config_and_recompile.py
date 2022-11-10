@@ -154,7 +154,9 @@ class ConfigRecomp():
                         current_channel+=1
                     elif lines[i].startswith("ENABLE_INPUT"):
                         if lines[i].split()[1] == "YES":
-                                self.enable_ch[channel].setChecked(True)
+                            self.enable_ch[channel].setChecked(True)
+                        else:
+                            self.enable_ch[channel].setChecked(False)
                             # self.freeTrigger(self.trigger_ch[channel], True)
                     elif lines[i].startswith("BASELINE"):
                         self.base_ch[channel].setText(lines[i].split()[1])
