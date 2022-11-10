@@ -176,7 +176,7 @@ class ConfigRecomp():
         except IOError:
             QMessageBox.critical(self, "ERROR!", "Config. file not opened!")
             return
-        self.writeConfigFile(True)
+        self.writeConfigFile(False)
 
     def writeConfigFile(self, fromConfig):
 
