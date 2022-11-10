@@ -289,8 +289,7 @@ class ConfigRecomp():
         message = f'Trigger type: {triggertype}\nRecord length: {self.recordsaved} pts\nPulse polarity: {pulse_polarity}\nFile type: {datatype}'
         if fromConfig:
             message = message + "\nClick 'Ok' and reload wavedump (shift+r)"
-
-        QMessageBox.about(self, "", message)
+            QMessageBox.about(self, "", message)
 
     def recompile(self):
         nwvfs = self.ui.nwvfs.text()
