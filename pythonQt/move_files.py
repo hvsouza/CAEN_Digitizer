@@ -16,6 +16,7 @@ from ui_about import Ui_About
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox, QFileDialog
+from PyQt5.QtGui import QIcon
 
 
 from config_and_recompile import ConfigRecomp
@@ -139,6 +140,8 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         self.recordlength = 0
         self.getRecordLength()
         self.loadConfig("/etc/wavedump/WaveDumpConfig.txt")
+
+        self.setWindowIcon(QIcon(f"{self.userpath}/Documents/CAEN_Digitizer/.repo_img/icon_GUI.png"))
 
 
     def showAbout(self):
