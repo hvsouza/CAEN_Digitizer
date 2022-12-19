@@ -15,6 +15,17 @@ function check_n_exec(){
     
 }
 
+if [ -x "$(command -v apt)" ]; then
+    alias myapt=apt
+elif [ -x "$(command -v yum)" ]; then
+    alias myapt=yum
+elif [ -x "$(command -v pacman)" ]; then
+    alias myapt=pacman
+else
+    echo "Failed to find package manager. Please, edit the caen_digitizer.sh script"
+    exit 1
+fi
+
 
 INSTALLPATH=Installation
 PreInstall=PreInstallThis
