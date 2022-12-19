@@ -49,7 +49,7 @@ tar -C $ROOTPATH/$INSTALLPATH -xvf $( /bin/ls CAENDigitizer* | grep -e ".tgz" -e
 tar -C $ROOTPATH/ -xvf $( /bin/ls *wavedump* | grep -e ".tgz" -e ".tar.gz")
 
 echo "Installing cmake and build-essentials"
-sudo apt install cmake build-essential
+sudo myapt install cmake build-essential
 sleep $sleeptime
 
 #installing requirements
@@ -109,7 +109,7 @@ cp $ROOTPATH/$SOURCEFILES/WDconfig.h .
 cd ..
 
 echo "Installing gnuplot"
-sudo apt install gnuplot
+sudo myapt install gnuplot
 sleep $sleeptime
 
 ./configure
