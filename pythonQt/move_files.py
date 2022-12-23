@@ -250,7 +250,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
     def getRunSubrun(self, run, subrun):
         getout = False
         getout = self.checkInt(self.run, run)
-        getout = getout or self.checkInt(self.subrun, subrun)
+        getout = getout or self.checkInt(self.subrun, subrun) # if there is a problem, they return True
         return getout
 
     def getInfoDefault(self):
