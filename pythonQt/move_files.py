@@ -43,6 +43,9 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         self.create_path()
         self.ui.browse_dir.clicked.connect(self.getDir)
         self.primary = self.ui.primary_name.text()
+        self.run = [0]
+        self.subrun = [0]
+        self.block = ""
 
         # Control the moving functions
         self.ui.button_movefile.clicked.connect(self.style2_move)
@@ -131,9 +134,6 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
 
         self.ui.FileTypeSet.currentTextChanged.connect(self.changeFormat)
         self.ui.externaltrigger.stateChanged.connect(self.checkExternalTrigger)
-        self.run = 0
-        self.subrun = 0
-        self.block = ""
 
         self.getEnabledAndTrigger()
 
@@ -164,9 +164,12 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
 
     def writeToolTip(self, standard):
         if standard == "D":
-            self.getInfoDefault()
+            emptyruns = self.getInfoDefault()
         else:
-            self.getInfoStyle2()
+            emptyruns = self.getInfoStyle2()
+
+        if emptyruns:
+            return f'Error: run or subrun is empty'
         _, mpath, folder, _, _, _ = self.genPatternInfo(False)
 
         folder = self.fixString(folder)
@@ -197,7 +200,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
                         self.default_path = directory
                         self.untouch = False
         else:
-            directory = "new_data"
+            directory = dirnow
             self.ui.primary_name.setText(directory)
     def saveConfigDefault(self):
         self.getInfoDefault()
@@ -231,31 +234,30 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         string = string.replace(".", "_")
         return string
 
+    def checkInt(self, val, uival):
+        if not uival.text().strip(): # if it is empty or just white spaces
+            return True
+        try:
+            val[0] = int(uival.text())
+        except ValueError:
+            QMessageBox.critical(self, "ERROR!","Run and Subruns should be unsigned integers")
+            uival.undo()
+            val[0] = int(uival.text())
+            return True
+
+        return False
+
     def getRunSubrun(self, run, subrun):
         getout = False
-        try:
-            self.run = int(run.text())
-        except ValueError:
-            QMessageBox.critical(self, "ERROR!","Run and Subruns should be unsigned integers")
-            run.undo()
-            self.run = int(run.text())
-            getout = True
-
-        try:
-            self.subrun = int(subrun.text())
-        except ValueError:
-            QMessageBox.critical(self, "ERROR!","Run and Subruns should be unsigned integers")
-            subrun.undo()
-            self.subrun = int(subrun.text())
-            getout = True
-
+        getout = self.checkInt(self.run, run)
+        getout = getout or self.checkInt(self.subrun, subrun)
         return getout
 
     def getInfoDefault(self):
         getout = self.getRunSubrun(self.ui.run_3, self.ui.subrun3)
         if getout:
             self.block = ""
-            return
+            return True
 
         block1 = self.ui.block1.text()
         block2 = self.ui.block2.text()
@@ -266,12 +268,13 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
             self.block = block1
         else:
             self.block = block2
+        return False
 
     def getInfoStyle2(self):
         getout = self.getRunSubrun(self.ui.run, self.ui.subrun)
         if getout:
             self.block = ""
-            return
+            return True
         voltage = self.ui.voltage.text()
         threshold = self.ui.threshold.text() + "ADC"
         trigger_channel = self.ui.trigger_channel.text()
@@ -284,22 +287,28 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
 
         block = [voltage,threshold,trigger_channel]
         self.block = '_'.join(block)
+        return False
 
     def default_move(self):
-        self.getInfoDefault()
+        emptyruns = self.getInfoDefault()
+        if emptyruns:
+            QMessageBox.critical(self, "ERROR", "Run or subrun number are empty")
+            return
         status = self.moveFiles()
         if status:
             self.saveConfigDefault()
-            self.subrun += 1
-            self.ui.subrun3.setText(str(self.subrun))
+            self.subrun[0] += 1
+            self.ui.subrun3.setText(str(self.subrun[0]))
 
     def style2_move(self):
-        self.getInfoStyle2()
+        emptyruns = self.getInfoStyle2()
+        if emptyruns:
+            QMessageBox.critical(self, "ERROR", "Run or subrun number are empty")
         status = self.moveFiles()
         if status:
             self.saveConfigStyle2
-            self.subrun += 1
-            self.ui.subrun.setText(str(self.subrun))
+            self.subrun[0] += 1
+            self.ui.subrun.setText(str(self.subrun[0]))
 
 
 
@@ -310,7 +319,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         mpath = f"{self.default_path}{self.primary}/"
         mkdir = f"mkdir -p {mpath}"
 
-        folder = "run"+str(self.run)
+        folder = "run"+str(self.run[0])
         if self.block != "":
             folder = folder + "_" + self.block
 
@@ -320,7 +329,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         newname = [""]*self.nchannels
         for i, namej in enumerate(oldname):
 
-            newname[i] = f'{self.subrun}_{namej}'
+            newname[i] = f'{self.subrun[0]}_{namej}'
 
             if self.block != "":
                 newname[i] = newname[i] + "_" + self.block
@@ -469,11 +478,11 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
 
         if ret == QMessageBox.Yes:
             QMessageBox.about(self, "", "New run!")
-            self.run = int(runLine.text())
-            self.run += 1
-            runLine.setText(str(self.run))
-            self.subrun = 0
-            subrunLine.setText(str(self.subrun))
+            self.run[0] = int(runLine.text())
+            self.run[0] += 1
+            runLine.setText(str(self.run[0]))
+            self.subrun[0] = 0
+            subrunLine.setText(str(self.subrun[0]))
 
 
     def lock_unlock(self):
