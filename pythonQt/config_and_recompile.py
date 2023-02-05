@@ -92,6 +92,7 @@ class ConfigRecomp():
     def twinSample(self):
         val = self.ui.samplingRate_2.currentText()
         self.ui.samplingRate.setCurrentText(val)
+        self.writeState()
 
 
     def checkUSB(self, usbport):
@@ -299,9 +300,11 @@ class ConfigRecomp():
         passwrd = self.ui.passwrd.text()
 
         max_samplingRate = self.ui.adcMaximumRate.currentText()
+        self.sampling_original = max_samplingRate
         max_samplingRate = float(max_samplingRate.split(" ")[0])
 
         samplingRate = self.ui.samplingRate_2.currentText()
+        self.sampling_set = samplingRate
         samplingRate = float(samplingRate.split(" ")[0])
 
         factor = int(max_samplingRate/samplingRate)
@@ -330,3 +333,32 @@ class ConfigRecomp():
         self.writeConfigFile(False);
 
         QMessageBox.about(self,"","Done!\n\nPlease restart wavedump.");
+        self.writeState()
+
+
+    def getPrevState(self):
+
+        filestate = f"{self.userpath}/Documents/CAEN_Digitizer/pythonQt/.state"
+        try:
+            with open(filestate,"r") as f:
+                # this get content lines and their position
+                alllines = [line.rstrip() for line in f]
+                lines = [line for line in alllines if line and not line.startswith('#')]
+                self.sampling_set = lines[0]
+                self.sampling_original = lines[1]
+
+        except IOError:
+            self.writeState()
+
+    def writeState(self):
+        filestate = f"{self.userpath}/Documents/CAEN_Digitizer/pythonQt/.state"
+        self.sampling_original = self.ui.adcMaximumRate.currentText()
+        self.sampling_set = self.ui.samplingRate_2.currentText()
+        try:
+            with open(filestate,"w") as f:
+                f.write(f'# Sampling rate set\n')
+                f.write(f'{self.sampling_set}\n')
+                f.write(f'# Sampling rate original\n')
+                f.write(f'{self.sampling_original}\n')
+        except IOError:
+            return

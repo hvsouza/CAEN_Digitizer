@@ -37,8 +37,13 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         self.userpath = os.path.expanduser('~') # sames has 'cd ~/ && pwd' but safer
         self.untouch = True
         #configuring some extras
-        self.ui.samplingRate.setCurrentText("250 MSamples/s")
-        self.ui.samplingRate_2.setCurrentText("250 MSamples/s")
+        self.sampling_set = "250 MSamples/s"
+        self.sampling_original = "500 MSamples/s"
+        self.getPrevState()
+
+        self.ui.samplingRate.setCurrentText(self.sampling_set)
+        self.ui.samplingRate_2.setCurrentText(self.sampling_set)
+        self.ui.adcMaximumRate.setCurrentText(self.sampling_original)
         self.default_path = f'{self.userpath}/Documents/ADC_data/coldbox_data/'
         self.create_path()
         self.ui.browse_dir.clicked.connect(self.getDir)
@@ -119,6 +124,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
 
         self.ui.pushButton_SetConfig.clicked.connect(lambda: self.pressSet())
         self.ui.samplingRate_2.currentTextChanged.connect(lambda:self.twinSample())
+        self.ui.adcMaximumRate.currentTextChanged.connect(lambda:self.writeState())
         self.ui.pushButtonRecompile.clicked.connect(lambda: self.recompile())
         self.enable_ch[0].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[0],self.enable_ch[0].isChecked()))
         self.enable_ch[1].stateChanged.connect(lambda: self.freeTrigger(self.trigger_ch[1],self.enable_ch[1].isChecked()))
