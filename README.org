@@ -72,7 +72,10 @@ NOTE: you need to disable “Secure Boot” at the BIOS.
 #+begin_src bash
 ./caen_installation.sh
 #+end_src
-   
+
+You need to specify the digitizer sampling rate and the sampling rate you want. You can only change by a factor of 2:\\
+If the digitizer has a sampling of 500 MSamples/s, you can change it to 250 MS/s, 125 MS/s or 62.5 MS/s.
+
 If you are installing for the first time, you probably need to restart the computer.\\
 If the digitizer is connected and installation was successfully, open a terminal and just type “wavedump”, it should show you something like this output:
 
