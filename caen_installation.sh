@@ -169,7 +169,7 @@ cp $ROOTPATH/$SOURCEFILES/WaveDumpExe.sh ~/Desktop/WaveDumpData/
 > ~/Desktop/WaveDumpData/move_files.sh
 echo '#!/bin/bash' >> ~/Desktop/WaveDumpData/move_files.sh
 echo '' >> ~/Desktop/WaveDumpData/move_files.sh
-echo "python3 $ROOTPATH/pythonQt/move_files.sh &" >> ~/Desktop/WaveDumpData/move_files.sh
+echo "python3 $ROOTPATH/pythonQt/move_files.py &" >> ~/Desktop/WaveDumpData/move_files.sh
 
 
 # # copying files necessary for QtCreator
