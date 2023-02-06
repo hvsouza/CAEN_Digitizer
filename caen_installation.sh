@@ -36,6 +36,44 @@ sleeptime=3
 check_n_exec "sudo rm -r $INSTALLPATH"
 check_n_exec "sudo rm -r wavedump*"
 
+
+while true; do
+    echo "What is the original sampling rate of the digitizer (in MSamples/s)?"
+    read original_rate
+    if [ -z "$original_rate" ]; then
+       continue
+    fi
+    # echo "The original sampling rate is $original_rate MHz."
+
+    echo "Do you want to change the sampling rate of the digitizer? (yes/no)"
+    echo "NOTE: for the coldbox, data is being taking with 250 MSamples/s."
+    read answer
+
+    if [ "$answer" == "yes" ]; then
+        echo "Enter the desired sampling rate (in MSamples/s):"
+        read rate
+
+        factor=$(echo "$original_rate / $rate" | bc -l)
+        int_factor=$(printf "%.0f" $factor)
+
+        if [ $(expr $int_factor % 2) -ne 0 ]; then
+            echo "Error: Sampling rate must be changed by a factor of 2. Example:"
+            echo "Original: $original_rate MSamples/s"
+            echo "Set: $original_rate / 2 MHz, $original_rate / 4 MHz, etc."
+        else
+            echo "The new sampling rate is $rate MHz."
+            echo "Sampling rate is being reduced by a factor of $int_factor."
+            break
+        fi
+    else
+        echo "The sampling rate will remain unchanged ($original_rate MSamples/s)."
+        int_factor=1
+        break
+    fi
+done
+
+echo $int_factor
+
 mkdir -p $INSTALLPATH/$PreInstall
 
 
@@ -105,6 +143,9 @@ cd $( /bin/ls | grep wavedump* )
 cd src
 #replacing the .c file with my custom one
 cp $ROOTPATH/$SOURCEFILES/WaveDump.c .
+linenumber_factor=$(eval "sed -n '/int factor/=' WaveDump.c") # search line with pathern
+sed -i "$linenumber_factor d" WaveDump.c
+sed -i "$linenumber_factor i \ \ \ \ \ \ \ \ int factor = $int_factor; \/\/ Added by Henrique Souza" WaveDump.c
 cp $ROOTPATH/$SOURCEFILES/WDconfig.h .
 cd ..
 
@@ -130,5 +171,13 @@ cp $ROOTPATH/$SOURCEFILES/{WaveDumpExe.sh,move_files.sh} ~/Desktop/WaveDumpData/
 
 # copying file to create short cut
 cp -r $ROOTPATH/$SOURCEFILES/install_by_hand/WAVEDump.png ~/Pictures
+
+
+cd $ROOTPATH/pythonQt
+> .state
+echo "# Sampling rate set" >> .state
+echo "$rate MSamples/s" >> .state
+echo "# Sampling rate original" >> .state
+echo "$original_rate MSamples/s" >> .state
 
 cd $ROOTPATH
