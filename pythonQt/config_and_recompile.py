@@ -139,8 +139,13 @@ class ConfigRecomp():
                 self.ui.postTrigger.setText(lines[4].split()[1])
                 self.ui.setPolarity.setCurrentText(lines[5].split()[1].capitalize())
 
-                if lines[6].split()[1] == "ACQUISITION_ONLY":
+                string_exttr = lines[6].split()[1]
+                if string_exttr == "ACQUISITION_ONLY":
                     self.ui.externaltrigger.setChecked(True)
+                    self.ui.actionAcqusition_only.setChecked(True)
+                elif string_exttr == "ACQUISITION_AND_TRGOUT":
+                    self.ui.externaltrigger.setChecked(True)
+                    self.ui.actionAcq_and_TRG_OUT.setChecked(True)
                     # self.setExternalTrigger()
                 else:
                     self.ui.externaltrigger.setChecked(False)
@@ -164,7 +169,7 @@ class ConfigRecomp():
                     elif lines[i].startswith("TRIGGER_THRESHOLD"):
                         self.triggerL_ch[channel].setText(lines[i].split()[1])
                     elif lines[i].startswith("CHANNEL_TRIGGER"):
-                        if lines[i].split()[1] == "ACQUISITION_ONLY" and self.trigger_ch[channel].isEnabled():
+                        if lines[i].split()[1] != "DISABLED" and self.trigger_ch[channel].isEnabled():
                             self.trigger_ch[channel].setChecked(True)
                         else:
                             self.trigger_ch[channel].setChecked(False)
@@ -188,7 +193,7 @@ class ConfigRecomp():
             isenabled = ench.isChecked()
             enabled_ch[i] = "YES" if isenabled else "NO"
             isself = self.trigger_ch[i].isChecked()
-            selfTrigger_ch[i] = "ACQUISITION_ONLY" if isself else "DISABLED"
+            selfTrigger_ch[i] = self.uitriggertype[0] if isself else "DISABLED"
             if isself:
                 selftype = "Self trigger"
 
@@ -199,8 +204,13 @@ class ConfigRecomp():
 
         pulse_polarity = self.ui.setPolarity.currentText().upper()
         datatype = self.ui.FileTypeSet.currentText().upper()
-        externalTrigger = "ACQUISITION_ONLY" if self.ui.externaltrigger.isChecked() else "DISABLED"
-        triggertype = "External trigger" if externalTrigger == "ACQUISITION_ONLY" else selftype
+        if self.ui.actionAcqusition_only.isChecked():
+            self.uitriggertype[0] = "ACQUISITION_ONLY"
+        else:
+            self.uitriggertype[0] = "ACQUISITION_AND_TRGOUT"
+
+        externalTrigger = self.uitriggertype[0] if self.ui.externaltrigger.isChecked() else "DISABLED"
+        triggertype = "External trigger" if externalTrigger != "DISABLED" else selftype
         pulsetype = self.ui.externalType.currentText().upper()
 
         self.getRecordLength()
@@ -362,3 +372,15 @@ class ConfigRecomp():
                 f.write(f'{self.sampling_original}\n')
         except IOError:
             return
+
+
+    def setTriggerType(self, typechoice, uichoice, uiotherchoice):
+        # as soon as it is clicked, The state changes, keep this in mind
+        # self.ui = Ui_MainWindow()
+        if uiotherchoice.isChecked() and uichoice.isChecked(): #just activated uichoice
+            self.uitriggertype[0] = typechoice
+            uiotherchoice.setChecked(False)
+        elif not uiotherchoice.isChecked() and not uichoice.isChecked():
+            uichoice.setChecked(True)
+            QMessageBox.about(self, "WARNING", f'{typechoice} was kept.\nChoose one of the two trigger types.')
+            self.uitriggertype[0] = typechoice

@@ -123,6 +123,10 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
             self.ui.triggerL7,
             self.ui.triggerL8,
         ]
+        self.uitriggertype = [""]
+
+        self.ui.actionAcqusition_only.toggled.connect(lambda: self.setTriggerType("ACQUISITION_ONLY", self.ui.actionAcqusition_only, self.ui.actionAcq_and_TRG_OUT))
+        self.ui.actionAcq_and_TRG_OUT.toggled.connect(lambda: self.setTriggerType("ACQUISITION_AND_TRGOUT", self.ui.actionAcq_and_TRG_OUT, self.ui.actionAcqusition_only))
 
         self.previousStateTrigger = [False for i in range(self.nchannels)]
 
