@@ -325,7 +325,7 @@ class ConfigRecomp():
             return
 
         print("\n\n")
-        recompile_command = f"bash ~/Documents/CAEN_Digitizer/recompile_wavedump.sh {nwvfs} {factor}"
+        recompile_command = f"bash {self.codepath}/recompile_wavedump.sh {nwvfs} {factor}"
         os.system(recompile_command)
 
         print("Press enter to free the terminal...")
@@ -338,7 +338,7 @@ class ConfigRecomp():
 
     def getPrevState(self):
 
-        filestate = f"{self.userpath}/Documents/CAEN_Digitizer/pythonQt/.state"
+        filestate = f"{self.codepath}/pythonQt/.state"
         try:
             with open(filestate,"r") as f:
                 # this get content lines and their position
@@ -351,7 +351,7 @@ class ConfigRecomp():
             self.writeState()
 
     def writeState(self):
-        filestate = f"{self.userpath}/Documents/CAEN_Digitizer/pythonQt/.state"
+        filestate = f"{self.codepath}/pythonQt/.state"
         self.sampling_original = self.ui.adcMaximumRate.currentText()
         self.sampling_set = self.ui.samplingRate_2.currentText()
         try:

@@ -35,6 +35,10 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
 
         self.nchannels = 8
         self.userpath = os.path.expanduser('~') # sames has 'cd ~/ && pwd' but safer
+        self.codepath = os.path.abspath(os.path.dirname(__file__)) # gets the location of the python script
+        self.codepath_list = self.codepath.split(os.sep) # split it with the division "/",
+        self.codepath = os.sep.join(self.codepath_list[:-1]) # remove the last folder
+
         self.untouch = True
         #configuring some extras
         self.sampling_set = "250 MSamples/s"
@@ -147,14 +151,14 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         self.getRecordLength()
         self.loadConfig("/etc/wavedump/WaveDumpConfig.txt")
 
-        self.setWindowIcon(QIcon(f"{self.userpath}/Documents/CAEN_Digitizer/.repo_img/icon_GUI.png"))
+        self.setWindowIcon(QIcon(f"{self.codepath}/.repo_img/icon_GUI.png"))
 
 
     def showAbout(self):
         self.About = QtWidgets.QMainWindow()
         self.aui = Ui_About()
         self.aui.setupUi(self.About)
-        self.aui.label.setPixmap(QtGui.QPixmap(f"{self.userpath}/Documents/CAEN_Digitizer/.repo_img/computer-nerd.jpg"))
+        self.aui.label.setPixmap(QtGui.QPixmap(f"{self.codepath}/.repo_img/computer-nerd.jpg"))
         self.aui.label_2.setOpenExternalLinks(True)
         self.About.show()
 
