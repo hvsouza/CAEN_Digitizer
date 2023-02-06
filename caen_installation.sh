@@ -16,11 +16,11 @@ function check_n_exec(){
 }
 
 if [ -x "$(command -v apt)" ]; then
-    alias myapt=apt
+    alias myapt=$(command -v apt)
 elif [ -x "$(command -v yum)" ]; then
-    alias myapt=yum
+    alias myapt=$(command -v yum)
 elif [ -x "$(command -v pacman)" ]; then
-    alias myapt=pacman
+    alias myapt=$(command -v pacman)
 else
     echo "Failed to find package manager. Please, edit the caen_digitizer.sh script"
     exit 1
@@ -164,7 +164,12 @@ cp -r $ROOTPATH/$SOURCEFILES/install_by_hand/WaveDumpConfig.txt .
 
 # creates a shortcut at Desktop. The move_files GUI must be installed by hand
 mkdir -p ~/Desktop/WaveDumpData
-cp $ROOTPATH/$SOURCEFILES/{WaveDumpExe.sh,move_files.sh} ~/Desktop/WaveDumpData/
+cp $ROOTPATH/$SOURCEFILES/{WaveDumpExe.sh} ~/Desktop/WaveDumpData/
+> ~/Desktop/WaveDumpData/move_files.sh
+echo '#!/bin/bash' >> ~/Desktop/WaveDumpData/move_files.sh
+echo '' >> ~/Desktop/WaveDumpData/move_files.sh
+echo "python3 $ROOTPATH/pythonQt/move_files.sh &" >> ~/Desktop/WaveDumpData/move_files.sh
+
 
 # # copying files necessary for QtCreator
 # mkdir -p ~/Documents/QtCreator
