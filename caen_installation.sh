@@ -54,9 +54,9 @@ while true; do
         read rate
 
         factor=$(echo "$original_rate / $rate" | bc -l)
-        int_factor=$(printf "%.0f" $factor)
+        int_factor=$( LC_ALL=C printf '%.0f' "$factor" ) # some annoying thing about integer conversion
 
-        if [ $(expr $int_factor % 2) -ne 0 ]; then
+        if [ $(expr $int_factor % 2) -ne 0 ] || [ $int_factor -lt 1 ]; then
             echo "Error: Sampling rate must be changed by a factor of 2. Example:"
             echo "Original: $original_rate MSamples/s"
             echo "Set: $original_rate / 2 MHz, $original_rate / 4 MHz, etc."
@@ -73,7 +73,8 @@ while true; do
     fi
 done
 
-echo $int_factor
+sleep $sleeptime
+
 
 mkdir -p $INSTALLPATH/$PreInstall
 
