@@ -3008,21 +3008,59 @@ The password is the same you use to login the computer.</string>
    </property>
    <widget class="QMenu" name="menuLAr_Test">
     <property name="title">
-     <string>LAr Test</string>
+     <string>More</string>
     </property>
+    <widget class="QMenu" name="menuTrigger_type">
+     <property name="title">
+      <string>Trigger type</string>
+     </property>
+     <addaction name="actionAcqusition_only"/>
+     <addaction name="actionAcq_and_TRG_OUT"/>
+    </widget>
     <addaction name="actionLoad_cofig_file"/>
+    <addaction name="menuTrigger_type"/>
+   </widget>
+   <widget class="QMenu" name="menu_info">
+    <property name="title">
+     <string>?</string>
+    </property>
     <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuLAr_Test"/>
+   <addaction name="menu_info"/>
   </widget>
   <action name="actionLoad_cofig_file">
    <property name="text">
     <string>Load cofig. file</string>
    </property>
   </action>
+  <action name="w">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
   <action name="actionAbout">
    <property name="text">
     <string>About</string>
+   </property>
+  </action>
+  <action name="actionAcqusition_only">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Acqusition only</string>
+   </property>
+  </action>
+  <action name="actionAcq_and_TRG_OUT">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Acq. and TRG OUT</string>
    </property>
   </action>
  </widget>
