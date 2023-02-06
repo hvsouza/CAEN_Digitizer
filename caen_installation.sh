@@ -66,6 +66,7 @@ while true; do
             break
         fi
     else
+        rate=original_rate
         echo "The sampling rate will remain unchanged ($original_rate MSamples/s)."
         int_factor=1
         break
