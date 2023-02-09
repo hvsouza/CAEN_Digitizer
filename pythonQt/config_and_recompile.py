@@ -155,21 +155,30 @@ class ConfigRecomp():
                 channel = 0
                 current_channel = 0
                 for i in range(9, len(lines)):
+                    try:
+                        second_input = lines[i].split()[1]
+                    except:
+                        second_input = ""
                     if lines[i].startswith(f'[{current_channel}]'):
                         channel = current_channel
                         current_channel+=1
                     elif lines[i].startswith("ENABLE_INPUT"):
-                        if lines[i].split()[1] == "YES":
+                        if second_input == "YES":
                             self.enable_ch[channel].setChecked(True)
                         else:
                             self.enable_ch[channel].setChecked(False)
                             # self.freeTrigger(self.trigger_ch[channel], True)
                     elif lines[i].startswith("BASELINE"):
-                        self.base_ch[channel].setText(lines[i].split()[1])
+                        self.base_ch[channel].setText(second_input)
                     elif lines[i].startswith("TRIGGER_THRESHOLD"):
-                        self.triggerL_ch[channel].setText(lines[i].split()[1])
+                        self.triggerL_ch[channel].setText(second_input)
                     elif lines[i].startswith("CHANNEL_TRIGGER"):
-                        if lines[i].split()[1] != "DISABLED" and self.trigger_ch[channel].isEnabled():
+                        if second_input != "DISABLED" and self.trigger_ch[channel].isEnabled():
+                            self.uitriggertype[0] = second_input
+                            if self.uitriggertype[0] == "ACQUISITION_ONLY":
+                                self.ui.actionAcqusition_only.setChecked(True)
+                            else:
+                                self.ui.actionAcq_and_TRG_OUT.setChecked(True)
                             self.trigger_ch[channel].setChecked(True)
                         else:
                             self.trigger_ch[channel].setChecked(False)
