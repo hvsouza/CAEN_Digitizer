@@ -263,10 +263,16 @@ class ConfigRecomp():
             chconf.append(f'[{i}]')
             chconf.append(f'\n')
             chconf.append(f'ENABLE_INPUT          {enabled_ch[i]}\n')
-            if enabled_ch[i] == "YES":
-                chconf.append(f'BASELINE_LEVEL        {basenow[i]}\n')
-                chconf.append(f'TRIGGER_THRESHOLD     {triggerLnow[i]}\n')
-                chconf.append(f'CHANNEL_TRIGGER       {selfTrigger_ch[i]}\n')
+            if basenow[i] == "":
+                basenow[i] = 10
+            if triggerLnow[i] == "":
+                triggerLnow[i] = 10
+            if selfTrigger_ch[i] == "":
+                selfTrigger_ch[i] = "DISABLED"
+            chconf.append(f'BASELINE_LEVEL        {basenow[i]}\n')
+            chconf.append(f'TRIGGER_THRESHOLD     {triggerLnow[i]}\n')
+            chconf.append(f'CHANNEL_TRIGGER       {selfTrigger_ch[i]}\n')
+
             chconf.append("\n")
             replace_ch.append(chconf)
 
