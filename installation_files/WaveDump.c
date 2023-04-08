@@ -2191,6 +2191,7 @@ InterruptTimeout:
 
         nCycles++;
         if (ElapsedTime > 1000) {
+            // Added by Henrique Souza
             if (Nb == 0)
                 if (ret == CAEN_DGTZ_Timeout) printf ("Timeout...\n"); else printf("No data...\n");
             else if (WDrun.ContinuousWrite)
