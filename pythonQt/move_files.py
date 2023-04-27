@@ -243,16 +243,16 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         os.system(cmdcpy)
         # QMessageBox.about(self, "", "Config. file saved.")
 
-    def fixString(self, string):
-        string = string.replace(" ", "_")
-        string = string.replace(".", "_")
+    def fixString(self, mystring):
+        mystring = mystring.replace(" ", "_")
+        mystring = mystring.replace(".", "_")
         # avoiding several underscores one after the other
-        string = string.replace("___", "_")
-        string = string.replace("__", "_")
-        string = string.replace("__", "_")
-        if string[-1] == "_":
-            string = string[:-1]
-        return string
+        mystring = mystring.replace("___", "_")
+        mystring = mystring.replace("__", "_")
+        mystring = mystring.replace("__", "_")
+        if mystring[-1] == "_":
+            mystring = mystring[:-1]
+        return mystring
 
     def checkInt(self, val, uival):
         if not uival.text().strip(): # if it is empty or just white spaces
@@ -431,7 +431,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
             elif self.enable_ch[i].isChecked() and FileNotThereYet[i] is False:
                 errorMessage2 = f'{errorMessage2}The file \'{mpath}{folder}/{newname[i]} \'already exist, please check the run and subrun number!\n'
             elif self.enable_ch[i].isChecked():
-                if format == ".dat":
+                if myformat == ".dat":
                     _actual_pts_saved, _total_events = self.getInfoBinary(datacheck)
                 else:
                     _actual_pts_saved, _total_events = self.getInfoASCII(datacheck)
