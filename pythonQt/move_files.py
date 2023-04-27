@@ -250,8 +250,12 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
         mystring = mystring.replace("___", "_")
         mystring = mystring.replace("__", "_")
         mystring = mystring.replace("__", "_")
-        if mystring[-1] == "_":
-            mystring = mystring[:-1]
+        try:
+            if mystring[-1] == "_":
+                mystring = mystring[:-1]
+        except IndexError:
+            pass
+
         return mystring
 
     def checkInt(self, val, uival):
