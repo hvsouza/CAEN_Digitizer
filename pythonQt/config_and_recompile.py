@@ -161,10 +161,6 @@ class ConfigRecomp():
                     except:
                         second_input = ""
 
-                    if lines[i].startswith(("WRITE_REGISTER", "ADDRESS", "DATA", "MASK")):
-                        self.register_command = lines[i]
-                        continue
-                    
                     if lines[i].startswith(f'[{current_channel}]'):
                         channel = current_channel
                         current_channel+=1
@@ -248,8 +244,6 @@ class ConfigRecomp():
         replace[13] = f'TRIGGER_THRESHOLD  100'
         replace[14] = f'CHANNEL_TRIGGER  DISABLED'
 
-        if self.register_command != "":
-            replace.insert(11, self.register_command)
 
         replace_ch = []
 
@@ -294,6 +288,16 @@ class ConfigRecomp():
                 lines = [[line[0], line[1]] for line in alllines if line[1] and not line[1].startswith('#')]
 
                 # replace the common structure of the file
+
+                self.register_command = ""
+                for i, [pos,line] in enumerate(lines):
+                    if alllines[pos][1].startswith(("WRITE_REGISTER", "ADDRESS", "DATA", "MASK")):
+                        self.register_command = alllines[pos][1]
+
+                if self.register_command != "":
+                    replace.insert(11, self.register_command)
+
+
                 for i, (rep,[pos,line]) in enumerate(zip(replace,lines)):
                     alllines[pos][1] = rep
 
