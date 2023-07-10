@@ -287,17 +287,19 @@ class ConfigRecomp():
                 alllines = [[pos, line.rstrip()] for pos, line in enumerate(f)]
                 lines = [[line[0], line[1]] for line in alllines if line[1] and not line[1].startswith('#')]
 
-                # replace the common structure of the file
 
-                self.register_command = ""
+                # This for is only for searching user 'register' configuration that might be changed manually
+                self.register_command = []
                 for i, [pos,line] in enumerate(lines):
                     if alllines[pos][1].startswith(("WRITE_REGISTER", "ADDRESS", "DATA", "MASK")):
-                        self.register_command = alllines[pos][1]
+                        self.register_command.append(alllines[pos][1])
 
-                if self.register_command != "":
-                    replace.insert(11, self.register_command)
+                for idx, regcmd in enumerate(self.register_command):
+                    if regcmd != "":
+                        replace.insert(11+idx, regcmd)
 
 
+                # replace the common structure of the file
                 for i, (rep,[pos,line]) in enumerate(zip(replace,lines)):
                     alllines[pos][1] = rep
 
