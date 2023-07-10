@@ -148,6 +148,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, Ui_About):
 
         self.ui.FileTypeSet.currentTextChanged.connect(self.changeFormat)
         self.ui.externaltrigger.stateChanged.connect(self.checkExternalTrigger)
+        self.register_command = ""
 
         self.getEnabledAndTrigger()
 

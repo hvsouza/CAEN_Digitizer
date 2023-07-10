@@ -152,6 +152,7 @@ class ConfigRecomp():
 
                 self.ui.externalType.setCurrentText(lines[7].split()[1])
                 self.ui.FileTypeSet.setCurrentText(lines[8].split()[1])
+
                 channel = 0
                 current_channel = 0
                 for i in range(9, len(lines)):
@@ -159,6 +160,11 @@ class ConfigRecomp():
                         second_input = lines[i].split()[1]
                     except:
                         second_input = ""
+
+                    if lines[i].startswith(("WRITE_REGISTER", "ADDRESS", "DATA", "MASK")):
+                        self.register_command = lines[i]
+                        continue
+                    
                     if lines[i].startswith(f'[{current_channel}]'):
                         channel = current_channel
                         current_channel+=1
@@ -182,6 +188,7 @@ class ConfigRecomp():
                             self.trigger_ch[channel].setChecked(True)
                         else:
                             self.trigger_ch[channel].setChecked(False)
+
 
 
                 for ch in range(current_channel, self.nchannels):
@@ -241,6 +248,9 @@ class ConfigRecomp():
         replace[13] = f'TRIGGER_THRESHOLD  100'
         replace[14] = f'CHANNEL_TRIGGER  DISABLED'
 
+        if self.register_command != "":
+            replace.insert(11, self.register_command)
+
         replace_ch = []
 
         basenow = [0]*self.nchannels
@@ -280,7 +290,7 @@ class ConfigRecomp():
 
             with open("/etc/wavedump/WaveDumpConfig.txt", "r+") as f:
                 # this get content lines and their position
-                alllines = [[pos,line.rstrip()] for pos, line in enumerate(f)]
+                alllines = [[pos, line.rstrip()] for pos, line in enumerate(f)]
                 lines = [[line[0], line[1]] for line in alllines if line[1] and not line[1].startswith('#')]
 
                 # replace the common structure of the file
