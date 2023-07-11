@@ -567,7 +567,7 @@ One can use registers with wavedump. As the documentation was not clear for me, 
   #+end_example
   In (1)  we have =data=1000= and =mask=1000=. This values are hexadecimals. That means:
 
-  =data= (as binary) = 0001 0000 0000 0000 -> only bit 12 has a value
+  =data= (as binary) = 0001 0000 0000 0000 -> only bit 12 has a value\\
   =mask= is the same in this case
 
   Now, for (2), it gives =data=1000= and =mask=3000=. Converting:\\
@@ -582,7 +582,7 @@ One can use registers with wavedump. As the documentation was not clear for me, 
   #+begin_src
     WRITE_REGISTER 1084 0 3 -> For channel 0 and 1
   #+end_src
-  So, =data==0 and =mask==3  means 0000 and 0011
+  So, =data==0 and =mask==3  means 0000 and 0011\\
   This will set bits [0] and [1] to 0. And 00 is OR according to the manual of register from wavedump.
 
 
