@@ -385,11 +385,11 @@ Please, keep in mind that this will not reduce the dead time of the digitizer.
 
 Besides, when "Continuous writting" is enabled at wavedump, the default configuration set wavedump to save 10,000 waveforms and then stop. To change the maximum number of events change the value of "# of waveforms" to the desired one. If not value is given, the default of 10,000 is used. To set non-stop continuous writting, set the value to a negative number.
 
-In the example above, wavedump will be recompiled setting a maximum of 500 waveforms per continous writting and a sampling rate of 250 MSamples/s (half of the digitizer capability).
+In the example above, wavedump will be recompiled setting a maximum of 500 waveforms per continuous writting and a sampling rate of 250 MSamples/s (half of the digitizer capability).
 
 * Extra: Creating a shortcut for Wavedump
 
-Inside the folder =~/Documents/CAEN_Digitizer/installation_files/install_by_hand= you will find the file WaveDump.desktop. Replace the user from “henrique” to yours. Copy the .desktop file into =~/.local/share/applications/= (the tumbnail should be already placed at =~/Pictures=). Now, open the menu (windows key) and search for CAEN you should find the shortcut (if not, try login out and login in). You can place this short cut at your dock/panel, this makes much easier to launch wavedump in a way that is saves the data at =~/Desktop/WaveDumpData/=.
+Inside the folder =~/Documents/CAEN_Digitizer/installation_files/install_by_hand= you will find the file WaveDump.desktop. Replace the user from “henrique” to yours. Copy the .desktop file into =~/.local/share/applications/= (the thumbnail should be already placed at =~/Pictures=). Now, open the menu (windows key) and search for CAEN you should find the shortcut (if not, try login out and login in). You can place this short cut at your dock/panel, this makes much easier to launch wavedump in a way that is saves the data at =~/Desktop/WaveDumpData/=.
  
 * Extra: recompiling wavedump
 
@@ -553,7 +553,6 @@ and set to DISABLED each channel trigger.
   CHANNEL_TRIGGER        DISABLED
 #+end_example
 
-
 * Extra: Registers
 
 One can use registers with wavedump. As the documentation was not clear for me, I leave some comments on that:
@@ -566,26 +565,24 @@ One can use registers with wavedump. As the documentation was not clear for me, 
   2. Set bit [12] = 1 and bit [13] = 0 of register 1080, leaving the other bits to their previous value:
   WRITE_REGISTER 1080 1000 3000
   #+end_example
+  In (1)  we have =data=1000= and =mask=1000=. This values are hexadecimals. That means:
 
-  In (1)  we have data=1000 and mask=1000. This values are hexadecimals. That means:
+  =data= (as binary) = 0001 0000 0000 0000 -> only bit 12 has a value
+  =mask= is the same in this case
 
-  `data` (as binary) = 0001 0000 0000 0000 -> only bit 12 has a value
-  `mask` is the same in this case
-
-  Now, for (2), it gives `data`=1000 and `mask`=3000. Converting:
-  `data`  (binary) = 0001 0000 0000 0000
-  `mask` (binary) = 0011 0000 0000 0000
+  Now, for (2), it gives =data=1000= and =mask=3000=. Converting:\\
+  =data=  (binary) = =0001 0000 0000 0000=\\
+  =mask= (binary)  = =0011 0000 0000 0000=
 
   And so bit[12] is set to 1 and bit[13] is set to 0
 
-  If `data` was 0 or 1, it would set both bits to 0 or 1
+  If =data= was 0 or 1, it would set both bits to 0 or 1
 
   Now, to set AND logical coincidence for Ch0 and Ch1 one can use:
   #+begin_src
     WRITE_REGISTER 1084 0 3 -> For channel 0 and 1
   #+end_src
-
-  So, `data`=0 and `mask`=3  means 0000 and 0011
+  So, =data==0 and =mask==3  means 0000 and 0011
   This will set bits [0] and [1] to 0. And 00 is OR according to the manual of register from wavedump.
 
 
