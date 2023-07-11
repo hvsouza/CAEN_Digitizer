@@ -560,12 +560,12 @@ One can use registers with wavedump. As the documentation was not clear for me, 
 
 - You can send multiple register commands without problem. They all need to be add manually.
 - In the example at WaveDump it is written:
-#+begin_example
-1. Set only bit [12] of register 1080 to 1, leaving the other bits to their previous value:
-WRITE_REGISTER 1080 1000 1000
-2. Set bit [12] = 1 and bit [13] = 0 of register 1080, leaving the other bits to their previous value:
-WRITE_REGISTER 1080 1000 3000
-#+end_example
+  #+begin_example
+  1. Set only bit [12] of register 1080 to 1, leaving the other bits to their previous value:
+  WRITE_REGISTER 1080 1000 1000
+  2. Set bit [12] = 1 and bit [13] = 0 of register 1080, leaving the other bits to their previous value:
+  WRITE_REGISTER 1080 1000 3000
+  #+end_example
 
   In (1)  we have data=1000 and mask=1000. This values are hexadecimals. That means:
 
@@ -580,11 +580,10 @@ WRITE_REGISTER 1080 1000 3000
 
   If `data` was 0 or 1, it would set both bits to 0 or 1
 
-  Now, to set AND logical coincidence for Ch0 and#+begin_example
- Ch1 one can use:
-#+begin_src
-  WRITE_REGISTER 1084 0 3 -> For channel 0 and 1
-#+end_src
+  Now, to set AND logical coincidence for Ch0 and Ch1 one can use:
+  #+begin_src
+    WRITE_REGISTER 1084 0 3 -> For channel 0 and 1
+  #+end_src
 
   So, `data`=0 and `mask`=3  means 0000 and 0011
   This will set bits [0] and [1] to 0. And 00 is OR according to the manual of register from wavedump.
