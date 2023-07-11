@@ -43,6 +43,7 @@ Please, if you find any bug, miss information or some nasty mistake, feel free t
 - [[#extra-recompiling-wavedump][Extra: recompiling wavedump]]
 - [[#extra-file-structure][Extra: File structure]]
 - [[#extra-common-variables][Extra: Common variables]]
+- [[#extra-registers][Extra: Registers]]
 - [[#faq][FAQ]]
   - [[#adc-related][ADC related]]
   - [[#wavedump-related][Wavedump related]]
@@ -551,6 +552,44 @@ and set to DISABLED each channel trigger.
   TRIGGER_THRESHOLD      500
   CHANNEL_TRIGGER        DISABLED
 #+end_example
+
+
+* Extra: Registers
+
+One can use registers with wavedump. As the documentation was not clear for me, I leave some comments on that:
+
+- You can send multiple register commands without problem. They all need to be add manually.
+- In the example at WaveDump it is written:
+#+begin_example
+1. Set only bit [12] of register 1080 to 1, leaving the other bits to their previous value:
+WRITE_REGISTER 1080 1000 1000
+2. Set bit [12] = 1 and bit [13] = 0 of register 1080, leaving the other bits to their previous value:
+WRITE_REGISTER 1080 1000 3000
+#+end_example
+
+  In (1)  we have data=1000 and mask=1000. This values are hexadecimals. That means:
+
+  `data` (as binary) = 0001 0000 0000 0000 -> only bit 12 has a value
+  `mask` is the same in this case
+
+  Now, for (2), it gives `data`=1000 and `mask`=3000. Converting:
+  `data`  (binary) = 0001 0000 0000 0000
+  `mask` (binary) = 0011 0000 0000 0000
+
+  And so bit[12] is set to 1 and bit[13] is set to 0
+
+  If `data` was 0 or 1, it would set both bits to 0 or 1
+
+  Now, to set AND logical coincidence for Ch0 and#+begin_example
+ Ch1 one can use:
+#+begin_src
+  WRITE_REGISTER 1084 0 3 -> For channel 0 and 1
+#+end_src
+
+  So, `data`=0 and `mask`=3  means 0000 and 0011
+  This will set bits [0] and [1] to 0. And 00 is OR according to the manual of register from wavedump.
+
+
 
 * FAQ
 ** ADC related
