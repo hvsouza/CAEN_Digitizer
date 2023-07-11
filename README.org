@@ -570,7 +570,8 @@ One can use registers with wavedump. As the documentation was not clear for me, 
   =data= (as binary) = 0001 0000 0000 0000 -> only bit 12 has a value\\
   =mask= is the same in this case
 
-  Now, for (2), it gives =data=1000= and =mask=3000=. Converting:\\
+  Now, for (2), it gives =data=1000= and =mask=3000=. Converting:
+
   =data=  (binary) = =0001 0000 0000 0000=\\
   =mask= (binary)  = =0011 0000 0000 0000=
 
@@ -579,12 +580,13 @@ One can use registers with wavedump. As the documentation was not clear for me, 
   If =data= was 0 or 1, it would set both bits to 0 or 1
 
   Now, to set AND logical coincidence for Ch0 and Ch1 one can use:
-  #+begin_src
-    WRITE_REGISTER 1084 0 3 -> For channel 0 and 1
-  #+end_src
-  So, =data==0 and =mask==3  means 0000 and 0011\\
+  #+begin_example
+  WRITE_REGISTER 1084 0 3 # For channel 0 and 1
+  # OR
+  # WRITE_REGISTER 1084 0000 0011 # For channel 0 and 1
+  #+end_example
+  So, =data=0= and =mask=3= (hexadecimal) means =0000= and =0011= (binary)\\
   This will set bits [0] and [1] to 0. And 00 is OR according to the manual of register from wavedump.
-
 
 
 * FAQ
