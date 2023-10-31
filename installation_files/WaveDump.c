@@ -1492,7 +1492,7 @@ void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *W
 *   \param   EventInfo Pointer to the EventInfo data structure
 *   \param   Event Pointer to the Event to write
 */
-int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_EventInfo_t *EventInfo, void *Event, int *after_max, int *max_events, uint32_t mymaximum)
+int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_EventInfo_t *EventInfo, void *Event, int *after_max, uint64_t *max_events, uint64_t mymaximum)
 {
     int ch, j, ns;
     CAEN_DGTZ_UINT16_EVENT_t  *Event16 = NULL;
@@ -1635,7 +1635,7 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
         /* Added by Henrique Souza */
         /* This will save a maximum number of events */
         if(*max_events == mymaximum-1){
-            printf("\n\n\n\n\n\n\n\n\n\nEvents have reached the maximum of %ld... \n", *max_events+1);
+            printf("\n\n\n\n\n\n\n\n\n\nEvents have reached the maximum of %lu... \n", *max_events+1);
             printf("Continuous writing is disabled\n\n\n\n\n\n\n\n\n\n");
             *max_events = 0;
             WDrun->ContinuousWrite = 0;
@@ -2274,21 +2274,19 @@ InterruptTimeout:
                     else{
                         if(max_events == 0 && askAgain == 1){
                             char nwaves[12];
-                            printf("\nEnter the number of waveforms desired (Current: %d):\n",mymaximum);
+                            printf("\nEnter the number of waveforms desired (Current: %lu):\n",mymaximum);
                             scanf("%s", nwaves);
-                            sscanf(nwaves, "%d", &mymaximum);
-                            printf("\nSaving %d waveforms\n",mymaximum);
+                            sscanf(nwaves, "%lu", &mymaximum);
+                            printf("\nSaving %lu waveforms\n",mymaximum);
                             /* mymaximum = atoi(mymaximum); */
                             if (askAgain == 1) {
-                                char yorn[2];
+                                char yorn[12];
                                 printf("\nMake this value default for this session and ask again only if [k] is pressed? (y/n):\n");
                                 scanf("%s",&yorn);
                                 if(yorn[0] == 'y' || yorn[0] == 'Y'){
                                     askAgain = 0;
                                 }
-
                             }
-
                         }
 
                     }
