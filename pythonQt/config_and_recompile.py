@@ -18,6 +18,7 @@ import subprocess as sp
 
 class ConfigRecomp():
 
+    ui:Ui_MainWindow
     def setExternalTrigger(self):
         for var in self.trigger_ch:
             var.setChecked(False)
@@ -40,7 +41,7 @@ class ConfigRecomp():
             else:
                 self.ui.FileTypeSet.setCurrentText("Binary")
 
-    def freeTrigger(self,trigger,state):
+    def freeTrigger(self, trigger, state):
         if state and self.ui.externaltrigger.isChecked() is False:
             trigger.setDisabled(False)
         else:
@@ -101,7 +102,10 @@ class ConfigRecomp():
         pos = ret.find(standardret)
         if pos == -1: pos = ret.find(standardret.capitalize())
         if pos == -1:
-            QMessageBox.warning(self, "Warning!", "The digitizer was probably not recognized by the system")
+            if not self.hold_initial_print:
+                QMessageBox.warning(self, "Warning!", "The digitizer was probably not recognized by the system")
+            else:
+                self.hold_initial_print = False
             return
         pos += len(standardret)
         realUSB = ret[pos]
@@ -115,7 +119,7 @@ class ConfigRecomp():
             dirnow = self.ui.primary_name.text()
             mfile, mfilter = QtWidgets.QFileDialog.getOpenFileName(self, "Find Files", f'{self.default_path}/{dirnow}', "*.txt, *.log")
 
-        if not mfile:
+        if not mfile: # if nothing was selected, get out
             return
 
 
@@ -125,8 +129,6 @@ class ConfigRecomp():
                 # this get content lines and their position
                 alllines = [line.rstrip() for line in f]
                 lines = [line for line in alllines if line and not line.startswith('#')]
-                # self.ui = Ui_MainWindow()
-                # self.ui.setupUi(self)
                 self.ui.usbPort.setValue(int((lines[1].split())[2]))
                 self.recordlength = int(lines[2].split()[1])
 
@@ -282,7 +284,7 @@ class ConfigRecomp():
 
         try:
 
-            with open("/etc/wavedump/WaveDumpConfig.txt", "r+") as f:
+            with open(self.standard_config_file, "r+") as f:
                 # this get content lines and their position
                 alllines = [[pos, line.rstrip()] for pos, line in enumerate(f)]
                 lines = [[line[0], line[1]] for line in alllines if line[1] and not line[1].startswith('#')]

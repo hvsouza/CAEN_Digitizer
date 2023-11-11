@@ -7,3 +7,4 @@ move_files/build-move_files-Desktop_Qt_5_GCC_64bit-Release/*
 
 pythonQt/__pycache__/
 pythonQt/.state
+pythonQt/.devices

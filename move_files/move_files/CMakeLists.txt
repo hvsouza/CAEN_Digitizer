@@ -20,6 +20,11 @@ set(PROJECT_SOURCES
         mainwindow.h
         mainwindow.ui
         about.ui
+        add_dev_channel_map.ui
+        del_dev_channel_map.ui
+        channel_map.ui
+        run_log.ui
+        dialog_runlog.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
