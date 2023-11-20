@@ -134,6 +134,8 @@ class RegisterWritter():
 
     def update_register_list(self):
         currentRegToWrite = self.regui.registers_field.toPlainText().split('\n')
+        if currentRegToWrite == ['']:
+            currentRegToWrite = []
         idx_reference = 0
         if self.place_holder_coincidence_reg in currentRegToWrite:
             idx_reference = currentRegToWrite.index(self.place_holder_coincidence_reg)
@@ -151,6 +153,8 @@ class RegisterWritter():
     def read_register_list(self):
         currentRegToWrite = self.regui.registers_field.toPlainText().split('\n')
         self.register_commands = currentRegToWrite
+        if self.register_commands == ['']:
+            self.register_commands = []
 
 
     def load_register(self, currentRegWritten):
