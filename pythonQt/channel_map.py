@@ -270,6 +270,6 @@ class ChannelMapper():
                 v.removeItem(0) # it will realocate to zero!
             v.insertItem(0, '')
             for i, dev in enumerate(self.alldevs):
-                v.insertItem(i+2, dev)
+                v.insertItem(i+1, dev)
 
             v.setCurrentText(tmpdev)
