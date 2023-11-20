@@ -86,7 +86,7 @@ class ConfigRecomp():
             QMessageBox.warning(self, "WARNING!!!",f"Time duration and sampling rate are not compatible!\nRecord length set to {self.recordsaved}\nCorresponding to {ret} ns")
 
     def pressSet(self):
-        self.writeConfigFile(True)
+        self.writeConfigFile(fromSetConfig=True)
 
 
 
@@ -196,9 +196,9 @@ class ConfigRecomp():
         except IOError:
             QMessageBox.critical(self, "ERROR!", "Config. file not opened!")
             return
-        self.writeConfigFile(False)
+        self.writeConfigFile(fromSetConfig=False)
 
-    def writeConfigFile(self, fromConfig):
+    def writeConfigFile(self, fromSetConfig):
 
         enabled_ch = [ False for i in range(self.nchannels) ]
         selfTrigger_ch = [ False for i in range(self.nchannels) ]
@@ -229,24 +229,40 @@ class ConfigRecomp():
 
         self.getRecordLength()
 
+        config_field = [""]*15
+        config_field[0] = '[COMMON]'
+        config_field[1] = 'OPEN USB'
+        config_field[2] = 'RECORD_LENGTH'
+        config_field[3] = 'DECIMATION_FACTOR'
+        config_field[4] = 'POST_TRIGGER'
+        config_field[5] = 'PULSE_POLARITY'
+        config_field[6] = 'EXTERNAL_TRIGGER'
+        config_field[7] = 'FPIO_LEVEL'
+        config_field[8] = 'OUTPUT_FILE_FORMAT'
+        config_field[9] = 'OUTPUT_FILE_HEADER'
+        config_field[10] = 'TEST_PATTERN'
+        config_field[11] = 'ENABLE_INPUT'
+        config_field[12] = 'BASELINE_LEVEL'
+        config_field[13] = 'TRIGGER_THRESHOLD'
+        config_field[14] = 'CHANNEL_TRIGGER'
+
+
         replace = [""]*15
-        replace[0] = f"[COMMON]"
-        replace[1] = f'OPEN USB {usbport} 0'
-        replace[2] = f'RECORD_LENGTH  {self.recordlength}'
-        replace[3] = f'DECIMATION_FACTOR 1'
-        replace[4] = f'POST_TRIGGER  {self.ui.postTrigger.text()}'
-        replace[5] = f'PULSE_POLARITY  {pulse_polarity}'
-        replace[6] = f'EXTERNAL_TRIGGER  {externalTrigger}'
-        replace[7] = f'FPIO_LEVEL  {pulsetype}'
-        replace[8] = f'OUTPUT_FILE_FORMAT  {datatype}'
-        replace[9] = f'OUTPUT_FILE_HEADER  YES'
-        replace[10] = f'TEST_PATTERN  NO'
-        replace[11] = f'ENABLE_INPUT  NO'
-        replace[12] = f'BASELINE_LEVEL  10'
-        replace[13] = f'TRIGGER_THRESHOLD  100'
-        replace[14] = f'CHANNEL_TRIGGER  DISABLED'
-
-
+        replace[0]  = f'{config_field[0]}'
+        replace[1]  = f'{config_field[1]} {usbport} 0'
+        replace[2]  = f'{config_field[2]}  {self.recordlength}'
+        replace[3]  = f'{config_field[3]} 1'
+        replace[4]  = f'{config_field[4]}  {self.ui.postTrigger.text()}'
+        replace[5]  = f'{config_field[5]}  {pulse_polarity}'
+        replace[6]  = f'{config_field[6]}  {externalTrigger}'
+        replace[7]  = f'{config_field[7]}  {pulsetype}'
+        replace[8]  = f'{config_field[8]}  {datatype}'
+        replace[9]  = f'{config_field[9]}  YES'
+        replace[10] = f'{config_field[10]}  NO'
+        replace[11] = f'{config_field[11]}  NO'
+        replace[12] = f'{config_field[12]}  10'
+        replace[13] = f'{config_field[13]}  100'
+        replace[14] = f'{config_field[14]}  DISABLED'
         replace_ch = []
 
         basenow = [0]*self.nchannels
@@ -286,40 +302,56 @@ class ConfigRecomp():
 
             with open(self.standard_config_file, "r+") as f:
                 # this get content lines and their position
-                alllines = [[pos, line.rstrip()] for pos, line in enumerate(f)]
-                lines = [[line[0], line[1]] for line in alllines if line[1] and not line[1].startswith('#')]
+                alllines = [line.rstrip() for line in f]
 
 
-                # This for is only for searching user 'register' configuration that might be changed manually
-                self.register_command = []
-                for i, [pos,line] in enumerate(lines):
-                    if alllines[pos][1].startswith(("WRITE_REGISTER", "ADDRESS", "DATA", "MASK")):
-                        self.register_command.append(alllines[pos][1])
+                # Clean up registers, because we main increase or decrease those.
+                # Keep old self.register_commands or update when reading config file
+                register_command = []
+                tmplines = []
+                for i, line in enumerate(alllines):
+                    if line.startswith(("WRITE_REGISTER", "ADDRESS", "DATA", "MASK")) or line.startswith(self.place_holder_coincidence_reg):
+                        register_command.append(line)
+                    else:
+                        tmplines.append(line)
 
-                for idx, regcmd in enumerate(self.register_command):
-                    if regcmd != "":
-                        replace.insert(11+idx, regcmd)
+                alllines  = tmplines
+                lines = [line for line in alllines if line and not line.startswith('#')]
 
+                if not fromSetConfig:
+                    self.load_register(register_command)
+
+                # add again registers
+                idx_registers = alllines.index(self.example_reg_reference) + 1
+                for reg in self.register_commands:
+                    
+                    alllines.insert(idx_registers, reg)
+                    idx_registers+=1
 
                 # replace the common structure of the file
-                for i, (rep,[pos,line]) in enumerate(zip(replace,lines)):
-                    alllines[pos][1] = rep
+                idxstart = 0
+                for rep, cfield in zip(replace, config_field):
+                    for i, line in enumerate(alllines[idxstart:]):
+                        if line.startswith(cfield):
+                            alllines[i+idxstart] = rep
+                            idxstart = i+idxstart
+                            break
 
                 # search for the calling of the channel '[x]', keep whatwever is written there
                 # this is good to keep something such as '[0] # detector 2'
                 firstpos = 0
                 for i in range(self.nchannels):
-                    for [pos,line] in alllines:
+                    for j, line in enumerate(alllines):
                         if line.startswith(replace_ch[i][0]):
                             if i == 0:
-                                firstpos = pos
+                                firstpos = j
                             replace_ch[i][0] = line
 
-                if firstpos == 0: firstpos = pos
+                # if firstpos == 0: firstpos = pos
                 f.seek(0)
                 f.truncate(0)
-                for [pos,line] in alllines:
-                    if pos < firstpos:
+                for i, line in enumerate(alllines):
+                    if i < firstpos:
                         f.write(f'{line}\n')
 
                 for rep in replace_ch:
@@ -331,7 +363,7 @@ class ConfigRecomp():
             QMessageBox.critical(self, "ERROR!", "Config. file not opened!")
 
         message = f'Trigger type: {triggertype}\nRecord length: {self.recordsaved} pts\nPulse polarity: {pulse_polarity}\nFile type: {datatype}'
-        if fromConfig:
+        if fromSetConfig:
             message = message + "\nClick 'Ok' and reload wavedump (shift+r)"
             QMessageBox.about(self, "", message)
 

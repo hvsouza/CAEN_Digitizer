@@ -19,6 +19,8 @@ from ui_channel_map import Ui_ChannelMap
 from ui_add_dev_channel_map import Ui_AddDev
 from ui_del_dev_channel_map import Ui_DelDev
 from ui_dialog_runlog import Ui_Dialog_RunLog
+from ui_coincidence_trigger import Ui_CoincTrigger
+from ui_register import Ui_Register
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox, QFileDialog
@@ -28,13 +30,15 @@ from PyQt5.QtGui import QIcon
 from config_and_recompile import ConfigRecomp
 from channel_map import ChannelMapper
 from run_log import RunLogger
+from register_write import RegisterWritter
+
 from itertools import groupby
 
 import subprocess as sp
 
 from difflib import Differ
 
-class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger):
+class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, RegisterWritter):
     def __init__(self,parent=None):
         super(MainWindow, self).__init__()
 
@@ -169,7 +173,6 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger):
 
         self.ui.FileTypeSet.currentTextChanged.connect(self.changeFormat)
         self.ui.externaltrigger.stateChanged.connect(self.checkExternalTrigger)
-        self.register_command = ""
 
 
         self.About = QtWidgets.QMainWindow()
@@ -250,6 +253,69 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger):
         self.DelDev.setWindowIcon(QIcon(f"{self.codepath}/.repo_img/icon_GUI.png"))
         self.deldevui.delb.clicked.connect(self.delDeviceToMap)
 
+        # Run log Widget setup
+        self.CoincTrigger = QtWidgets.QMainWindow()
+        self.ctui = Ui_CoincTrigger()
+        self.ctui.setupUi(self.CoincTrigger)
+        self.CoincTrigger.setWindowModality(QtCore.Qt.WindowModality.WindowModal) # prevent window to lose focus (close - open)
+        self.CoincTrigger.setWindowIcon(QIcon(f"{self.codepath}/.repo_img/icon_GUI.png"))
+
+        self.ui.actionCoincidence.triggered.connect(lambda: self.CoincTrigger.show())
+        self.coincEnabledCBox = [
+            self.ctui.enable0,
+            self.ctui.enable1,
+            self.ctui.enable2,
+            self.ctui.enable3,
+            self.ctui.enable4,
+            self.ctui.enable5,
+            self.ctui.enable6,
+            self.ctui.enable7
+        ]
+        self.triggerTypePair = [
+            self.ctui.type01,
+            self.ctui.type23,
+            self.ctui.type45,
+            self.ctui.type67
+        ]
+        self.coincEnabledCBox[0].stateChanged.connect(lambda: self.controlComboBox(idxself=0, idxpair=1, idxcombo=0))
+        self.coincEnabledCBox[1].stateChanged.connect(lambda: self.controlComboBox(idxself=1, idxpair=0, idxcombo=0))
+        self.coincEnabledCBox[2].stateChanged.connect(lambda: self.controlComboBox(idxself=2, idxpair=3, idxcombo=1))
+        self.coincEnabledCBox[3].stateChanged.connect(lambda: self.controlComboBox(idxself=3, idxpair=2, idxcombo=1))
+        self.coincEnabledCBox[4].stateChanged.connect(lambda: self.controlComboBox(idxself=4, idxpair=5, idxcombo=2))
+        self.coincEnabledCBox[5].stateChanged.connect(lambda: self.controlComboBox(idxself=5, idxpair=4, idxcombo=2))
+        self.coincEnabledCBox[6].stateChanged.connect(lambda: self.controlComboBox(idxself=6, idxpair=7, idxcombo=3))
+        self.coincEnabledCBox[7].stateChanged.connect(lambda: self.controlComboBox(idxself=7, idxpair=6, idxcombo=3))
+
+        self.coinc_enabled = [False]*self.nchannels
+        self.data_coinc_pair = [0]*(self.nchannels//2)
+        self.place_holder_coincidence_reg = '# End of coincidence trigger'
+        self.example_reg_reference = "# WRITE_REGISTER 1080 45 FFFFFFFF"
+
+        self.ctui.setb.clicked.connect(self.coincidenceSet)
+        self.ctui.clearb.clicked.connect(self.clearAllCoinc)
+        self.ctui.cancelb.clicked.connect(lambda: self.CoincTrigger.close())
+
+        # Register Widget setup
+        self.Register = QtWidgets.QMainWindow()
+        self.regui = Ui_Register()
+        self.regui.setupUi(self.Register)
+        self.Register.setWindowModality(QtCore.Qt.WindowModality.WindowModal) # prevent window to lose focus (close - open)
+        self.Register.setWindowIcon(QIcon(f"{self.codepath}/.repo_img/icon_GUI.png"))
+
+        self.regui.registers_field.setReadOnly(True)
+        self.regui.manual_edit.setChecked(False)
+        self.regui.manual_edit.clicked.connect(self.toggle_manual_edit_reg)
+        self.regui.doneb.clicked.connect(self.closeRegister)
+        self.regui.applyb.clicked.connect(self.add_register)
+
+        self.register_commands = ""
+
+
+        self.majority_level = 0
+        self.self_trigger_time = 1
+        self.coincidenceWindow = 1
+
+        self.ui.actionRegister.triggered.connect(lambda: self.Register.show())
 
         # Debug mode button
         self.ui.debugModeBox.toggled.connect(self.setDebugMode)
@@ -269,6 +335,8 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger):
         self.RunLog.close()
         self.ChannelMap.close()
         self.AddDev.close()
+        self.Register.close()
+        self.CoincTrigger.close()
 
     def showAbout(self):
         self.About.show()

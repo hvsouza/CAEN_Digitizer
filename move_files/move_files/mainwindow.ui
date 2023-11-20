@@ -22,6 +22,12 @@
     <height>530</height>
    </size>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>509</width>
+    <height>530</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -3067,6 +3073,7 @@ The password is the same you use to login the computer.</string>
      </property>
      <addaction name="actionAcqusition_only"/>
      <addaction name="actionAcq_and_TRG_OUT"/>
+     <addaction name="actionCoincidence"/>
     </widget>
     <widget class="QMenu" name="menuSetup">
      <property name="title">
@@ -3086,6 +3093,7 @@ The password is the same you use to login the computer.</string>
     <addaction name="menuTrigger_type"/>
     <addaction name="menuSetup"/>
     <addaction name="menuDebug_mode"/>
+    <addaction name="actionRegister"/>
    </widget>
    <widget class="QMenu" name="menu_info">
     <property name="title">
@@ -3166,6 +3174,16 @@ The password is the same you use to login the computer.</string>
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check will enable debug mode.&lt;/p&gt;&lt;p&gt;Instead of moving files, it will only copy attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </action>
+  <action name="actionRegister">
+   <property name="text">
+    <string>Register</string>
+   </property>
+  </action>
+  <action name="actionCoincidence">
+   <property name="text">
+    <string>Coincidence</string>
    </property>
   </action>
  </widget>

@@ -25,6 +25,8 @@ set(PROJECT_SOURCES
         channel_map.ui
         run_log.ui
         dialog_runlog.ui
+        coincidence_trigger.ui
+        register.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
