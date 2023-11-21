@@ -158,11 +158,12 @@ class ChannelMapper():
         if newdev.split():
             if newdev.capitalize() in self.alldevs_cap:
                 QMessageBox.warning(self, "WARNING!!!", "Device already exist! Check capitalization.")
-            self.alldevs.add(newdev)
-            self.alldevs_cap.add(newdev.capitalize())
-            self.alldevs = sorted(self.alldevs)
-            self.fillItemsMap()
-            self.adddevui.devname.setText('')
+            else:
+                self.alldevs.add(newdev)
+                self.alldevs_cap.add(newdev.capitalize())
+                self.alldevs = sorted(self.alldevs)
+                self.fillItemsMap()
+                self.adddevui.devname.setText('')
         self.AddDev.close()
         self.updateMapListFile()
         self.showChannelMap()
@@ -213,7 +214,7 @@ class ChannelMapper():
         if not all_empty:
             for i, (chidx, name) in enumerate(zip(chtowrite,nametowrite)):
                 if not name.split():
-                    QMessageBox.warning(self, "WARNING!!!", f"Ch.{chidx} has no name set?")
+                    QMessageBox.warning(self, "WARNING!!!", f"Ch.{chidx} has no name set")
         else:
             return
 
