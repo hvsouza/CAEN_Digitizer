@@ -87,6 +87,7 @@ class ConfigRecomp():
 
     def pressSet(self):
         self.writeConfigFile(fromSetConfig=True)
+        self.showChannelMap()
 
 
 
