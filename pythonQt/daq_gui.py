@@ -1,7 +1,7 @@
 #!/bin/python3
 ## ________________________________________ ##
 ## Author: Henrique Souza
-## Filename: move_files.py
+## Filename: daq_gui.py
 ## Created: 2022
 ## ________________________________________ ##
 

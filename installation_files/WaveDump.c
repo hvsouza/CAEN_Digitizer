@@ -2195,7 +2195,7 @@ InterruptTimeout:
             if (Nb == 0)
                 if (ret == CAEN_DGTZ_Timeout) printf ("Timeout...\n"); else printf("No data...\n");
             else if (WDrun.ContinuousWrite)
-                printf("Reading at %.2f MB/s (Trg Rate: %.2f Hz). Acquired %d/%d waveforms\n", (float)Nb/((float)ElapsedTime*1048.576f), (float)Ne*1000.0f/(float)ElapsedTime, max_events, mymaximum);
+                printf("Reading at %.2f MB/s (Trg Rate: %.2f Hz). Acquired %lu/%lu waveforms\n", (float)Nb/((float)ElapsedTime*1048.576f), (float)Ne*1000.0f/(float)ElapsedTime, max_events, mymaximum);
             else
                 printf("Reading at %.2f MB/s (Trg Rate: %.2f Hz)\n", (float)Nb/((float)ElapsedTime*1048.576f), (float)Ne*1000.0f/(float)ElapsedTime);
             nCycles= 0;
