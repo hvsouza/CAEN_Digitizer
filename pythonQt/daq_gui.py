@@ -445,7 +445,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
         os.system(f'mkdir -p {self.default_path}')
     def getDir(self):
         dirnow = self.ui.primary_name.text()
-        directory = QtWidgets.QFileDialog.getExistingDirectory(self, "Find Files", f'{self.default_path}/{dirnow}')
+        directory = QtWidgets.QFileDialog.getExistingDirectory(self, "Find Files", f'{self.default_path}/{dirnow}/../')
         tocheck = self.default_path[:-1]
         if directory and directory != tocheck:
             if directory.startswith(tocheck):
