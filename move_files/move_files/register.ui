@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>470</width>
+    <width>602</width>
     <height>420</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>470</width>
+    <width>602</width>
     <height>420</height>
    </size>
   </property>
@@ -49,6 +49,20 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="setb">
+            <property name="text">
+             <string>Set</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="clearb">
+            <property name="text">
+             <string>Clear all</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="doneb">
@@ -149,7 +163,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>470</width>
+     <width>602</width>
      <height>24</height>
     </rect>
    </property>

@@ -72,7 +72,7 @@ class ChannelMapper():
 
     def loadSearchMap(self):
         dirnow = self.ui.primary_name.text()
-        mfile, mfilter = QtWidgets.QFileDialog.getOpenFileName(self, "Find Files", f'{self.default_path}/{dirnow}', "*.log")
+        mfile, mfilter = QtWidgets.QFileDialog.getOpenFileName(self, "Find Files", f'{self.default_path}/{dirnow}', "*.csv")
         self.showChannelMap()
 
         if not mfile: # if nothing was selected, get out
@@ -196,9 +196,9 @@ class ChannelMapper():
 
     def saveChannelMap(self, pathconfig):
 
-        filename = 'channelmap.log'
+        filename = 'channelmap.csv'
         if not self.isprimary:
-            filename = 'channelmap_2.log'
+            filename = 'channelmap_2.csv'
 
         fchmap = f'{pathconfig}/{filename}'
         nametowrite = []

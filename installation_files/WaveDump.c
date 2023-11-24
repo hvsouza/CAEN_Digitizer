@@ -94,6 +94,12 @@ static char ErrMsg[ERR_DUMMY_LAST][100] = {
 	"Board Failure",									/* ERR_BOARD_FAILURE */
 
 };
+enum LastState
+{
+    afterSingle = 0,  // after single writting it will be set to -1
+    afterContinuous   // after continuous is set to disabled
+
+};
 
 
 #ifndef max
@@ -1257,7 +1263,7 @@ int Set_calibrated_DCO(int handle, int ch, WaveDumpConfig_t *WDcfg, CAEN_DGTZ_Bo
 *   \param   WDcfg:   Pointer to the WaveDumpConfig_t data structure
 *   \param   BoardInfo: structure with the board info
 */
-void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *WDcfg, CAEN_DGTZ_BoardInfo_t BoardInfo, int *askAgain)
+void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *WDcfg, CAEN_DGTZ_BoardInfo_t BoardInfo, int *askAgain, int *last_state)
 {
 
     int c = 0;
@@ -1371,7 +1377,17 @@ void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *W
             if (WDrun->ContinuousWrite)
                 printf("Continuous writing is enabled\n");
             else
+            { // Added by Henrique Souza
+                // If the user stops continuous writting, close the files
+                *last_state = afterContinuous;
+                for (int ch = 0; ch < WDcfg->Nch; ch++) {
+                    if (WDrun->fout[ch]){
+                        fclose(WDrun->fout[ch]);
+                        WDrun->fout[ch]= NULL;
+                    }
+                }
                 printf("Continuous writing is disabled\n");
+            }
             break;
         case 's' :
             if (WDrun->AcqRun == 0) {
@@ -1492,7 +1508,7 @@ void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *W
 *   \param   EventInfo Pointer to the EventInfo data structure
 *   \param   Event Pointer to the Event to write
 */
-int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_EventInfo_t *EventInfo, void *Event, int *after_max, uint64_t *max_events, uint64_t mymaximum)
+int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_EventInfo_t *EventInfo, void *Event, int *last_state, uint64_t *max_events, uint64_t mymaximum)
 {
     int ch, j, ns;
     CAEN_DGTZ_UINT16_EVENT_t  *Event16 = NULL;
@@ -1528,18 +1544,17 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
             BinHeader[5] = EventInfo->TriggerTimeTag;
             /* Added by Henrique Souza */
             /* This allows to keep implementing the file, but not after moving it */
-            if (!WDrun->fout[ch] || (WDrun->SingleWrite && *after_max == 0)) { // Added by Henrique Souza
+            if (!WDrun->fout[ch]) { // Added by Henrique Souza
                 char fname[100];
                 sprintf(fname, "%swave%d.dat", path,ch);
-                if(WDrun->ContinuousWrite && *after_max == 1){
-                    if ((WDrun->fout[ch] = fopen(fname, "ab")) == NULL)
+                if(WDrun->SingleWrite || (*last_state == afterSingle)){ // if it is single write or if it is after a single
+                    if ((WDrun->fout[ch] = fopen(fname, "wb")) == NULL)
                         return -1;
                 }
-                else{
-                    if ((WDrun->fout[ch] = fopen(fname, "wb")) == NULL)
+                else{ // othewise, it should append the file
+                    if ((WDrun->fout[ch] = fopen(fname, "ab")) == NULL)
                       return -1;
                 }
-                if(ch == nchannels-1) *after_max = 0;
             }
                 // if ((WDrun->fout[ch] = fopen(fname, "wb")) == NULL)
                 // return -1;
@@ -1584,18 +1599,17 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
             // Ascii file format
             /* Added by Henrique Souza */
             /* This allows to keep implementing the file, but not after moving it */
-            if (!WDrun->fout[ch] || (WDrun->SingleWrite && *after_max == 0)) { // Added by Henrique Souza
+            if (!WDrun->fout[ch]) { // Added by Henrique Souza
                 char fname[100];
                 sprintf(fname, "%swave%d.txt", path,ch);
-                if(WDrun->ContinuousWrite && *after_max == 1){
-                    if ((WDrun->fout[ch] = fopen(fname, "a")) == NULL)
+                if(WDrun->SingleWrite || (*last_state == afterSingle)){ // if it is single write or if it is after a single
+                    if ((WDrun->fout[ch] = fopen(fname, "w")) == NULL)
                         return -1;
                 }
                 else{
-                    if ((WDrun->fout[ch] = fopen(fname, "w")) == NULL)
+                    if ((WDrun->fout[ch] = fopen(fname, "a")) == NULL)
                       return -1;
                 }
-                if(ch == nchannels-1) *after_max = 0;
             }
                 // if ((WDrun->fout[ch] = fopen(fname, "wb")) == NULL)
                 // return -1;
@@ -1639,13 +1653,20 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
             printf("Continuous writing is disabled\n\n\n\n\n\n\n\n\n\n");
             *max_events = 0;
             WDrun->ContinuousWrite = 0;
-            WDrun->SingleWrite = 1;
-            *after_max = 1;
+            *last_state = afterContinuous;
+
+            fclose(WDrun->fout[ch]);
+            WDrun->fout[ch]= NULL;
+        }
+        else{
+            // cannot use x++
+            *max_events = *max_events+1; // Added by Henrique Souza
         }
         /* End of addition */
         if (WDrun->SingleWrite) {
             fclose(WDrun->fout[ch]);
             WDrun->fout[ch]= NULL;
+            *last_state = afterSingle;
         }
     }
     return 0;
@@ -1806,7 +1827,7 @@ int main(int argc, char *argv[])
     uint64_t CurrentTime, PrevRateTime, ElapsedTime;
     uint64_t max_events = 0; // Added by Henrique Souza
     uint64_t mymaximum = 10000;
-    int after_max = 0; // Added by Henrique Souza
+    int last_state = afterSingle; // Added by Henrique Souza
     int setDefault = 0;
     int askAgain = 1;
 
@@ -2094,7 +2115,7 @@ Restart:
     /* *************************************************************************************** */
     while(!WDrun.Quit) {
         // Check for keyboard commands (key pressed)
-        CheckKeyboardCommands(handle, &WDrun, &WDcfg, BoardInfo, &askAgain);
+        CheckKeyboardCommands(handle, &WDrun, &WDcfg, BoardInfo, &askAgain, &last_state);
         if (WDrun.Restart) {
             CAEN_DGTZ_SWStopAcquisition(handle);
             CAEN_DGTZ_FreeReadoutBuffer(&buffer);
@@ -2269,7 +2290,7 @@ InterruptTimeout:
                 if (WDrun.ContinuousWrite || WDrun.SingleWrite) {
                     // Note: use a thread here to allow parallel readout and file writing
                     if(WDrun.SingleWrite){ // Added by Henrique Souza
-                        after_max = 0;
+                        last_state = afterSingle;
                     }
                     else{
                         if(max_events == 0 && askAgain == 1){
@@ -2294,10 +2315,10 @@ InterruptTimeout:
                         ret = WriteOutputFilesx742(&WDcfg, &WDrun, &EventInfo, Event742);
                     }
                     else if (WDcfg.Nbit == 8) {
-                        ret = WriteOutputFiles(&WDcfg, &WDrun, &EventInfo, Event8, &after_max, &max_events, mymaximum);
+                        ret = WriteOutputFiles(&WDcfg, &WDrun, &EventInfo, Event8, &last_state, &max_events, mymaximum);
                     }
                     else {
-                        ret = WriteOutputFiles(&WDcfg, &WDrun, &EventInfo, Event16, &after_max, &max_events, mymaximum);
+                        ret = WriteOutputFiles(&WDcfg, &WDrun, &EventInfo, Event16, &last_state, &max_events, mymaximum);
                     }
                     if (ret) {
                         ErrCode = ERR_OUTFILE_WRITE;
@@ -2305,11 +2326,10 @@ InterruptTimeout:
                     }
                     if (WDrun.SingleWrite) {
                         printf("Single Event saved to output files\n");
-                        max_events = -1; // Added by Henrique Souza
+                        max_events = 0; // Added by Henrique Souza
                         WDrun.SingleWrite = 0;
                     }
 
-                    max_events++; // Added by Henrique Souza
                 }
 
                 /* Plot Waveforms */

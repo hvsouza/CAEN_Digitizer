@@ -49,7 +49,7 @@ class RunLogger():
 
         texttowrite = self.rlui.runlogfield.toPlainText() # get whatever is already there...
 
-        if not os.path.exists(frunlog): # if file files does not exist, if subrun is 0, fine
+        if not os.path.exists(frunlog): # if file does not exist, if subrun is 0, fine
             if self.subrun[0] == 0 or finishingrun:
                 if self.keep_ask_log:
                     if self.subrun[0] != 0: # so when it is finishing a run and there was data transfered

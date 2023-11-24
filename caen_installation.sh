@@ -147,8 +147,8 @@ cd src
 cp $ROOTPATH/$SOURCEFILES/WaveDump.c .
 linenumber_factor=$(eval "sed -n '/int factor/=' WaveDump.c") # search line with pathern
 sed -i "$linenumber_factor d" WaveDump.c
-sed -i "$linenumber_factor i \ \ \ \ \ \ \ \ int factor = $int_factor; \/\/ Added by Henrique Souza" WaveDump.c
-cp $ROOTPATH/$SOURCEFILES/WDconfig.h .
+sed -i "$linenumber_factor i \ \ \ \ \ \ \ \ int factor = $int_factor; \/\/ Added by Henrique Souza\r" WaveDump.c
+cp $ROOTPATH/$SOURCEFILES/WDconfig.h ../include/
 cd ..
 
 echo "Installing gnuplot"

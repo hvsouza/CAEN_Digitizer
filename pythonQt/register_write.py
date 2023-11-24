@@ -69,6 +69,7 @@ class RegisterWritter():
         self.update_register_list()
         self.writeConfigFile(fromSetConfig=True)
         self.CoincTrigger.close()
+        self.CoincTrigger.show()
 
 
 
@@ -152,18 +153,18 @@ class RegisterWritter():
 
     def read_register_list(self):
         currentRegToWrite = self.regui.registers_field.toPlainText().split('\n')
+        currentRegToWrite = [c for c in currentRegToWrite if c != ''] # remove rogue returns
         self.register_commands = currentRegToWrite
-        if self.register_commands == ['']:
-            self.register_commands = []
+        self.fill_plain_reg(currentRegToWrite) # in case there was rogue returns
 
 
     def load_register(self, currentRegWritten):
         self.register_commands = currentRegWritten
         self.fill_plain_reg(currentRegWritten)
 
-    def fill_plain_reg(self, plaintext):
+    def fill_plain_reg(self, list_of_registers):
         
-        plaintext = '\n'.join(plaintext)
+        plaintext = '\n'.join(list_of_registers)
         self.regui.registers_field.setPlainText(plaintext)
 
 
@@ -204,6 +205,7 @@ class RegisterWritter():
         data = self.regui.data.text()
         mask = self.regui.mask.text()
         cmd = f'WRITE_REGISTER {address} {data} {mask}'
+        self.read_register_list()
         self.register_commands.append(cmd)
         self.fill_plain_reg(self.register_commands)
         self.regui.address.setText('')
@@ -224,14 +226,21 @@ class RegisterWritter():
             ret = QMessageBox.question(self, "", "Also clear current register commands for coincidence?", QMessageBox.Yes, QMessageBox.No)
             if ret == QMessageBox.Yes:
                 self.coincidenceSet() # as all fields are reset, it will right nothing
-            self.CoincTrigger.close()
-            self.CoincTrigger.show()
 
 
     def closeRegister(self):
         self.read_register_list()
         self.writeConfigFile(fromSetConfig=True)
         self.Register.close()
+
+    def setRegister(self):
+        self.closeRegister()
+        self.Register.show()
+
+
+    def clearRegister(self):
+        self.regui.registers_field.setPlainText('')
+        self.read_register_list()
 
 def closeRegister(self):
     self.loadConfig

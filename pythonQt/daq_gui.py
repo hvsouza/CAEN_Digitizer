@@ -38,6 +38,8 @@ import subprocess as sp
 
 from difflib import Differ
 
+import numpy as np
+
 class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, RegisterWritter):
     def __init__(self,parent=None):
         super(MainWindow, self).__init__()
@@ -306,6 +308,8 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
         self.regui.manual_edit.setChecked(False)
         self.regui.manual_edit.clicked.connect(self.toggle_manual_edit_reg)
         self.regui.doneb.clicked.connect(self.closeRegister)
+        self.regui.setb.clicked.connect(self.setRegister)
+        self.regui.clearb.clicked.connect(self.clearRegister)
         self.regui.applyb.clicked.connect(self.add_register)
 
         self.register_commands = ""
@@ -672,6 +676,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
         errorMessage = ""
         errorMessage2 = ""
         messageNpts = ""
+        messageOpenFile = ""
 
         actual_pts_saved = []
         total_events = []
@@ -680,14 +685,15 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
         isCritical = False
         for i, _oldname in enumerate(oldname):
             datacheck = datapath+f'{_oldname}{myformat}'
-            transfercheck = f'{mpath}{folder}/{newname[i]}'
+            transfercheck = f'{mpath}{folder}/{newname[i]}' # the new data will have this name
+            # check if files that are going to be transfered are there
             fileIsThere[i] = os.path.exists(datacheck)
+            # check there data will not be overwritten
             FileNotThereYet[i] = not os.path.exists(transfercheck)
             if self.DEBUGMODE:
-                cmdmv[i] = f'cp --attributes-only {self.standard_data_origin}{_oldname}{myformat} {mpath}{folder}/{newname[i]}'
+                cmdmv[i] = f'cp --attributes-only {self.standard_data_origin}{_oldname}{myformat} {transfercheck}'
             else:
-                cmdmv[i] = f'mv -n {self.standard_data_origin}{_oldname}{myformat} {mpath}{folder}/{newname[i]}'
-
+                cmdmv[i] = f'mv -n {self.standard_data_origin}{_oldname}{myformat} {transfercheck}'
 
 
             if self.enable_ch[i].isChecked() and fileIsThere[i] is False:
@@ -695,21 +701,30 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
             elif self.enable_ch[i].isChecked() is False and fileIsThere[i] is False:
                 fileIsThere[i] = None
             elif self.enable_ch[i].isChecked() and FileNotThereYet[i] is False:
-                errorMessage2 = f'{errorMessage2}The file \'{mpath}{folder}/{newname[i]} \'already exist, please check the run and subrun number!\n'
+                errorMessage2 = f'{errorMessage2}The file \'{transfercheck} \'already exist, please check the run and subrun number!\n'
             elif self.enable_ch[i].isChecked():
-                if myformat == ".dat":
-                    _actual_pts_saved, _total_events = self.getInfoBinary(datacheck)
+                pids = self.checkFileIsOpen(datacheck)
+                if pids['INUSE'] == False:
+                    if myformat == ".dat":
+                        _actual_pts_saved, _total_events = self.getInfoBinary(datacheck)
+                    else:
+                        _actual_pts_saved, _total_events = self.getInfoASCII(datacheck)
+                    actual_pts_saved.append(_actual_pts_saved)
+                    total_events.append(_total_events)
+                    idx_total_events.append(i)
+                    if actual_pts_saved[aux] != self.recordsaved:
+                        messageNpts = f'{messageNpts}Ch{i} has {actual_pts_saved[aux]} pts per waveforms.\n'
+                    if len(set(actual_pts_saved))!=1:
+                        messageNpts = f'{messageNpts}Number of pts per waveform are not equal in all files!!!\n\nFiles were not transfered.'
+                        isCritical = True
+                    aux += 1
                 else:
-                    _actual_pts_saved, _total_events = self.getInfoASCII(datacheck)
-                actual_pts_saved.append(_actual_pts_saved)
-                total_events.append(_total_events)
-                idx_total_events.append(i)
-                if actual_pts_saved[aux] != self.recordsaved:
-                    messageNpts = f'{messageNpts}Ch{i} has {actual_pts_saved[aux]} pts per waveforms.\n'
-                if len(set(actual_pts_saved))!=1:
-                    messageNpts = f'{messageNpts}Number of pts per waveform are not equal in all files!!!\n\nFiles were not transfered.'
-                    isCritical = True
-                aux += 1
+                    messageOpenFile = f"The file {datacheck} is open, by these process {pids['PID']}, command: {pids['COMMAND']}"
+                    break
+
+        if messageOpenFile != "":
+            QMessageBox.critical(self, "ERROR!", messageOpenFile)
+            return False
 
         errorMessage = errorMessage + "Please, check what was the problem with the above files!"
         if False in fileIsThere:
@@ -790,6 +805,28 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
 
     def setDebugMode(self):
         self.DEBUGMODE = self.ui.debugModeBox.isChecked()
+
+    def checkFileIsOpen(self, data):
+        output = sp.check_output(f"fuser --verbose {data}; exit 0",shell=True, stderr=sp.STDOUT).decode()
+        if output == '':
+            return {'INUSE':False}
+
+        output = output.split()
+        if output[:4] != ['USER', 'PID', 'ACCESS', 'COMMAND']:
+            QMessageBox.critical(self, 'ERROR!!!', "Files might be opened, but command line did not behave as expected. Need some debug")
+            return {'INUSE', False}
+
+        keys = output[:4] # take 4 first as keys
+        output = output[5:] # skip file name, take all the rest
+        splitsize = len(output)/4
+        output = np.array(np.array_split(output,splitsize))
+        ret = {}
+        for i, k in enumerate(keys):
+            ret[k] = output[:,i]
+
+        ret['INUSE'] = True
+        return ret
+
 
 
 
