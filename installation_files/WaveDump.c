@@ -1655,7 +1655,7 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
             fclose(WDrun->fout[ch]);
             WDrun->fout[ch]= NULL;
         }
-        else{
+        else if(ch == nchannels-1){
             // cannot use x++
             *max_events = *max_events+1; // Added by Henrique Souza
         }
