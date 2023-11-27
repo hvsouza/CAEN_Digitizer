@@ -704,27 +704,27 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
                 errorMessage2 = f'{errorMessage2}The file \'{transfercheck} \'already exist, please check the run and subrun number!\n'
             elif self.enable_ch[i].isChecked():
                 pids = self.checkFileIsOpen(datacheck)
-                if pids['INUSE'] == False:
-                    if myformat == ".dat":
-                        _actual_pts_saved, _total_events = self.getInfoBinary(datacheck)
-                    else:
-                        _actual_pts_saved, _total_events = self.getInfoASCII(datacheck)
-                    actual_pts_saved.append(_actual_pts_saved)
-                    total_events.append(_total_events)
-                    idx_total_events.append(i)
-                    if actual_pts_saved[aux] != self.recordsaved:
-                        messageNpts = f'{messageNpts}Ch{i} has {actual_pts_saved[aux]} pts per waveforms.\n'
-                    if len(set(actual_pts_saved))!=1:
-                        messageNpts = f'{messageNpts}Number of pts per waveform are not equal in all files!!!\n\nFiles were not transfered.'
-                        isCritical = True
-                    aux += 1
+                if pids['INUSE'] == True:
+                    messageOpenFile += f"The file {datacheck} is open, by these process {pids['PID']}, command: {pids['COMMAND']}\n"
+                if myformat == ".dat":
+                    _actual_pts_saved, _total_events = self.getInfoBinary(datacheck)
                 else:
-                    messageOpenFile = f"The file {datacheck} is open, by these process {pids['PID']}, command: {pids['COMMAND']}"
-                    break
+                    _actual_pts_saved, _total_events = self.getInfoASCII(datacheck)
+                actual_pts_saved.append(_actual_pts_saved)
+                total_events.append(_total_events)
+                idx_total_events.append(i)
+                if actual_pts_saved[aux] != self.recordsaved:
+                    messageNpts = f'{messageNpts}Ch{i} has {actual_pts_saved[aux]} pts per waveforms.\n'
+                if len(set(actual_pts_saved))!=1:
+                    messageNpts = f'{messageNpts}Number of pts per waveform are not equal in all files!!!\n\nFiles were not transfered.'
+                    isCritical = True
+                aux += 1
 
         if messageOpenFile != "":
-            QMessageBox.critical(self, "ERROR!", messageOpenFile)
-            return False
+            messageOpenFile += "\n\nIgnore this and proceed?\n(You can also close wavedump and then move the files, this is safer)"
+            ignoreOpened = QMessageBox.question(self, "WARNING!!!", messageOpenFile, QMessageBox.Yes, QMessageBox.No)
+            if ignoreOpened == QMessageBox.No:
+                return False
 
         errorMessage = errorMessage + "Please, check what was the problem with the above files!"
         if False in fileIsThere:
