@@ -35,6 +35,10 @@ OPEN USB 0 0
 # RECORD_LENGTH = number of samples in the acquisition window
 RECORD_LENGTH  10000
 
+# CONTINUOUS_WRITTING_MAX = number of waveforms to be saved each time continuous writting is called
+# If continuous writting is set again, it will append CONTINUOUS_WRITTING_MAX to existing file
+CONTINUOUS_WRITTING_MAX 10000
+
 # DECIMATION_FACTOR: ONLY FOR 740 and 724 MODELS. change the decimation factor for the acquisition.
 # options: 1 2 4 8 16 32 64 128
 DECIMATION_FACTOR 1

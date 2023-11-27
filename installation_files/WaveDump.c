@@ -1263,7 +1263,7 @@ int Set_calibrated_DCO(int handle, int ch, WaveDumpConfig_t *WDcfg, CAEN_DGTZ_Bo
 *   \param   WDcfg:   Pointer to the WaveDumpConfig_t data structure
 *   \param   BoardInfo: structure with the board info
 */
-void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *WDcfg, CAEN_DGTZ_BoardInfo_t BoardInfo, int *askAgain, int *last_state)
+void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *WDcfg, CAEN_DGTZ_BoardInfo_t BoardInfo, int *last_state)
 {
 
     int c = 0;
@@ -1307,9 +1307,6 @@ void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *W
         }
     } else {
         switch(c) {
-        case 'k' :
-          *askAgain = 1;
-          break;
         case 'g' :
 			//for boards with >8 channels
 			if ((BoardInfo.FamilyCode == CAEN_DGTZ_XX730_FAMILY_CODE) || (BoardInfo.FamilyCode == CAEN_DGTZ_XX725_FAMILY_CODE) && (WDcfg->Nch > 8))
@@ -1508,7 +1505,7 @@ void CheckKeyboardCommands(int handle, WaveDumpRun_t *WDrun, WaveDumpConfig_t *W
 *   \param   EventInfo Pointer to the EventInfo data structure
 *   \param   Event Pointer to the Event to write
 */
-int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_EventInfo_t *EventInfo, void *Event, int *last_state, uint64_t *max_events, uint64_t mymaximum)
+int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_EventInfo_t *EventInfo, void *Event, int *last_state, uint64_t *max_events)
 {
     int ch, j, ns;
     CAEN_DGTZ_UINT16_EVENT_t  *Event16 = NULL;
@@ -1648,7 +1645,7 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
 
         /* Added by Henrique Souza */
         /* This will save a maximum number of events */
-        if(*max_events == mymaximum-1){
+        if(*max_events == WDcfg->ContinuousMax-1){
             printf("\n\n\n\n\n\n\n\n\n\nEvents have reached the maximum of %lu... \n", *max_events+1);
             printf("Continuous writing is disabled\n\n\n\n\n\n\n\n\n\n");
             *max_events = 0;
@@ -1826,10 +1823,7 @@ int main(int argc, char *argv[])
     int isVMEDevice= 0, MajorNumber;
     uint64_t CurrentTime, PrevRateTime, ElapsedTime;
     uint64_t max_events = 0; // Added by Henrique Souza
-    uint64_t mymaximum = 10000;
     int last_state = afterSingle; // Added by Henrique Souza
-    int setDefault = 0;
-    int askAgain = 1;
 
     int nCycles= 0;
     CAEN_DGTZ_BoardInfo_t       BoardInfo;
@@ -2115,7 +2109,7 @@ Restart:
     /* *************************************************************************************** */
     while(!WDrun.Quit) {
         // Check for keyboard commands (key pressed)
-        CheckKeyboardCommands(handle, &WDrun, &WDcfg, BoardInfo, &askAgain, &last_state);
+        CheckKeyboardCommands(handle, &WDrun, &WDcfg, BoardInfo, &last_state);
         if (WDrun.Restart) {
             CAEN_DGTZ_SWStopAcquisition(handle);
             CAEN_DGTZ_FreeReadoutBuffer(&buffer);
@@ -2216,7 +2210,7 @@ InterruptTimeout:
             if (Nb == 0)
                 if (ret == CAEN_DGTZ_Timeout) printf ("Timeout...\n"); else printf("No data...\n");
             else if (WDrun.ContinuousWrite)
-                printf("Reading at %.2f MB/s (Trg Rate: %.2f Hz). Acquired %lu/%lu waveforms\n", (float)Nb/((float)ElapsedTime*1048.576f), (float)Ne*1000.0f/(float)ElapsedTime, max_events, mymaximum);
+                printf("Reading at %.2f MB/s (Trg Rate: %.2f Hz). Acquired %lu/%lu waveforms\n", (float)Nb/((float)ElapsedTime*1048.576f), (float)Ne*1000.0f/(float)ElapsedTime, max_events, WDcfg.ContinuousMax);
             else
                 printf("Reading at %.2f MB/s (Trg Rate: %.2f Hz)\n", (float)Nb/((float)ElapsedTime*1048.576f), (float)Ne*1000.0f/(float)ElapsedTime);
             nCycles= 0;
@@ -2292,33 +2286,15 @@ InterruptTimeout:
                     if(WDrun.SingleWrite){ // Added by Henrique Souza
                         last_state = afterSingle;
                     }
-                    else{
-                        if(max_events == 0 && askAgain == 1){
-                            char nwaves[12];
-                            printf("\nEnter the number of waveforms desired (Current: %lu):\n",mymaximum);
-                            scanf("%s", nwaves);
-                            sscanf(nwaves, "%lu", &mymaximum);
-                            printf("\nSaving %lu waveforms\n",mymaximum);
-                            /* mymaximum = atoi(mymaximum); */
-                            if (askAgain == 1) {
-                                char yorn[12];
-                                printf("\nMake this value default for this session and ask again only if [k] is pressed? (y/n):\n");
-                                scanf("%s",&yorn);
-                                if(yorn[0] == 'y' || yorn[0] == 'Y'){
-                                    askAgain = 0;
-                                }
-                            }
-                        }
 
-                    }
                     if (BoardInfo.FamilyCode == CAEN_DGTZ_XX742_FAMILY_CODE) {
                         ret = WriteOutputFilesx742(&WDcfg, &WDrun, &EventInfo, Event742);
                     }
                     else if (WDcfg.Nbit == 8) {
-                        ret = WriteOutputFiles(&WDcfg, &WDrun, &EventInfo, Event8, &last_state, &max_events, mymaximum);
+                        ret = WriteOutputFiles(&WDcfg, &WDrun, &EventInfo, Event8, &last_state, &max_events);
                     }
                     else {
-                        ret = WriteOutputFiles(&WDcfg, &WDrun, &EventInfo, Event16, &last_state, &max_events, mymaximum);
+                        ret = WriteOutputFiles(&WDcfg, &WDrun, &EventInfo, Event16, &last_state, &max_events);
                     }
                     if (ret) {
                         ErrCode = ERR_OUTFILE_WRITE;
