@@ -328,6 +328,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
         self.getEnabledAndTrigger()
 
         self.recordlength = 0
+        self.nwvfs = 100000
         self.getRecordLength()
         self.loadConfig(self.standard_config_file)
         self.setWindowIcon(QIcon(f"{self.codepath}/.repo_img/icon_GUI.png"))

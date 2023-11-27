@@ -162,8 +162,8 @@ make
 sudo make install
 
 # replacing config file
-cp -r $ROOTPATH/$SOURCEFILES/install_by_hand/WaveDumpConfig.txt /etc/wavedump/
-cp -r $ROOTPATH/$SOURCEFILES/install_by_hand/WaveDumpConfig.txt .
+cp -r $ROOTPATH/$SOURCEFILES/WaveDumpConfig.txt /etc/wavedump/
+cp -r $ROOTPATH/$SOURCEFILES/WaveDumpConfig.txt .
 
 # creates a shortcut at Desktop. The move_files GUI must be installed by hand
 mkdir -p ~/Desktop/WaveDumpData
