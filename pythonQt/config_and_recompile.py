@@ -15,6 +15,7 @@ from ui_mainwindow import Ui_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 import subprocess as sp
+import ctypes
 
 class ConfigRecomp():
 
@@ -90,6 +91,8 @@ class ConfigRecomp():
         
 
     def pressSet(self):
+        if not self.checknwvfs():
+            return
         self.writeConfigFile(fromSetConfig=True)
         self.showChannelMap()
 
@@ -458,3 +461,15 @@ class ConfigRecomp():
             uichoice.setChecked(True)
             QMessageBox.about(self, "WARNING", f'{typechoice} was kept.\nChoose one of the two trigger types.')
             self.uitriggertype[0] = typechoice
+
+    def checknwvfs(self):
+        ret = True
+        try:
+            value = int(self.ui.nwaveforms.text())
+        except:
+            QMessageBox.critical(self,"ERROR!!!", "Number of waveforms should be an integer")
+            ret = False
+            value = 0
+        value = ctypes.c_uint64(value).value
+        self.ui.nwaveforms.setText(str(value))
+        return ret
