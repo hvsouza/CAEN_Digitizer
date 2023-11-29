@@ -1643,29 +1643,34 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
             fflush(WDrun->fout[ch]); // Added by Henrique Souza
           }
 
-        /* Added by Henrique Souza */
-        /* This will save a maximum number of events */
-        if(*max_events == WDcfg->ContinuousMax-1){
-            printf("\n\n\n\n\n\n\n\n\n\nEvents have reached the maximum of %lu... \n", *max_events+1);
-            printf("Continuous writing is disabled\n\n\n\n\n\n\n\n\n\n");
-            *max_events = 0;
-            WDrun->ContinuousWrite = 0;
-            *last_state = afterContinuous;
-
-            fclose(WDrun->fout[ch]);
-            WDrun->fout[ch]= NULL;
-        }
-        else if(ch == nchannels-1){
-            // cannot use x++
-            *max_events = *max_events+1; // Added by Henrique Souza
-        }
-        /* End of addition */
         if (WDrun->SingleWrite) {
             fclose(WDrun->fout[ch]);
             WDrun->fout[ch]= NULL;
-            *last_state = afterSingle;
         }
     }
+    /* Added by Henrique Souza */
+    /* This will save a maximum number of events */
+    if(*max_events == mymaximum-1){
+        printf("\n\n\n\n\n\n\n\n\n\nEvents have reached the maximum of %lu... \n", *max_events+1);
+        printf("Continuous writing is disabled\n\n\n\n\n\n\n\n\n\n");
+        *max_events = 0;
+        WDrun->ContinuousWrite = 0;
+        *last_state = afterContinuous;
+        for (int ch = 0; ch < WDcfg->Nch; ch++) {
+            if (WDrun->fout[ch]){
+                fclose(WDrun->fout[ch]);
+                WDrun->fout[ch]= NULL;
+            }
+        }
+    }
+    else{
+        // cannot use x++
+        *max_events = *max_events+1; // Added by Henrique Souza
+    }
+    if (WDrun->SingleWrite) {
+        *last_state = afterSingle;
+    }
+    /* End of addition */
     return 0;
 
 }
