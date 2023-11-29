@@ -135,8 +135,8 @@ class ConfigRecomp():
 
             with open(mfile,"r") as f:
                 # this get content lines and their position
-                alllines = [line.rstrip() for line in f]
-                lines = [line for line in alllines if line and not line.startswith('#')]
+                alllines = [line.rstrip() for line in f]  # replace \n by nothing
+                lines = [line for line in alllines if line and not line.startswith('#')]  # only non empty and no commented
                 self.ui.usbPort.setValue(int((lines[1].split())[2]))
                 self.recordlength = int(lines[2].split()[1])
 

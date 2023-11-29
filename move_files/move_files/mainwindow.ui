@@ -2613,6 +2613,12 @@ polarity:</string>
         <height>20</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="toolTip">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Set the number of waveforms to collect each time 'W' is pressed.&lt;/p&gt;&lt;p&gt;Set to zero for not stopping continuous acquisition&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>

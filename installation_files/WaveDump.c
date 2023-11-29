@@ -1650,7 +1650,7 @@ int WriteOutputFiles(WaveDumpConfig_t *WDcfg, WaveDumpRun_t *WDrun, CAEN_DGTZ_Ev
     }
     /* Added by Henrique Souza */
     /* This will save a maximum number of events */
-    if(*max_events == mymaximum-1){
+    if(*max_events == WDcfg->ContinuousMax-1){
         printf("\n\n\n\n\n\n\n\n\n\nEvents have reached the maximum of %lu... \n", *max_events+1);
         printf("Continuous writing is disabled\n\n\n\n\n\n\n\n\n\n");
         *max_events = 0;
