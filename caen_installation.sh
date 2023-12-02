@@ -149,6 +149,7 @@ linenumber_factor=$(eval "sed -n '/int factor/=' WaveDump.c") # search line with
 sed -i "$linenumber_factor d" WaveDump.c
 sed -i "$linenumber_factor i \ \ \ \ \ \ \ \ int factor = $int_factor; \/\/ Added by Henrique Souza\r" WaveDump.c
 cp $ROOTPATH/$SOURCEFILES/WDconfig.c .
+cp $ROOTPATH/$SOURCEFILES/WDplot.c .
 cp $ROOTPATH/$SOURCEFILES/WDconfig.h ../include/
 cp $ROOTPATH/$SOURCEFILES/WaveDump.h ../include/
 cd ..
@@ -173,10 +174,6 @@ echo '#!/bin/bash' >> ~/Desktop/WaveDumpData/daq_gui.sh
 echo '' >> ~/Desktop/WaveDumpData/daq_gui.sh
 echo "python3 $ROOTPATH/pythonQt/daq_gui.py &" >> ~/Desktop/WaveDumpData/daq_gui.sh
 
-
-# # copying files necessary for QtCreator
-# mkdir -p ~/Documents/QtCreator
-# cp -r $ROOTPATH/move_files/move_files ~/Documents/QtCreator/
 
 # copying file to create short cut
 cp -r $ROOTPATH/$SOURCEFILES/install_by_hand/WAVEDump.png ~/Pictures

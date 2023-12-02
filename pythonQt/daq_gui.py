@@ -697,12 +697,20 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
                 cmdmv[i] = f'mv -n {self.standard_data_origin}{_oldname}{myformat} {transfercheck}'
 
 
-            if self.enable_ch[i].isChecked() and fileIsThere[i] is False:
+            if self.enable_ch[i].isChecked() and fileIsThere[i] is False: # check if data exist at origin
                 errorMessage = f'{errorMessage}Ch{i} is enabled, but has no file !\n'
-            elif self.enable_ch[i].isChecked() is False and fileIsThere[i] is False:
+
+            elif self.enable_ch[i].isChecked() is False and fileIsThere[i] is False: # in case it is not check and there is no file, we do not care
                 fileIsThere[i] = None
-            elif self.enable_ch[i].isChecked() and FileNotThereYet[i] is False:
+                if self.enable_ch[i].isChecked() is False and FileNotThereYet[i] is False: # but we want to avoid if there is already a file there
+                    errorMessage2 = f'{errorMessage2}There is a file \'{transfercheck} \'already, please check the run and subrun number!\n'
+
+            elif self.enable_ch[i].isChecked() and FileNotThereYet[i] is False: # if ch is checked and file is already there I do not overwrite
                 errorMessage2 = f'{errorMessage2}The file \'{transfercheck} \'already exist, please check the run and subrun number!\n'
+
+            elif self.enable_ch[i].isChecked() is False and FileNotThereYet[i] is False:
+                errorMessage2 = f'{errorMessage2}There is a file \'{transfercheck} \'already, please check the run and subrun number!\n'
+
             elif self.enable_ch[i].isChecked():
                 pids = self.checkFileIsOpen(datacheck)
                 if pids['INUSE'] == True:

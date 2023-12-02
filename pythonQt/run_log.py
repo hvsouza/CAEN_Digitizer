@@ -37,7 +37,13 @@ class RunLogger():
     def loadRunLog(self, frunlog):
         with open(frunlog,'r') as file:
             self.textrunlog = file.read()
-        self.rlui.runlogfield.setPlainText(self.textrunlog)
+
+        try:
+            lines = [l for l in self.textrunlog.split("\n")[3:]]
+            self.textrunlog = '\n'.join(lines)
+            self.rlui.runlogfield.setPlainText(self.textrunlog)
+        except:
+            QMessageBox.critical(self, "ERROR!!!", "Could not load the runlog")
 
     def saveRunLog(self, pathconfig, finishingrun = False):
 
