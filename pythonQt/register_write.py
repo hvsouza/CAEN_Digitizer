@@ -32,7 +32,15 @@ class RegisterWritter():
     def check_enabled_channels(self):
         cbox:QtWidgets.QCheckBox
         for i, cbox in enumerate(self.coincEnabledCBox):
-            self.coinc_enabled[i] = True if cbox.isChecked() else False
+            if cbox.isChecked():
+                self.coinc_enabled[i] = True
+                self.enable_ch[i].setChecked(True)
+                self.trigger_ch[i].setChecked(False)
+                self.ui.externaltrigger.setChecked(False)
+            else:
+                self.coinc_enabled[i] = False
+                self.enable_ch[i].setChecked(False)
+                self.trigger_ch[i].setChecked(False)
 
     def check_pair_type(self):
         pair_type:QtWidgets.QComboBox

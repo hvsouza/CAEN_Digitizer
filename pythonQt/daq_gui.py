@@ -262,7 +262,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
         self.CoincTrigger.setWindowModality(QtCore.Qt.WindowModality.WindowModal) # prevent window to lose focus (close - open)
         self.CoincTrigger.setWindowIcon(QIcon(f"{self.codepath}/.repo_img/icon_GUI.png"))
 
-        self.ui.actionCoincidence.triggered.connect(lambda: self.CoincTrigger.show())
+        self.ui.actionCoincidence.triggered.connect(self.showCoincidence)
         self.coincEnabledCBox = [
             self.ctui.enable0,
             self.ctui.enable1,
@@ -319,7 +319,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
         self.self_trigger_time = 1
         self.coincidenceWindow = 1
 
-        self.ui.actionRegister.triggered.connect(lambda: self.Register.show())
+        self.ui.actionRegister.triggered.connect(self.showRegister)
 
         # Debug mode button
         self.ui.debugModeBox.toggled.connect(self.setDebugMode)
@@ -362,6 +362,15 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
         if ret:
             self.rlui.runlogfield.setPlainText(self.diagui.runlogfield.toPlainText())
         return ret
+
+    def showCoincidence(self):
+        self.CoincTrigger.close()
+        self.CoincTrigger.show()
+
+    def showRegister(self):
+        self.Register.close()
+        self.Register.show()
+
 
     def showRunLog(self):
         if self.runlog_neveropen:
@@ -664,6 +673,14 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
         return next(g, True) and not next(g, False)
 
     def moveFiles(self):
+        anyenabled = False
+        for ench in self.enable_ch:
+            ench:QtWidgets.QCheckBox
+            anyenabled = anyenabled or ench.isChecked()
+        if anyenabled is False:
+            QMessageBox.critical(self,"ERRO!","No channel enabled")
+            return False
+
 
         self.block = self.fixString(self.block)
 
