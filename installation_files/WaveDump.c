@@ -2014,7 +2014,7 @@ Restart:
 		goto QuitProgram;
 	}
 
-  printf("\nDigitizer succesfully reloaded\n");
+    printf("\nDigitizer succesfully reloaded\n");
     // Select the next enabled group for plotting
     if ((WDcfg.EnableMask) && (BoardInfo.FamilyCode == CAEN_DGTZ_XX742_FAMILY_CODE || BoardInfo.FamilyCode == CAEN_DGTZ_XX740_FAMILY_CODE))
         if( ((WDcfg.EnableMask>>WDrun.GroupPlotIndex)&0x1)==0 )
