@@ -35,11 +35,10 @@ class RegisterWritter():
             if cbox.isChecked():
                 self.coinc_enabled[i] = True
                 self.enable_ch[i].setChecked(True)
-                self.trigger_ch[i].setChecked(False)
+                self.trigger_ch[i].setChecked(True)
                 self.ui.externaltrigger.setChecked(False)
             else:
                 self.coinc_enabled[i] = False
-                self.enable_ch[i].setChecked(False)
                 self.trigger_ch[i].setChecked(False)
 
     def check_pair_type(self):
@@ -87,6 +86,7 @@ class RegisterWritter():
         self.add_commands_coincidence = []
         for pair, request in zip(self.data_coinc_pair,self.requesting_trigger):
             if not request:
+                auxi+=2
                 continue
             # set self trigger
             address = f'0x1{auxi}84'
@@ -101,8 +101,8 @@ class RegisterWritter():
             data = hex(self.self_trigger_time)
             cmd = f'WRITE_REGISTER {address} {data} {mask}'
             self.add_commands_coincidence.append(cmd)
-
             auxi+=2
+
 
     def set_trigger_request(self):
         # setup trigger requests
