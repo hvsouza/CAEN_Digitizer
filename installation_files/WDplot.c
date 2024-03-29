@@ -56,11 +56,6 @@ FILE *gnuplot = NULL;
 char PlotDataFileName[512];
 extern char path[128];
 
-#ifdef WIN32
-#else
-	#define Sleep(t) usleep((t)*1000);
-#endif
-
 static long get_time()
 {
 	long time_ms;

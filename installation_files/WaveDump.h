@@ -47,6 +47,8 @@
 	#define		_PACKED_		__attribute__ ((packed, aligned(1)))
 	#define		_INLINE_		__inline__ 
 
+    #define Sleep(t) usleep((t)*1000);
+
 #endif
 
 #ifdef LINUX
@@ -163,11 +165,10 @@ typedef struct WaveDumpRun_t {
     FILE *fout[MAX_CH];
 } WaveDumpRun_t;
 
-
-
 /* Function prototypes */
 int ParseConfigFile(FILE *f_ini, WaveDumpConfig_t *WDcfg);
-void Set_relative_Threshold(int handle, WaveDumpConfig_t *WDcfg, CAEN_DGTZ_BoardInfo_t BoardInfo);
+int32_t Get_current_baseline(int handle, WaveDumpConfig_t* WDcfg, char* buffer, char* EventPtr, CAEN_DGTZ_BoardInfo_t BoardInfo, double* baselines);
+int32_t Set_relative_Threshold(int handle, WaveDumpConfig_t *WDcfg, CAEN_DGTZ_BoardInfo_t BoardInfo);
 void Calibrate_DC_Offset(int handle, WaveDumpConfig_t *WDcfg, CAEN_DGTZ_BoardInfo_t BoardInfo);
 void Calibrate_XX740_DC_Offset(int handle, WaveDumpConfig_t *WDcfg, CAEN_DGTZ_BoardInfo_t BoardInfo);
 int Set_calibrated_DCO(int handle, int ch, WaveDumpConfig_t *WDcfg, CAEN_DGTZ_BoardInfo_t BoardInfo);
