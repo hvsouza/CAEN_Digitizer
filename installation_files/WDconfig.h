@@ -44,32 +44,10 @@ int ParseConfigFile(FILE *f_ini, WaveDumpConfig_t *WDcfg);
 */
 int WriteRegisterBitmask(int32_t handle, uint32_t address, uint32_t data, uint32_t mask);
 
-/*! \fn      int DoProgramDigitizer(int handle, WaveDumpConfig_t WDcfg)
+/*! \fn      int ProgramDigitizer(int handle, WaveDumpConfig_t WDcfg) 
 *   \brief   configure the digitizer according to the parameters read from
 *            the cofiguration file and saved in the WDcfg data structure
-*
-*   \param   handle   Digitizer handle
-*   \param   WDcfg:   WaveDumpConfig data structure
-*   \return  0 = Success; negative numbers are error codes
-*/
-int DoProgramDigitizer(int handle, WaveDumpConfig_t* WDcfg, CAEN_DGTZ_BoardInfo_t BoardInfo);
-
-/*! \fn      int ProgramDigitizerWithRelativeThreshold(int handle, WaveDumpConfig_t WDcfg)
-*   \brief   configure the digitizer according to the parameters read from the cofiguration
-*            file and saved in the WDcfg data structure, performing a calibration of the
-*            DCOffset to set the required BASELINE_LEVEL.
-*
-*   \param   handle   Digitizer handle
-*   \param   WDcfg:   WaveDumpConfig data structure
-*   \return  0 = Success; negative numbers are error codes
-*/
-int ProgramDigitizerWithRelativeThreshold(int handle, WaveDumpConfig_t* WDcfg, CAEN_DGTZ_BoardInfo_t BoardInfo);
-
-/*! \fn      int ProgramDigitizerWithRelativeThreshold(int handle, WaveDumpConfig_t WDcfg)
-*   \brief   configure the digitizer according to the parameters read from the cofiguration
-*            file and saved in the WDcfg data structure, performing a calibration of the
-*            DCOffset to set the required BASELINE_LEVEL (if provided).
-*
+*            
 *   \param   handle   Digitizer handle
 *   \param   WDcfg:   WaveDumpConfig data structure
 *   \return  0 = Success; negative numbers are error codes
