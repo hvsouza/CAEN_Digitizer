@@ -64,7 +64,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
         self.ui.samplingRate.setCurrentText(self.sampling_set)
         self.ui.samplingRate_2.setCurrentText(self.sampling_set)
         self.ui.adcMaximumRate.setCurrentText(self.sampling_original)
-        self.default_path = f'{self.userpath}/Documents/ADC_data/coldbox_data/'
+        self.default_path = self.read_default_path()
         self.standard_data_origin = f'{self.userpath}/Desktop/WaveDumpData/'
         self.create_path()
         self.ui.browse_dir.clicked.connect(self.getDir)
@@ -336,6 +336,7 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
 
         
     def closeEvent(self, event):
+        self.writeState()
         self.About.close()
         self.RunLog.close()
         self.ChannelMap.close()
@@ -453,6 +454,22 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
 
     def create_path(self):
         os.system(f'mkdir -p {self.default_path}')
+
+    def define_experiment_path(self):
+        directory = QtWidgets.QFileDialog.getExistingDirectory(self, "Find Files", f'{self.default_path}/')
+        tocheck = self.default_path[:-1]
+        if directory and directory != tocheck:
+            directory = directory+"/"
+            answer = QMessageBox.question(self, "", f"Changing the default folder to:\n{directory}\nIs that ok?", QMessageBox.Yes | QMessageBox.No)
+            if answer == QMessageBox.Yes:
+                directory = directory.replace(" ",r"\ ")
+                self.default_path = directory
+                self.write_default_path(directory)
+                self.untouch = False
+                return 
+        QMessageBox.critical(self, "ERROR!", "Please, create a valid folder in order to properly store data.")
+        exit(1)
+
     def getDir(self):
         dirnow = self.ui.primary_name.text()
         directory = QtWidgets.QFileDialog.getExistingDirectory(self, "Find Files", f'{self.default_path}/{dirnow}/../')
@@ -472,8 +489,9 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
                     directory = directory+"/"
                     answer2 = QMessageBox.question(self, "", f"Changing the default folder to:\n{directory}\nIs that ok?", QMessageBox.Yes | QMessageBox.No)
                     if answer2 == QMessageBox.Yes:
-                        directory = directory.replace(" ","\ ")
+                        directory = directory.replace(" ",r"\ ")
                         self.default_path = directory
+                        self.write_default_path(directory)
                         self.untouch = False
         else:
             directory = dirnow
@@ -584,12 +602,15 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
         if emptyruns:
             QMessageBox.critical(self, "ERROR", "Run or subrun numbers are empty")
             return
+
         status = self.moveFiles()
         if status:
             self.saveConfigDefault()
             self.subrun[0] += 1
             self.ui.subrun3.setText(str(self.subrun[0]))
             self.nofilesmove = False
+            self.finishRun(self.ui.run_3, self.ui.subrun3, 'D')
+            self.writeState()
 
     def style2_move(self):
         emptyruns = self.getInfoStyle2()
@@ -805,7 +826,8 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
         return True
 
     def finishRun(self, runLine, subrunLine, movetype):
-        ret = QMessageBox.question(self, "", "Finish this run?", QMessageBox.Yes, QMessageBox.No)
+        # ret = QMessageBox.question(self, "", "Finish this run?", QMessageBox.Yes, QMessageBox.No)
+        ret = QMessageBox.Yes
 
         if ret == QMessageBox.Yes:
             if movetype == 'D':
@@ -852,6 +874,30 @@ class MainWindow(QtWidgets.QMainWindow, ConfigRecomp, ChannelMapper, RunLogger, 
 
         ret['INUSE'] = True
         return ret
+
+    def read_default_path(self):
+
+        file_default_path = f"{self.codepath}/pythonQt/.path"
+        try:
+            with open(file_default_path,"r") as f:
+                # this get content lines and their position
+                return f.readline().rstrip()
+        except IOError:
+            QMessageBox.warning(self, "WARNING!", "Could not read default path file, please, create a folder with the name of the experiment.\n")
+            self.default_path = f"{self.userpath}/Documents/ADC_data/"
+            self.define_experiment_path()
+            self.write_default_path(self.default_path)
+            return self.default_path
+
+    def write_default_path(self, path):
+        file_default_path = f"{self.codepath}/pythonQt/.path"
+        try:
+            with open(file_default_path,"w") as f:
+                f.write(path)
+        except IOError:
+            QMessageBox.warning(self, "WARNING!", "Could not write default path file, please... not sure why.\n")
+
+
 
 
 
